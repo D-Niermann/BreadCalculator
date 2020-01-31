@@ -1,66 +1,17 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="style.css">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-ul li {
-  border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  color: black;
-  display: block;
-  position: relative;
-}
-
-ul li:hover {
-  background-color: #eee;
-}
-
-.close {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  right: 0%;
-  padding: 12px 16px;
-  transform: translate(0%, -50%);
-}
-
-.close:hover {background: #bbb;}
-</style>
 </head>
 <body>
 
-<h2>Closable List Items</h2>
-<p>Click on the "x" symbol to the right of the list item to close/hide it.</p>
 
 <ul id="list">
-  <li>Adele</li>
-  <li>Agnes<span class="close">&times;</span></li>
 
-  <li>Billy<span class="close">&times;</span></li>
-  <li>Bob<span class="close">&times;</span></li>
-
-  <li>Calvin<span class="close">&times;</span></li>
-  <li>Christina<span class="close">&times;</span></li>
-  <li>Cindy</li>
+  
 </ul>
+<div id="add">x</div>
 
-<script>
-
-</script>
-
+<script src="functions.js"></script>
 </body>
 </html>
