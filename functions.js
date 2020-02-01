@@ -31,20 +31,33 @@ document.getElementById("add").addEventListener("click", function() {
          event.preventDefault();
          let field = event.target;
         console.log("Updated Grams")
-      }
-    });
+      } });
     entry.appendChild(input); // put it into the DOM
    
     var input = document.createElement("input");
     input.type = "text";
     input.className = "input-text-name"; // set the CSS class
     input.value = "Name"
+    input.addEventListener ('keydown', function (event) {
+      if (event.which == 13) { //enter key
+         event.preventDefault();
+         let field = event.target;
+        console.log("Updated Name")
+      } });
     entry.appendChild(input); // put it into the DOM
   
     var input = document.createElement("input");
     input.type = "text";
     input.className = "input-text-percent"; // set the CSS class
     input.value = "0"
+    input.addEventListener("focusout", function(event){});
+
+    input.addEventListener ('keydown', function(event) {
+      if (event.which == 13) { //enter key
+         event.preventDefault();
+         let field = event.target;
+        console.log("Updated Percent")
+      } });
     entry.appendChild(input); // put it into the DOM
     
     var sel = document.createElement("select")
