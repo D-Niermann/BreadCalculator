@@ -9,7 +9,7 @@ let win
 function createWindow () {
   // Erstellen des Browser-Fensters.
   win = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 800,
     webPreferences: {
       nodeIntegration: true
@@ -19,6 +19,8 @@ function createWindow () {
   // und lade die index.html der App.
   win.loadFile('index.html')
 
+//   var Rec = new Recipe();
+  
   // Öffnen der DevTools.
   win.webContents.openDevTools()
 
