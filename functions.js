@@ -1,16 +1,17 @@
-const T_OTHER = "Sonstige"
+const T_OTHER = "Other"
 const T_FLOUR = "Flour"
 const T_WATER = "Liquid"
 var ID = 0
 
 class Entry{
 
-	constructor(id){
+	constructor(id, type){
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
 		this.percent = 0
-		this.type = T_FLOUR
+		this.type = type
+		this.lastEdited = ""
 	}
 
 	getInfo(){
@@ -18,12 +19,16 @@ class Entry{
 	}
 
 	updateGrams(value){
+		this.lastEdited = "gram"
 		this.gram = parseFloat(value)
+		if (isNaN(this.gram)){
+			this.gram = 0
+		}
 		// document.getElementById(this.id).childNodes.getElementsByClassName("input-text-gram").value = "test"
 		var childs = document.getElementById(this.id).childNodes
 		for(let i = 0; i<childs.length; i++){
 			if (childs[i].className == "input-text-gram"){
-				childs[i].value = parseInt(this.gram)
+				childs[i].value = Math.round(this.gram)
 			}
 		}
 	}
@@ -32,10 +37,15 @@ class Entry{
 	}
 	updatePercent(value){
 		this.percent = parseFloat(value)
+		this.lastEdited = "percent"
+		if (isNaN(this.percent)){
+			this.percent = 0
+		}
+		console.log("my percent:"+this.percent)
 		var childs = document.getElementById(this.id).childNodes
 		for(let i = 0; i<childs.length; i++){
 			if (childs[i].className == "input-text-percent"){
-				childs[i].value = Math.round(parseFloat(this.percent))
+				childs[i].value = Math.round(this.percent)
 			}
 		}
 	}
@@ -50,6 +60,11 @@ class Entry{
 	}
 	isWater(){
 		if(this.type==T_WATER){
+			return true}
+		else{return false}
+	}
+	isOther(){
+		if(this.type==T_OTHER){
 			return true}
 		else{return false}
 	}
@@ -106,6 +121,8 @@ class Dough{
 		var fluids = {}
 		var fluid_total = 0
 		console.log("Updating " + this.name)
+
+		// sum all weights
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			if (e.isFlour()){
@@ -117,6 +134,8 @@ class Dough{
 				fluid_total += e.gram;
 			}
 		}
+
+		// here decide what value to update based on entry.lastEdited?
 		if (type=="gram" || type == ""){
 			for (var key in flour) {
 				this.getEntry(key).updatePercent(this.getEntry(key).gram/flour_total*100)
@@ -162,18 +181,18 @@ for (i = 0; i < closebtns.length; i++) {
 ////////////////////////////////////////////
 // ZUTAT SPALTE
 ////////////////////////////////////////////
-function createEntryField(listID, Dough){
+function createEntryField(listID, Dough, type){
 	var list = document.getElementById(listID);
 	var list_el = document.createElement('li');
 	list_el.id = ID;
 	ID += 1;
-	var entry = new Entry(list_el.id)
+	var entry = new Entry(list_el.id, type)
 	Dough.addEntry(entry)
 
 
 	var close = document.createElement("span")
 	close.className = "close"
-	close.innerHTML = "x"
+	close.innerHTML = "-"
 	close.addEventListener("click", function() {
 		Dough.removeEntry(list_el.id)
 		Dough.update()
@@ -196,6 +215,7 @@ function createEntryField(listID, Dough){
 	list_el.appendChild(input); // put it into the DOM
 	text = document.createElement("a")
 	text.innerHTML = "g  "
+	text.className = "InfoTypeText"
 	list_el.appendChild(text)
 
 	var input = document.createElement("input");
@@ -224,7 +244,7 @@ function createEntryField(listID, Dough){
 		if (event.which == 13) { //enter key
 			Dough.getEntry(list_el.id).updatePercent(this.value)
 			Dough.update(list_el.id, "percent")
-			Dough.update(list_el.id)
+			// Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updatePercent(this.value)
@@ -232,11 +252,15 @@ function createEntryField(listID, Dough){
 		});
 	list_el.appendChild(input); // put it into the DOM
 	text = document.createElement("a")
+	text.className = "InfoTypeText"
 	text.innerHTML = "%      "
 	list_el.appendChild(text)
 	
 	
-	
+	var textType = document.createElement("a")
+	textType.innerHTML = type
+	textType.className = "InfoTypeText"
+	list_el.appendChild(textType)
 	// var sel = document.createElement("select")
 	// var c = document.createElement("option");
 	// c.text = T_FLOUR;
@@ -263,8 +287,12 @@ function createEntryField(listID, Dough){
 //  if add button.class == "addWater" -> field type = Water
 // add the list el
 // }
-document.getElementById("addPre1").addEventListener("click", function(){createEntryField("list1", Pre1)});
-document.getElementById("addPre2").addEventListener("click", function(){createEntryField("list2", Pre2)});
+document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR)});
+document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER)});
+document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER)});
+document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR)});
+document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER)});
+document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
 // key down event with enter key

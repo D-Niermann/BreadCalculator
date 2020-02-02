@@ -4,22 +4,30 @@ body {
 
 * {
 	box-sizing: border-box;
+	/* font-family: monospace; */
+	/* font-weight: bold; */
 }
-
-select {
+.InfoTypeText{
+	font-size: 12pt;
+	padding: 5px;
+	color: #7C5A0B;
+	font-weight: bold;
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+}
+.coll-input{
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
 	border: none;
-	/* ... */
-	width: 20%;
-	height: 100%;
-	padding-left: 10px;
-	background: url(fff-0-2.png) repeat;
-	color: rgb(0, 0, 0);
-	font-size: 16px;
+	background: #FAE042;
+	text-align: center;
 	font-weight: bold;
+	font-size: 14pt;
+	font-family: monospace;
 }
+
 
 .item1 {
 	grid-area: left;
@@ -72,7 +80,7 @@ input[type='checkbox'] {
 	-webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
 	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
 	padding: 4px;
-	background: rgba(255, 255, 255, 0.5);
+	background: rgba(255, 255, 255, 0.24);
 	/* margin-left: 20px;
 	margin-right: 20px; */
 	font-weight: bold;
@@ -158,6 +166,8 @@ ul li:hover {
 .close {
 	cursor: pointer;
 	position: absolute;
+	font-family: Calibri;
+	font-weight: bold;
 	top: 45%;
 	right: 0%;
 	padding: 16px 16px;
