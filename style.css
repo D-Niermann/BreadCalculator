@@ -19,6 +19,12 @@ body {
    -khtml-user-select: none;
    -webkit-user-select: none;
 }
+.addButton{
+	/* background-color: rgba(124, 124, 124, 0.37); */
+	text-align: center; 
+	font-size: 15pt; 
+	cursor: pointer;
+}
 .coll-input{
 	-moz-appearance: none;
 	-webkit-appearance: none;
@@ -80,10 +86,10 @@ input[type='checkbox'] {
 	border: 1px solid rgb(255, 255, 255, 0);
 	font-size: 10pt;
 	/* text-align: center; */
-	-webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
 	padding: 4px;
-	background: rgba(255, 255, 255, 0.24);
+	background: rgba(255, 255, 255, 0);
 	/* margin-left: 20px;
 	margin-right: 20px; */
 	font-weight: bold;
@@ -102,6 +108,11 @@ input[type='checkbox'] {
 .input-text-percent {
 	width: 10%;
 	text-align: right;
+}
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .lbl-toggle::before {

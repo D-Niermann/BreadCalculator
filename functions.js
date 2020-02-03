@@ -2,6 +2,8 @@ const T_OTHER = "Other"
 const T_FLOUR = "Flour"
 const T_WATER = "Liquid"
 var ID = 0
+const T_GRAM = "gram"
+const T_PERCENT = "percent"
 
 class Entry{
 
@@ -9,6 +11,7 @@ class Entry{
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
+		this.lastEdited = ""
 		this.percent = 0
 		this.type = type
 		this.lastEdited = ""
@@ -116,42 +119,58 @@ class Dough{
 
 
 	update(id, type = ""){
-		var flour = {}
-		var flour_total = 0
-		var fluids = {}
-		var fluid_total = 0
-		console.log("Updating " + this.name)
+		for (let i = 0; i < 10; i++) {
+			
+		
+			var flour = {}
+			var flour_total = 0
+			var fluids = {}
+			var fluid_total = 0
+			console.log("Updating " + this.name)
 
-		// sum all weights
-		for (let i = 0; i < this.entries.length; i++) {
-			const e = this.entries[i];
-			if (e.isFlour()){
-				flour[e.id] = e.gram;
-				flour_total += e.gram;
+			// sum all weights
+			for (let i = 0; i < this.entries.length; i++) {
+				const e = this.entries[i];
+				if (e.isFlour()){
+					flour[e.id] = e.gram;
+					flour_total += e.gram;
+				}
+				else if(e.isWater){
+					fluids[e.id] = e.gram;
+					fluid_total += e.gram;
+				}
 			}
-			else if(e.isWater){
-				fluids[e.id] = e.gram;
-				fluid_total += e.gram;
-			}
-		}
 
-		// here decide what value to update based on entry.lastEdited?
-		if (type=="gram" || type == ""){
 			for (var key in flour) {
-				this.getEntry(key).updatePercent(this.getEntry(key).gram/flour_total*100)
+				var percent = this.getEntry(key).gram/flour_total*100
+				var grams = this.getEntry(key).percent*flour_total/100
+				var le = this.getEntry(key).lastEdited
+				if (le == T_GRAM){
+					console.log("Updateing percents")
+					this.getEntry(key).updatePercent(percent)
+				}
+				if (le == T_PERCENT){
+					console.log("Updateing grams")
+					this.getEntry(key).updateGrams(grams)
+				}
 			}
 			for (var key in fluids) {
-				this.getEntry(key).updatePercent(this.getEntry(key).gram/flour_total*100)
+				var percent = this.getEntry(key).gram/flour_total*100
+				var grams = this.getEntry(key).percent*flour_total/100
+				var le = this.getEntry(key).lastEdited
+				if (le == T_GRAM){
+					console.log("Updateing percents")
+					this.getEntry(key).updatePercent(percent)
+				}
+				if (le == T_PERCENT){
+					console.log("Updateing grams")
+					this.getEntry(key).updateGrams(grams)
+				}
 			}
 		}
-		if(type=="percent"){
-			for (var key in flour) {
-				this.getEntry(key).updateGrams(this.getEntry(key).percent*flour_total/100)
-			}
-			for (var key in fluids) {
-				this.getEntry(key).updateGrams(this.getEntry(key).percent*flour_total/100)
-			}
-		}	
+			
+
+			
 	}	
 
 	
@@ -200,16 +219,18 @@ function createEntryField(listID, Dough, type){
 	});
 
 	var input = document.createElement("input");
-	input.type = "text";
+	input.type = "number";
 	input.className = "input-text-gram"; // set the CSS class
-	input.value = "0"
+	input.value = 0
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
 			Dough.getEntry(list_el.id).updateGrams(this.value)
+			Dough.getEntry(list_el.id).lastEdited = T_GRAM
 			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updateGrams(this.value)
+		Dough.getEntry(list_el.id).lastEdited = T_GRAM
 		Dough.update(list_el.id)
 		});
 	list_el.appendChild(input); // put it into the DOM
@@ -235,19 +256,22 @@ function createEntryField(listID, Dough, type){
 
 	
 	var input = document.createElement("input");
-	input.type = "text";
+	input.type = "number";
 	input.className = "input-text-percent"; // set the CSS class
-	input.value = "0"
+	input.value = 0
 	input.addEventListener("focusout", function(event){});
 
 	input.addEventListener ('keydown', function(event) {
 		if (event.which == 13) { //enter key
+			// only if value is different to old vlaue -> implement everything into an update funciton and a fetch function? or update with keyword arg
 			Dough.getEntry(list_el.id).updatePercent(this.value)
-			Dough.update(list_el.id, "percent")
-			// Dough.update(list_el.id)
+			Dough.getEntry(list_el.id).lastEdited = T_PERCENT
+			// Dough.update(list_el.id, "percent")
+			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updatePercent(this.value)
+		Dough.getEntry(list_el.id).lastEdited = T_PERCENT
 		Dough.update(list_el.id,"percent")
 		});
 	list_el.appendChild(input); // put it into the DOM
@@ -276,6 +300,7 @@ function createEntryField(listID, Dough, type){
 	// 	Pre1.update(list_el.id)
 	// })
 	// list_el.appendChild(sel)
+
 
 
 	list_el.appendChild(close)
