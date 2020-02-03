@@ -1,10 +1,13 @@
 body {
 	background-color: rgb(250, 244, 232);
 }
-
+/* @font-face {
+    font-family: myFont;
+    src: url(<path relative to css>);
+} */
 * {
 	box-sizing: border-box;
-	/* font-family: monospace; */
+	/* font-family: fantasy; */
 	/* font-weight: bold; */
 }
 .InfoTypeText{
