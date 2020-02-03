@@ -10,6 +10,11 @@ body {
 	/* font-family: fantasy; */
 	/* font-weight: bold; */
 }
+
+.content-addButtons{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
 .InfoTypeText{
 	font-size: 12pt;
 	padding: 5px;
