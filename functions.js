@@ -2,6 +2,8 @@ const T_OTHER = "Sonstige"
 const T_FLOUR = "Flour"
 const T_WATER = "Liquid"
 var ID = 0
+const T_GRAM = "gram"
+const T_PERCENT = "percent"
 
 class Entry{
 
@@ -9,6 +11,7 @@ class Entry{
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
+		this.lastEdited = ""
 		this.percent = 0
 		this.type = T_FLOUR
 	}
@@ -117,22 +120,44 @@ class Dough{
 				fluid_total += e.gram;
 			}
 		}
-		if (type=="gram" || type == ""){
-			for (var key in flour) {
-				this.getEntry(key).updatePercent(this.getEntry(key).gram/flour_total*100)
+		
+		
+
+		for (var key in flour) {
+			var percent = this.getEntry(key).gram/flour_total*100
+			var grams = this.getEntry(key).percent*flour_total/100
+			var le = this.getEntry(key).lastEdited
+			if (le == T_GRAM){
+				console.log("Updateing percents")
+				this.getEntry(key).updatePercent(percent)
 			}
-			for (var key in fluids) {
-				this.getEntry(key).updatePercent(this.getEntry(key).gram/flour_total*100)
+			if (le == T_PERCENT){
+				console.log("Updateing grams")
+				this.getEntry(key).updateGrams(grams)
 			}
 		}
-		if(type=="percent"){
-			for (var key in flour) {
-				this.getEntry(key).updateGrams(this.getEntry(key).percent*flour_total/100)
+		for (var key in fluids) {
+			var percent = this.getEntry(key).gram/flour_total*100
+			var grams = this.getEntry(key).percent*flour_total/100
+			var le = this.getEntry(key).lastEdited
+			if (le == T_GRAM){
+				console.log("Updateing percents")
+				this.getEntry(key).updatePercent(percent)
 			}
-			for (var key in fluids) {
-				this.getEntry(key).updateGrams(this.getEntry(key).percent*flour_total/100)
+			if (le == T_PERCENT){
+				console.log("Updateing grams")
+				this.getEntry(key).updateGrams(grams)
 			}
-		}	
+		}
+		
+		
+			// for (var key in flour) {
+				
+			// }
+			// for (var key in fluids) {
+			// 	this.getEntry(key).updateGrams(grams)
+			// }
+		
 	}	
 
 	
@@ -187,10 +212,12 @@ function createEntryField(listID, Dough){
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
 			Dough.getEntry(list_el.id).updateGrams(this.value)
+			Dough.getEntry(list_el.id).lastEdited = T_GRAM
 			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updateGrams(this.value)
+		Dough.getEntry(list_el.id).lastEdited = T_GRAM
 		Dough.update(list_el.id)
 		});
 	list_el.appendChild(input); // put it into the DOM
@@ -222,12 +249,15 @@ function createEntryField(listID, Dough){
 
 	input.addEventListener ('keydown', function(event) {
 		if (event.which == 13) { //enter key
+			// only if value is different to old vlaue -> implement everything into an update funciton and a fetch function? or update with keyword arg
 			Dough.getEntry(list_el.id).updatePercent(this.value)
-			Dough.update(list_el.id, "percent")
+			Dough.getEntry(list_el.id).lastEdited = T_PERCENT
+			// Dough.update(list_el.id, "percent")
 			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updatePercent(this.value)
+		Dough.getEntry(list_el.id).lastEdited = T_PERCENT
 		Dough.update(list_el.id,"percent")
 		});
 	list_el.appendChild(input); // put it into the DOM
@@ -237,21 +267,21 @@ function createEntryField(listID, Dough){
 	
 	
 	
-	// var sel = document.createElement("select")
-	// var c = document.createElement("option");
-	// c.text = T_FLOUR;
-	// sel.options.add(c, 1);
-	// var c = document.createElement("option");
-	// c.text = T_WATER;
-	// sel.options.add(c, 2);
-	// var c = document.createElement("option");
-	// c.text = T_OTHER;
-	// sel.options.add(c, 2);
-	// sel.addEventListener("change", function(){
-	// 	Pre1.getEntry(list_el.id).updateType(this.value)
-	// 	Pre1.update(list_el.id)
-	// })
-	// list_el.appendChild(sel)
+	var sel = document.createElement("select")
+	var c = document.createElement("option");
+	c.text = T_FLOUR;
+	sel.options.add(c, 1);
+	var c = document.createElement("option");
+	c.text = T_WATER;
+	sel.options.add(c, 2);
+	var c = document.createElement("option");
+	c.text = T_OTHER;
+	sel.options.add(c, 2);
+	sel.addEventListener("change", function(){
+		Pre1.getEntry(list_el.id).updateType(this.value)
+		Pre1.update(list_el.id)
+	})
+	list_el.appendChild(sel)
 
 
 	list_el.appendChild(close)
