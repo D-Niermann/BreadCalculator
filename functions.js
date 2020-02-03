@@ -26,7 +26,7 @@ class Entry{
 		var childs = document.getElementById(this.id).childNodes
 		for(let i = 0; i<childs.length; i++){
 			if (childs[i].className == "input-text-gram"){
-				childs[i].value = parseInt(this.gram)
+				childs[i].value = Math.round(this.gram)
 			}
 		}
 	}
@@ -38,7 +38,7 @@ class Entry{
 		var childs = document.getElementById(this.id).childNodes
 		for(let i = 0; i<childs.length; i++){
 			if (childs[i].className == "input-text-percent"){
-				childs[i].value = Math.round(parseFloat(this.percent))
+				childs[i].value = Math.round(this.percent)
 			}
 		}
 	}
@@ -104,52 +104,55 @@ class Dough{
 
 
 	update(id, type = ""){
-		var flour = {}
-		var flour_total = 0
-		var fluids = {}
-		var fluid_total = 0
-		console.log("Updating " + this.name)
-		for (let i = 0; i < this.entries.length; i++) {
-			const e = this.entries[i];
-			if (e.isFlour()){
-				flour[e.id] = e.gram;
-				flour_total += e.gram;
+		for (let i = 0; i < 10; i++) {
+			var flour = {}
+			var flour_total = 0
+			var fluids = {}
+			var fluid_total = 0
+			console.log("Updating " + this.name)
+			for (let i = 0; i < this.entries.length; i++) {
+				const e = this.entries[i];
+				if (e.isFlour()){
+					flour[e.id] = e.gram;
+					flour_total += e.gram;
+				}
+				else if(e.isWater){
+					fluids[e.id] = e.gram;
+					fluid_total += e.gram;
+				}
 			}
-			else if(e.isWater){
-				fluids[e.id] = e.gram;
-				fluid_total += e.gram;
-			}
-		}
 		
 		
-
-		for (var key in flour) {
-			var percent = this.getEntry(key).gram/flour_total*100
-			var grams = this.getEntry(key).percent*flour_total/100
-			var le = this.getEntry(key).lastEdited
-			if (le == T_GRAM){
-				console.log("Updateing percents")
-				this.getEntry(key).updatePercent(percent)
-			}
-			if (le == T_PERCENT){
-				console.log("Updateing grams")
-				this.getEntry(key).updateGrams(grams)
-			}
-		}
-		for (var key in fluids) {
-			var percent = this.getEntry(key).gram/flour_total*100
-			var grams = this.getEntry(key).percent*flour_total/100
-			var le = this.getEntry(key).lastEdited
-			if (le == T_GRAM){
-				console.log("Updateing percents")
-				this.getEntry(key).updatePercent(percent)
-			}
-			if (le == T_PERCENT){
-				console.log("Updateing grams")
-				this.getEntry(key).updateGrams(grams)
-			}
-		}
 		
+			
+		
+			for (var key in flour) {
+				var percent = this.getEntry(key).gram/flour_total*100
+				var grams = this.getEntry(key).percent*flour_total/100
+				var le = this.getEntry(key).lastEdited
+				if (le == T_GRAM){
+					console.log("Updateing percents")
+					this.getEntry(key).updatePercent(percent)
+				}
+				if (le == T_PERCENT){
+					console.log("Updateing grams")
+					this.getEntry(key).updateGrams(grams)
+				}
+			}
+			for (var key in fluids) {
+				var percent = this.getEntry(key).gram/flour_total*100
+				var grams = this.getEntry(key).percent*flour_total/100
+				var le = this.getEntry(key).lastEdited
+				if (le == T_GRAM){
+					console.log("Updateing percents")
+					this.getEntry(key).updatePercent(percent)
+				}
+				if (le == T_PERCENT){
+					console.log("Updateing grams")
+					this.getEntry(key).updateGrams(grams)
+				}
+			}
+		}
 		
 			// for (var key in flour) {
 				
@@ -206,9 +209,9 @@ function createEntryField(listID, Dough){
 	});
 
 	var input = document.createElement("input");
-	input.type = "text";
+	input.type = "number";
 	input.className = "input-text-gram"; // set the CSS class
-	input.value = "0"
+	input.value = 0
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
 			Dough.getEntry(list_el.id).updateGrams(this.value)
@@ -242,9 +245,9 @@ function createEntryField(listID, Dough){
 
 	
 	var input = document.createElement("input");
-	input.type = "text";
+	input.type = "number";
 	input.className = "input-text-percent"; // set the CSS class
-	input.value = "0"
+	input.value = 0
 	input.addEventListener("focusout", function(event){});
 
 	input.addEventListener ('keydown', function(event) {

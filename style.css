@@ -5,7 +5,14 @@ body {
 * {
 	box-sizing: border-box;
 }
-
+.addButton{
+	/* background-color: rgba(124, 124, 124, 0.37); */
+	text-align: center; 
+	/* -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1); */
+	font-size: 15pt; 
+	cursor: pointer;
+}
 select {
 	-moz-appearance: none;
 	-webkit-appearance: none;
@@ -91,6 +98,11 @@ input[type='checkbox'] {
 .input-text-percent {
 	width: 10%;
 	text-align: right;
+}
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .lbl-toggle::before {
