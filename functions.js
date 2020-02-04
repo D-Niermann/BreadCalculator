@@ -14,41 +14,46 @@ class Entry{
 		this.lastEdited = ""
 		this.percent = 0
 		this.type = type
-		this.lastEdited = ""
 	}
 
 	getInfo(){
-		console.log(this.id+", "+this.gram+", "+this.name+", "+this.percent+", "+this.type)
 	}
 
-	updateGrams(value){
-		this.lastEdited = "gram"
-		this.gram = parseFloat(value)
-		if (isNaN(this.gram)){
-			this.gram = 0
-		}
-		// document.getElementById(this.id).childNodes.getElementsByClassName("input-text-gram").value = "test"
-		var childs = document.getElementById(this.id).childNodes
-		for(let i = 0; i<childs.length; i++){
-			if (childs[i].className == "input-text-gram"){
-				childs[i].value = Math.round(this.gram)
+	updateGrams(value, fetchedFromHTML = false){
+		if (this.gram != value){
+			this.gram = parseFloat(value)
+			if (isNaN(this.gram)){
+				this.gram = 0
+			}
+			if (fetchedFromHTML){
+				this.lastEdited = T_GRAM
+			}
+			// document.getElementById(this.id).childNodes.getElementsByClassName("input-text-gram").value = "test"
+			var childs = document.getElementById(this.id).childNodes
+			for(let i = 0; i<childs.length; i++){
+				if (childs[i].className == "input-text-gram"){
+					childs[i].value = Math.round(this.gram)
+				}
 			}
 		}
 	}
-	updateName(value){
+	updateName(value, fetchedFromHTML = false){
 		this.name = value
 	}
-	updatePercent(value){
-		this.percent = parseFloat(value)
-		this.lastEdited = "percent"
-		if (isNaN(this.percent)){
-			this.percent = 0
-		}
-		console.log("my percent:"+this.percent)
-		var childs = document.getElementById(this.id).childNodes
-		for(let i = 0; i<childs.length; i++){
-			if (childs[i].className == "input-text-percent"){
-				childs[i].value = Math.round(this.percent)
+	updatePercent(value, fetchedFromHTML = false){
+		if (this.percent != value){
+			this.percent = parseFloat(value)
+			if (isNaN(this.percent)){
+				this.percent = 0
+			}
+			if (fetchedFromHTML){
+				this.lastEdited = T_PERCENT
+			}
+			var childs = document.getElementById(this.id).childNodes
+			for(let i = 0; i<childs.length; i++){
+				if (childs[i].className == "input-text-percent"){
+					childs[i].value = Math.round(this.percent)
+				}
 			}
 		}
 	}
@@ -79,7 +84,6 @@ class Dough{
 		this.name = name
 		this.id = 0
 		this.entries = []
-		console.log("Init Dough!")
 	}
 
 	addEntry(Entry){
@@ -118,7 +122,7 @@ class Dough{
 	}
 
 
-	update(id, type = ""){
+	update(id){
 		for (let i = 0; i < 10; i++) {
 			
 		
@@ -126,7 +130,6 @@ class Dough{
 			var flour_total = 0
 			var fluids = {}
 			var fluid_total = 0
-			console.log("Updating " + this.name)
 
 			// sum all weights
 			for (let i = 0; i < this.entries.length; i++) {
@@ -135,7 +138,7 @@ class Dough{
 					flour[e.id] = e.gram;
 					flour_total += e.gram;
 				}
-				else if(e.isWater){
+				else{
 					fluids[e.id] = e.gram;
 					fluid_total += e.gram;
 				}
@@ -146,11 +149,9 @@ class Dough{
 				var grams = this.getEntry(key).percent*flour_total/100
 				var le = this.getEntry(key).lastEdited
 				if (le == T_GRAM){
-					console.log("Updateing percents")
 					this.getEntry(key).updatePercent(percent)
 				}
 				if (le == T_PERCENT){
-					console.log("Updateing grams")
 					this.getEntry(key).updateGrams(grams)
 				}
 			}
@@ -159,11 +160,9 @@ class Dough{
 				var grams = this.getEntry(key).percent*flour_total/100
 				var le = this.getEntry(key).lastEdited
 				if (le == T_GRAM){
-					console.log("Updateing percents")
 					this.getEntry(key).updatePercent(percent)
 				}
 				if (le == T_PERCENT){
-					console.log("Updateing grams")
 					this.getEntry(key).updateGrams(grams)
 				}
 			}
@@ -222,15 +221,14 @@ function createEntryField(listID, Dough, type){
 	input.type = "number";
 	input.className = "input-text-gram"; // set the CSS class
 	input.value = 0
+	input.setAttribute("onClick","this.select();")
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
-			Dough.getEntry(list_el.id).updateGrams(this.value)
-			Dough.getEntry(list_el.id).lastEdited = T_GRAM
+			Dough.getEntry(list_el.id).updateGrams(this.value, true)
 			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
-		Dough.getEntry(list_el.id).updateGrams(this.value)
-		Dough.getEntry(list_el.id).lastEdited = T_GRAM
+		Dough.getEntry(list_el.id).updateGrams(this.value, true)
 		Dough.update(list_el.id)
 		});
 	list_el.appendChild(input); // put it into the DOM
@@ -243,13 +241,14 @@ function createEntryField(listID, Dough, type){
 	input.type = "text";
 	input.className = "input-text-name"; // set the CSS class
 	input.value = "Name"
+	input.setAttribute("onClick","this.select();")
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
-			Dough.getEntry(list_el.id).updateName(this.value)
+			Dough.getEntry(list_el.id).updateName(this.value, true)
 			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
-			Dough.getEntry(list_el.id).updateName(this.value)
+			Dough.getEntry(list_el.id).updateName(this.value, true)
 			Dough.update(list_el.id)
 		});
 	list_el.appendChild(input); // put it into the DOM
@@ -258,20 +257,19 @@ function createEntryField(listID, Dough, type){
 	var input = document.createElement("input");
 	input.type = "number";
 	input.className = "input-text-percent"; // set the CSS class
+	input.setAttribute("onClick","this.select();")
 	input.value = 0
 	input.addEventListener("focusout", function(event){});
 
 	input.addEventListener ('keydown', function(event) {
 		if (event.which == 13) { //enter key
 			// only if value is different to old vlaue -> implement everything into an update funciton and a fetch function? or update with keyword arg
-			Dough.getEntry(list_el.id).updatePercent(this.value)
-			Dough.getEntry(list_el.id).lastEdited = T_PERCENT
+			Dough.getEntry(list_el.id).updatePercent(this.value, true)
 			// Dough.update(list_el.id, "percent")
 			Dough.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
-		Dough.getEntry(list_el.id).updatePercent(this.value)
-		Dough.getEntry(list_el.id).lastEdited = T_PERCENT
+		Dough.getEntry(list_el.id).updatePercent(this.value, true)
 		Dough.update(list_el.id,"percent")
 		});
 	list_el.appendChild(input); // put it into the DOM
