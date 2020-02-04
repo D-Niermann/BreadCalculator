@@ -23,7 +23,7 @@ function createWindow () {
   
   // Öffnen der DevTools.
   win.webContents.openDevTools()
-
+  win.setMenu(null)
   // Ausgegeben, wenn das Fenster geschlossen wird.
   win.on('closed', () => {
     // Dereferenzieren des Fensterobjekts, normalerweise würden Sie Fenster

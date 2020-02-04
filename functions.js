@@ -8,6 +8,7 @@ const T_PERCENT = "percent"
 class Entry{
 
 	constructor(id, type){
+		console.log("Created id: "+id)
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
@@ -17,6 +18,7 @@ class Entry{
 	}
 
 	getInfo(){
+		console.log("ID: "+this.id + " Type: "+ this.type)
 	}
 
 	updateGrams(value, fetchedFromHTML = false){
@@ -112,13 +114,16 @@ class Dough{
 	}
 
 	removeEntry(id){
+		// console.log("---- OLD ------")
+		// this.showEntries()
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			if(e.id == id){
-				this.entries.splice(i)
-				return 0
+				this.entries.splice(i,1)
 			}
 		}
+		// console.log("---- NEW ------")
+		// this.showEntries()
 	}
 
 
@@ -202,6 +207,7 @@ for (i = 0; i < closebtns.length; i++) {
 function createEntryField(listID, Dough, type){
 	var list = document.getElementById(listID);
 	var list_el = document.createElement('li');
+	list_el.setAttribute("style","transition: 0.5s;")
 	list_el.id = ID;
 	ID += 1;
 	var entry = new Entry(list_el.id, type)
@@ -234,6 +240,7 @@ function createEntryField(listID, Dough, type){
 	list_el.appendChild(input); // put it into the DOM
 	text = document.createElement("a")
 	text.innerHTML = "g  "
+	text.setAttribute("style",'margin-right: 20px;')
 	text.className = "InfoTypeText"
 	list_el.appendChild(text)
 
@@ -241,6 +248,7 @@ function createEntryField(listID, Dough, type){
 	input.type = "text";
 	input.className = "input-text-name"; // set the CSS class
 	input.value = "Name"
+	input.setAttribute("style",'margin-right: 20px;')
 	input.setAttribute("onClick","this.select();")
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
@@ -276,6 +284,7 @@ function createEntryField(listID, Dough, type){
 	text = document.createElement("a")
 	text.className = "InfoTypeText"
 	text.innerHTML = "%      "
+	text.setAttribute("style",'margin-right: 20px;')
 	list_el.appendChild(text)
 	
 	
