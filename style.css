@@ -1,31 +1,34 @@
 :root {
-	--brown_title:rgb(236, 191, 128);
+	--brown_title:rgb(229, 195, 147);
 	--list_bg: rgb(238,186,113,0.2);
 }
 body {
 	background-color: rgb(255, 248, 238);
 }
-/* @font-face {
+@font-face {
     font-family: myFont;
-    src: url(<path relative to css>);
-} */
+    src: url("./fonts/Merienda-Regular.ttf");
+}
 * {
 	box-sizing: border-box;
 	/* font-family: fantasy; */
 	/* font-weight: bold; */
 }
 
-.content-addButtons{
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+
+.InfoTypeText{
+	font-size: 10pt;
+	padding: 5px;
+	color: rgba(73, 55, 12, 0.836);
+	font-weight: bold;
 	-moz-user-select: -moz-none;
    -khtml-user-select: none;
    -webkit-user-select: none;
 }
-.InfoTypeText{
-	font-size: 12pt;
+.InfoTypeText-transparent{
+	font-size: 10pt;
 	padding: 5px;
-	color: rgba(73, 55, 12, 0.723);
+	color: rgba(73, 55, 12, 0.2);
 	font-weight: bold;
 	-moz-user-select: -moz-none;
    -khtml-user-select: none;
@@ -34,9 +37,19 @@ body {
 .addButton{
 	/* background-color: rgba(124, 124, 124, 0.37); */
 	text-align: center; 
-	font-size: 15pt; 
+	font-family: myfont;
+	font-size: 12pt; 
 	cursor: pointer;
 }
+.content-addButtons{
+	display: grid;
+	
+	grid-template-columns: repeat(3, 1fr);
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+}
+
 .coll-input{
 	-moz-appearance: none;
 	-webkit-appearance: none;
@@ -46,7 +59,7 @@ body {
 	text-align: center;
 	font-weight: bold;
 	font-size: 14pt;
-	font-family: monospace;
+	font-family: myfont;
 }
 
 .topbar{
@@ -83,7 +96,7 @@ input[type='checkbox'] {
 .lbl-toggle {
 	display: block;
 	font-weight: bold;
-	font-family: monospace;
+	font-family: myfont;
 	font-size: 1.2rem;
 	text-transform: uppercase;
 	text-align: center;
@@ -102,7 +115,7 @@ input[type='checkbox'] {
 .title-input{
 	border: 1px solid rgb(255, 255, 255, 0);
 	font-size: 30pt;
-	font-family: monospace;
+	font-family: myfont;
 	/* font-weight: bold; */
 	/* text-align: center; */
 	/* -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
@@ -115,24 +128,24 @@ input[type='checkbox'] {
 
 .author-input{
 	border: 1px solid rgb(255, 255, 255, 0);
-	font-size: 15pt;
-	font-family: monospace;
+	font-size: 12pt;
+	font-family: myfont;
 	/* text-align: center; */
 	/* -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
 	box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1); */
 	/* padding: 4px; */
 	background: rgba(255, 255, 255, 0);
 	margin-left: 10px;
-	font-weight: bold;
+	/* font-weight: bold; */
 }
 
 
 .input-text-name, .input-text-gram, .input-text-percent {
-	border: 1px solid rgb(255, 255, 255, 0);
-	font-size: 10pt;
+	border: 0px solid rgb(255, 255, 255, 0);
+	font-size: 11pt;
 	/* text-align: center; */
-	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
-	box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 0, 0, 0.07);
+	box-shadow: inset 0 0 4px rgba(124, 101, 101, 0.07), 0 0 8px rgba(0, 0, 0, 0.07);
 	padding: 4px;
 	background: rgba(255, 255, 255, 0);
 	/* margin-left: 20px;
@@ -146,7 +159,7 @@ input[type='checkbox'] {
 }
 
 .input-text-name {
-	width: 30%;
+	width: 35%;
 	text-align: center;
 }
 
@@ -211,13 +224,17 @@ ul li {
 	/* margin-top: -1px; */
 	/* Prevent double borders */
 	/* background-color: #f6f6f6; */
+	font-family: myfont;
 	transition: 0.5s;
-	padding: 10px;
+	padding: 5px;
 	text-decoration: none;
-	font-size: 18px;
 	color: black;
 	display: block;
 	position: relative;
+}
+
+ul li > *{
+	font-family: myfont;
 }
 
 ul li:hover {

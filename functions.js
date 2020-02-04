@@ -290,7 +290,7 @@ function createEntryField(listID, Dough, type){
 	
 	var textType = document.createElement("a")
 	textType.innerHTML = type
-	textType.className = "InfoTypeText"
+	textType.className = "InfoTypeText-transparent"
 	list_el.appendChild(textType)
 	// var sel = document.createElement("select")
 	// var c = document.createElement("option");
