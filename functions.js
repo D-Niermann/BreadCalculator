@@ -331,7 +331,7 @@ function createEntryField(listID, Dough, type){
 	text = document.createElement("a")
 	text.className = "InfoTypeText"
 	text.innerHTML = "%      "
-	text.setAttribute("style",'margin-right: 20px;')
+	text.setAttribute("style",'margin-right: 40px;')
 	list_el.appendChild(text)
 	
 	

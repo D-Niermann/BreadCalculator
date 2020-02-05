@@ -1,9 +1,9 @@
 :root {
-	--brown_title:rgb(229, 195, 147);
-	--list_bg: rgb(238,186,113,0.2);
+	--brown_title:rgb(238, 211, 174);
+	--list_bg: rgba(238, 186, 113, 0.096);
 }
 body {
-	background-color: rgb(255, 248, 238);
+	background-color: rgb(247, 243, 238);
 }
 @font-face {
     font-family: myFont;
@@ -18,7 +18,7 @@ body {
 
 .InfoTypeText{
 	font-size: 10pt;
-	padding: 5px;
+	padding: 0px;
 	color: rgba(73, 55, 12, 0.836);
 	font-weight: bold;
 	-moz-user-select: -moz-none;
@@ -27,8 +27,8 @@ body {
 }
 .InfoTypeText-transparent{
 	font-size: 10pt;
-	padding: 5px;
-	color: rgba(73, 55, 12, 0.2);
+	padding: 0px;
+	color: rgba(73, 55, 12, 0.308);
 	font-weight: bold;
 	-moz-user-select: -moz-none;
    -khtml-user-select: none;
@@ -43,7 +43,7 @@ body {
 }
 .content-addButtons{
 	display: grid;
-	
+	margin-top: 8px;
 	grid-template-columns: repeat(3, 1fr);
 	-moz-user-select: -moz-none;
    -khtml-user-select: none;
@@ -63,7 +63,17 @@ body {
 }
 
 .topbar{
-	grid-area: top;
+	display: grid;
+	grid-gap: 5%;
+	grid-template-areas:  "left right";
+	/* grid-area: top; */
+}
+
+
+.infoBoxHead{
+	font-size: 18pt;
+	font-family: myfont;
+
 }
 
 .item1 {
@@ -72,6 +82,7 @@ body {
 
 .item2 {
 	grid-area: right;
+	
 }
 
 .main-grid {
@@ -165,6 +176,7 @@ input[type='checkbox'] {
 
 .input-text-percent {
 	width: 10%;
+
 	text-align: right;
 }
 input::-webkit-inner-spin-button {
@@ -224,9 +236,12 @@ ul li {
 	/* margin-top: -1px; */
 	/* Prevent double borders */
 	/* background-color: #f6f6f6; */
+	border-style: none none dotted none ;
+	border-width: 2px;
+	border-color: rgba(231, 176, 99, 0.342);
 	font-family: myfont;
 	transition: 0.5s;
-	padding: 5px;
+	padding-top: 5px;
 	text-decoration: none;
 	color: black;
 	display: block;
@@ -248,7 +263,7 @@ ul li:hover {
 	font-weight: bold;
 	top: 45%;
 	right: 0%;
-	padding: 16px 16px;
+	padding: 10px 10px;
 	margin-right: -10px;
 	transform: translate(0%, -50%);
 	transition: 0.2s;
