@@ -150,7 +150,7 @@ input[type='checkbox'] {
 	background: rgba(255, 255, 255, 0);
 	/* margin-left: 20px;
 	margin-right: 20px; */
-	font-weight: bold;
+	font-weight: 700;
 }
 
 .input-text-gram {
@@ -160,7 +160,7 @@ input[type='checkbox'] {
 
 .input-text-name {
 	width: 35%;
-	text-align: center;
+	text-align: left;
 }
 
 .input-text-percent {
@@ -251,8 +251,11 @@ ul li:hover {
 	padding: 16px 16px;
 	margin-right: -10px;
 	transform: translate(0%, -50%);
+	transition: 0.2s;
+	border-radius: 20%;
 }
 
 .close:hover {
+	transition: 0.2s;
 	background: rgb(0, 0, 0, 0.1);
 }

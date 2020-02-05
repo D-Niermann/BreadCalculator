@@ -1,9 +1,10 @@
 const T_OTHER = "Other"
 const T_FLOUR = "Flour"
-const T_WATER = "Liquid"
+const T_WATER = "Fluid"
 var ID = 0
 const T_GRAM = "gram"
 const T_PERCENT = "percent"
+
 
 class Entry{
 
@@ -86,10 +87,34 @@ class Dough{
 		this.name = name
 		this.id = 0
 		this.entries = []
+		this.isMain = false;
+		this.pre_flour_gram = 0
+		this.pre_fluid_gram = 0
 	}
 
 	addEntry(Entry){
+		console.log("adding entry: "+Entry.name)
 		this.entries.push(Entry)
+	}
+
+	addDough(dough){
+		const entries = dough.getAllEntries()
+		
+		for (let i = 0; i < entries.length; i++) {
+			const e = entries[i]
+			if(e.isFlour()){
+				this.pre_flour_gram += e.gram
+			}
+			if(e.isWater()){
+				this.pre_fluid_gram += e.gram
+			}
+			// var entry = new Entry(ID, e.type)
+			// ID += 1 
+			// entry.gram = e.gram
+			// entry.percent = e.percent
+
+			// this.addEntry(entry)
+		}
 	}
 
 	showEntries(){
@@ -97,6 +122,10 @@ class Dough{
 			const e = this.entries[i];
 			e.getInfo()
 		}
+	}
+
+	makeMain(){
+		this.isMain = true
 	}
 
 	// genID(){
@@ -111,6 +140,10 @@ class Dough{
 				return e
 			}
 		}
+	}
+
+	getAllEntries(){
+		return this.entries;
 	}
 
 	removeEntry(id){
@@ -128,11 +161,20 @@ class Dough{
 
 
 	update(id){
+		// fetch all entries from pre doughs
+		if (this.isMain){
+			this.pre_flour_gram = 0
+			this.pre_fluid_gram = 0
+			this.addDough(Pre1)
+			this.addDough(Pre2)
+			console.log("my grams:" + this.pre_fluid_gram)
+		}
+
 		for (let i = 0; i < 10; i++) {
 			
 		
 			var flour = {}
-			var flour_total = 0
+			var flour_total = this.pre_flour_gram
 			var fluids = {}
 			var fluid_total = 0
 
@@ -185,8 +227,8 @@ class Dough{
 
 var Pre1 = new Dough("Vorteig 1");
 var Pre2 = new Dough("Vorteig 2");
-
-
+var Main = new Dough("Main");
+Main.makeMain()
 
 
 
@@ -232,15 +274,17 @@ function createEntryField(listID, Dough, type){
 		if (event.which == 13) { //enter key
 			Dough.getEntry(list_el.id).updateGrams(this.value, true)
 			Dough.update(list_el.id)
+			Main.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updateGrams(this.value, true)
 		Dough.update(list_el.id)
+		Main.update(list_el.id)
 		});
 	list_el.appendChild(input); // put it into the DOM
 	text = document.createElement("a")
-	text.innerHTML = "g  "
-	text.setAttribute("style",'margin-right: 20px;')
+	text.innerHTML = " g "
+	text.setAttribute("style",'margin-right: 10px;')
 	text.className = "InfoTypeText"
 	list_el.appendChild(text)
 
@@ -258,6 +302,7 @@ function createEntryField(listID, Dough, type){
 	input.addEventListener ('focusout', function (event) {
 			Dough.getEntry(list_el.id).updateName(this.value, true)
 			Dough.update(list_el.id)
+			
 		});
 	list_el.appendChild(input); // put it into the DOM
 
@@ -275,10 +320,12 @@ function createEntryField(listID, Dough, type){
 			Dough.getEntry(list_el.id).updatePercent(this.value, true)
 			// Dough.update(list_el.id, "percent")
 			Dough.update(list_el.id)
+			Main.update(list_el.id)
 		} });
 	input.addEventListener ('focusout', function (event) {
 		Dough.getEntry(list_el.id).updatePercent(this.value, true)
 		Dough.update(list_el.id,"percent")
+		Main.update(list_el.id)
 		});
 	list_el.appendChild(input); // put it into the DOM
 	text = document.createElement("a")
@@ -292,27 +339,14 @@ function createEntryField(listID, Dough, type){
 	textType.innerHTML = type
 	textType.className = "InfoTypeText-transparent"
 	list_el.appendChild(textType)
-	// var sel = document.createElement("select")
-	// var c = document.createElement("option");
-	// c.text = T_FLOUR;
-	// sel.options.add(c, 1);
-	// var c = document.createElement("option");
-	// c.text = T_WATER;
-	// sel.options.add(c, 2);
-	// var c = document.createElement("option");
-	// c.text = T_OTHER;
-	// sel.options.add(c, 2);
-	// sel.addEventListener("change", function(){
-	// 	Pre1.getEntry(list_el.id).updateType(this.value)
-	// 	Pre1.update(list_el.id)
-	// })
-	// list_el.appendChild(sel)
+
 
 
 
 	list_el.appendChild(close)
 	list.appendChild(list_el);
-	Pre1.update(list_el.id)
+	Dough.update(list_el.id)	
+	Main.update(list_el.id)
 
 }
 // for i in getElementsbyName("addButton"){
@@ -325,6 +359,9 @@ document.getElementById("addPre13").addEventListener("click", function(){createE
 document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR)});
 document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER)});
 document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER)});
+document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, T_FLOUR)});
+document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, T_WATER)});
+document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
 // key down event with enter key
