@@ -9,7 +9,7 @@ const T_PERCENT = "percent"
 class Entry{
 
 	constructor(id, type){
-		console.log("Created id: "+id)
+		// console.log("Created id: "+id)
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
@@ -23,7 +23,7 @@ class Entry{
 	}
 
 	updateGrams(value, fetchedFromHTML = false){
-		if (this.gram != value){
+		if (Math.round(this.gram) != Math.round(value)){
 			this.gram = parseFloat(value)
 			if (isNaN(this.gram)){
 				this.gram = 0
@@ -44,7 +44,7 @@ class Entry{
 		this.name = value
 	}
 	updatePercent(value, fetchedFromHTML = false){
-		if (this.percent != value){
+		if (Math.round(this.percent) != Math.round(value)){
 			this.percent = parseFloat(value)
 			if (isNaN(this.percent)){
 				this.percent = 0
@@ -167,21 +167,22 @@ class Dough{
 			this.pre_fluid_gram = 0
 			this.addDough(Pre1)
 			this.addDough(Pre2)
-			console.log("my grams:" + this.pre_fluid_gram)
 		}
 
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 1; i++) {
 			
 		
 			var flour = {}
 			var flour_total = this.pre_flour_gram
 			var fluids = {}
 			var fluid_total = 0
+			var percent_total = 0
 
 			// sum all weights
 			for (let i = 0; i < this.entries.length; i++) {
 				const e = this.entries[i];
 				if (e.isFlour()){
+					percent_total += e.percent
 					flour[e.id] = e.gram;
 					flour_total += e.gram;
 				}
@@ -190,9 +191,10 @@ class Dough{
 					fluid_total += e.gram;
 				}
 			}
+			// console.log(this.name+" percent: "+percent_total)
 
 			for (var key in flour) {
-				var percent = this.getEntry(key).gram/flour_total*100
+				var percent = (this.getEntry(key).gram/flour_total)*100
 				var grams = this.getEntry(key).percent*flour_total/100
 				var le = this.getEntry(key).lastEdited
 				if (le == T_GRAM){
@@ -203,7 +205,7 @@ class Dough{
 				}
 			}
 			for (var key in fluids) {
-				var percent = this.getEntry(key).gram/flour_total*100
+				var percent = (this.getEntry(key).gram/flour_total)*100
 				var grams = this.getEntry(key).percent*flour_total/100
 				var le = this.getEntry(key).lastEdited
 				if (le == T_GRAM){
@@ -318,7 +320,6 @@ function createEntryField(listID, Dough, type){
 		if (event.which == 13) { //enter key
 			// only if value is different to old vlaue -> implement everything into an update funciton and a fetch function? or update with keyword arg
 			Dough.getEntry(list_el.id).updatePercent(this.value, true)
-			// Dough.update(list_el.id, "percent")
 			Dough.update(list_el.id)
 			Main.update(list_el.id)
 		} });
@@ -341,18 +342,18 @@ function createEntryField(listID, Dough, type){
 	list_el.appendChild(textType)
 
 
-
-
 	list_el.appendChild(close)
 	list.appendChild(list_el);
+
 	Dough.update(list_el.id)	
+	
+
+	
+	
 	Main.update(list_el.id)
 
 }
-// for i in getElementsbyName("addButton"){
-//  if add button.class == "addWater" -> field type = Water
-// add the list el
-// }
+
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR)});
 document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER)});
 document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER)});
@@ -364,11 +365,53 @@ document.getElementById("addPreMain2").addEventListener("click", function(){crea
 document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
-// key down event with enter key
-// document.getElementById('form').addEventListener ('keydown', function (event) {
-//   if (event.which == 13) { //enter key
-//      event.preventDefault();
-//      let field = event.target;
-    
-//   }
-// });
+
+var list = document.getElementById("list3");
+var list_el_pre1 = document.createElement('li');
+var pre1_input = document.createElement("input");
+pre1_input.type = "text";
+pre1_input.className = "predoughText"; // set the CSS class
+pre1_input.value = "Predough 1"
+// pre1_input.setAttribute("style",'text-align: center;')
+var close = document.createElement("span")
+close.className = "close"
+close.innerHTML = "-"
+close.addEventListener("click", function() {
+	Main.update()
+	list_el_pre1.remove()
+});
+list_el_pre1.appendChild(pre1_input);
+list_el_pre1.appendChild(close)
+list.appendChild(list_el_pre1);
+
+var list = document.getElementById("list3");
+var list_el_pre2 = document.createElement('li');
+var pre2_input = document.createElement("input");
+pre2_input.type = "text";
+pre2_input.className = "predoughText"; // set the CSS class
+pre2_input.value = "Predough 2"
+// pre2_input.setAttribute("style",'text-align: center;')
+var close = document.createElement("span")
+close.className = "close"
+close.innerHTML = "-"
+close.addEventListener("click", function() {
+	Main.update()
+	list_el_pre2.remove()
+});
+list_el_pre2.appendChild(pre2_input);
+list_el_pre2.appendChild(close)
+list.appendChild(list_el_pre2);
+
+var pre1_title = document.getElementById("Pre1_title")
+pre1_title.addEventListener("focusout", function() {
+	pre1_input.value = this.value
+});
+pre1_title.addEventListener ('keyup', function() {
+	pre1_input.value = this.value });
+
+var pre2_title = document.getElementById("Pre2_title")
+pre2_title.addEventListener("focusout", function() {
+	pre2_input.value = this.value
+});
+pre2_title.addEventListener ('keyup', function() {
+	pre2_input.value = this.value });
