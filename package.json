@@ -1,6 +1,6 @@
 {
   "name": "BreadCalculator",
-  "version": "0.6",
+  "version": "1.0.0",
   "description": "Calculates Dough weights and percentages.",
   "main": "main.js",
   "scripts": {
