@@ -1,12 +1,16 @@
 {
-  "name": "electronapp",
-  "version": "1.0.0",
-  "description": "BreadCalculator",
+  "name": "BreadCalculator",
+  "version": "0.6",
+  "description": "Calculates Dough weights and percentages.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager ."
   },
   "author": "Dario Niermann",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "electron-packager": "^14.2.0"
+  }
 }
