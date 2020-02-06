@@ -4,7 +4,7 @@ This program allows you to create your own bread recipes, calculating all percen
 
 ## Install
 
-No installation needed, just download the 'BreadCalculator vX.zip', unpack it and start the .exe.
+No installation needed, just download the 'BreadCalculator.zip', unpack it and start the .exe.
 
 
 
