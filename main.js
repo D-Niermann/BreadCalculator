@@ -22,7 +22,7 @@ function createWindow () {
 //   var Rec = new Recipe();
   
   // Öffnen der DevTools.
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
 
   win.setMenu(null)

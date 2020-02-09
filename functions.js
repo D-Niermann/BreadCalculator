@@ -90,6 +90,8 @@ class Dough{
 		this.isMain = false;
 		this.pre_flour_gram = 0
 		this.pre_fluid_gram = 0
+		this.flour_total = 0
+		this.fluid_total = 0
 	}
 
 	addEntry(Entry){
@@ -126,6 +128,14 @@ class Dough{
 
 	makeMain(){
 		this.isMain = true
+		this.weight_field = document.getElementById("total_weight")
+		this.weight_field.value = "0"
+		this.flour_field = document.getElementById("total_flour")
+		this.flour_field.value = "0"		
+		this.fluid_field = document.getElementById("total_fluid")
+		this.fluid_field.value = "0"
+		this.percent_field = document.getElementById("total_percent")
+		this.percent_field.value = "0"
 	}
 
 	// genID(){
@@ -173,9 +183,9 @@ class Dough{
 			
 		
 			var flour = {}
-			var flour_total = this.pre_flour_gram
+			this.flour_total = this.pre_flour_gram
 			var fluids = {}
-			var fluid_total = 0
+			this.fluid_total = this.pre_fluid_gram
 			var percent_total = 0
 
 			// sum all weights
@@ -184,18 +194,18 @@ class Dough{
 				if (e.isFlour()){
 					percent_total += e.percent
 					flour[e.id] = e.gram;
-					flour_total += e.gram;
+					this.flour_total += e.gram;
 				}
 				else{
 					fluids[e.id] = e.gram;
-					fluid_total += e.gram;
+					this.fluid_total += e.gram;
 				}
 			}
 			// console.log(this.name+" percent: "+percent_total)
 
 			for (var key in flour) {
-				var percent = (this.getEntry(key).gram/flour_total)*100
-				var grams = this.getEntry(key).percent*flour_total/100
+				var percent = (this.getEntry(key).gram/this.flour_total)*100
+				var grams = this.getEntry(key).percent*this.flour_total/100
 				var le = this.getEntry(key).lastEdited
 				if (le == T_GRAM){
 					this.getEntry(key).updatePercent(percent)
@@ -205,8 +215,8 @@ class Dough{
 				}
 			}
 			for (var key in fluids) {
-				var percent = (this.getEntry(key).gram/flour_total)*100
-				var grams = this.getEntry(key).percent*flour_total/100
+				var percent = (this.getEntry(key).gram/this.flour_total)*100
+				var grams = this.getEntry(key).percent*this.flour_total/100
 				var le = this.getEntry(key).lastEdited
 				if (le == T_GRAM){
 					this.getEntry(key).updatePercent(percent)
@@ -217,7 +227,12 @@ class Dough{
 			}
 		}
 			
-
+		if (this.isMain){
+			this.weight_field.value = this.flour_total + this.fluid_total
+			this.flour_field.value = this.flour_total
+			this.fluid_field.value = this.fluid_total
+			this.percent_field.value = 100+Math.round((this.fluid_total)/(this.flour_total) * 100)
+		}
 			
 	}	
 
@@ -235,15 +250,7 @@ Main.makeMain()
 
 
 
-var closebtns = document.getElementsByClassName("close");
-var i;
 
-/* Loop through the elements, and hide the parent, when clicked on */
-for (i = 0; i < closebtns.length; i++) {
-  closebtns[i].addEventListener("click", function() {
-  this.parentElement.style.display = 'none';
-});
-}
 
 ////////////////////////////////////////////
 // ZUTAT SPALTE
@@ -264,6 +271,7 @@ function createEntryField(listID, Dough, type){
 	close.addEventListener("click", function() {
 		Dough.removeEntry(list_el.id)
 		Dough.update()
+		Main.update()
 		list_el.remove()
 	});
 
@@ -351,7 +359,6 @@ function createEntryField(listID, Dough, type){
 	
 	
 	Main.update(list_el.id)
-
 }
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR)});
@@ -365,7 +372,7 @@ document.getElementById("addPreMain2").addEventListener("click", function(){crea
 document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
-
+//// Predough 1 field
 var list = document.getElementById("list3");
 var list_el_pre1 = document.createElement('li');
 var pre1_input = document.createElement("input");
@@ -384,6 +391,8 @@ list_el_pre1.appendChild(pre1_input);
 list_el_pre1.appendChild(close)
 list.appendChild(list_el_pre1);
 
+
+//// Predough 2 field
 var list = document.getElementById("list3");
 var list_el_pre2 = document.createElement('li');
 var pre2_input = document.createElement("input");
@@ -402,13 +411,16 @@ list_el_pre2.appendChild(pre2_input);
 list_el_pre2.appendChild(close)
 list.appendChild(list_el_pre2);
 
+
+// title updates for above predough fields
+// update entry pre1 in main dough
 var pre1_title = document.getElementById("Pre1_title")
 pre1_title.addEventListener("focusout", function() {
 	pre1_input.value = this.value
 });
 pre1_title.addEventListener ('keyup', function() {
 	pre1_input.value = this.value });
-
+// update entry pre2 in main dough
 var pre2_title = document.getElementById("Pre2_title")
 pre2_title.addEventListener("focusout", function() {
 	pre2_input.value = this.value
