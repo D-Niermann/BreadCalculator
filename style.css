@@ -61,6 +61,7 @@ body {
 .predoughText{
 	-moz-appearance: none;
 	-webkit-appearance: none;
+    user-select: none;
 	appearance: none;
 	border: none;
 	background: rgba(238, 186, 113, 0.0);

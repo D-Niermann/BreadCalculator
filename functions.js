@@ -8,7 +8,7 @@ const T_PERCENT = "percent"
 
 class Entry{
 
-	constructor(id, type){
+	constructor(id, type, listEl){
 		// console.log("Created id: "+id)
 		this.id = id
 		this.gram = 0
@@ -18,6 +18,9 @@ class Entry{
 		this.type = type
 	}
 
+	removeListEl(){
+		document.getElementById(this.id).remove();	
+	}
 	getInfo(){
 		console.log("ID: "+this.id + " Type: "+ this.type)
 	}
@@ -162,11 +165,21 @@ class Dough{
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			if(e.id == id){
+				e.removeListEl()
 				this.entries.splice(i,1)
 			}
 		}
 		// console.log("---- NEW ------")
 		// this.showEntries()
+	}
+
+	removeAll(){
+		for (let i = 0; i < this.entries.length; i++) {
+			const e = this.entries[i];
+			e.removeListEl()
+		}
+		this.entries = []
+		this.update()
 	}
 
 
@@ -272,7 +285,6 @@ function createEntryField(listID, Dough, type){
 		Dough.removeEntry(list_el.id)
 		Dough.update()
 		Main.update()
-		list_el.remove()
 	});
 
 	var input = document.createElement("input");
@@ -375,15 +387,16 @@ document.getElementById("addPreMain3").addEventListener("click", function(){crea
 //// Predough 1 field
 var list = document.getElementById("list3");
 var list_el_pre1 = document.createElement('li');
-var pre1_input = document.createElement("input");
-pre1_input.type = "text";
+var pre1_input = document.createElement("div");
+// pre1_input.type = "text";
 pre1_input.className = "predoughText"; // set the CSS class
-pre1_input.value = "Predough 1"
+pre1_input.innerHTML = "Predough 1"
 // pre1_input.setAttribute("style",'text-align: center;')
 var close = document.createElement("span")
 close.className = "close"
 close.innerHTML = "-"
 close.addEventListener("click", function() {
+	Pre1.removeAll()
 	Main.update()
 	list_el_pre1.remove()
 });
@@ -395,15 +408,15 @@ list.appendChild(list_el_pre1);
 //// Predough 2 field
 var list = document.getElementById("list3");
 var list_el_pre2 = document.createElement('li');
-var pre2_input = document.createElement("input");
-pre2_input.type = "text";
+var pre2_input = document.createElement("div");
 pre2_input.className = "predoughText"; // set the CSS class
-pre2_input.value = "Predough 2"
+pre2_input.innerHTML = "Predough 2"
 // pre2_input.setAttribute("style",'text-align: center;')
 var close = document.createElement("span")
 close.className = "close"
 close.innerHTML = "-"
 close.addEventListener("click", function() {
+	Pre2.removeAll()
 	Main.update()
 	list_el_pre2.remove()
 });
@@ -416,14 +429,14 @@ list.appendChild(list_el_pre2);
 // update entry pre1 in main dough
 var pre1_title = document.getElementById("Pre1_title")
 pre1_title.addEventListener("focusout", function() {
-	pre1_input.value = this.value
+	pre1_input.innerHTML = this.value
 });
 pre1_title.addEventListener ('keyup', function() {
-	pre1_input.value = this.value });
+	pre1_input.innerHTML = this.value });
 // update entry pre2 in main dough
 var pre2_title = document.getElementById("Pre2_title")
 pre2_title.addEventListener("focusout", function() {
-	pre2_input.value = this.value
+	pre2_input.innerHTML = this.value
 });
 pre2_title.addEventListener ('keyup', function() {
-	pre2_input.value = this.value });
+	pre2_input.innerHTML = this.value });
