@@ -192,7 +192,7 @@ class Dough{
 			this.addDough(Pre2)
 		}
 
-		for (let i = 0; i < 1; i++) {
+		for (let i = 0; i < 7; i++) { // this must be done multiple times if some percentages are wrong (dont add to 100%)
 			
 		
 			var flour = {}
@@ -209,7 +209,7 @@ class Dough{
 					flour[e.id] = e.gram;
 					this.flour_total += e.gram;
 				}
-				else{
+				if(e.isWater()){ // could be if(e.isFluid()) ??!
 					fluids[e.id] = e.gram;
 					this.fluid_total += e.gram;
 				}
@@ -241,9 +241,9 @@ class Dough{
 		}
 			
 		if (this.isMain){
-			this.weight_field.value = this.flour_total + this.fluid_total
-			this.flour_field.value = this.flour_total
-			this.fluid_field.value = this.fluid_total
+			this.weight_field.value = Math.round(this.flour_total + this.fluid_total)
+			this.flour_field.value = Math.round(this.flour_total)
+			this.fluid_field.value = Math.round(this.fluid_total)
 			this.percent_field.value = 100+Math.round((this.fluid_total)/(this.flour_total) * 100)
 		}
 			

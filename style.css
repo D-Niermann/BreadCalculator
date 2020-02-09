@@ -309,9 +309,7 @@ ul li > *{
 	font-family: myfont;
 }
 
-ul li:hover {
-	/* background-color: #eee; */
-}
+
 
 .close {
 	cursor: pointer;
