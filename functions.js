@@ -471,13 +471,13 @@ document.getElementById("addPreMain2").addEventListener("click", function(){crea
 document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
-//// Predough 1 field
+//// Pre-ferment 1 field
 var list = document.getElementById("list3");
 var list_el_pre1 = document.createElement('li');
 var pre1_input = document.createElement("div");
 // pre1_input.type = "text";
-pre1_input.className = "predoughText"; // set the CSS class
-pre1_input.innerHTML = "Predough 1"
+pre1_input.className = "Pre-fermentText"; // set the CSS class
+pre1_input.innerHTML = "Pre-ferment 1"
 // pre1_input.setAttribute("style",'text-align: center;')
 var close = document.createElement("span")
 close.className = "close"
@@ -485,7 +485,7 @@ close.innerHTML = "-"
 close.addEventListener("click", function() {
 	Pre1.removeAll()
 	Main.update()
-	document.getElementById("Pre1_title").value = "Predough 1"
+	document.getElementById("Pre1_title").value = "Pre-ferment 1"
 	list_el_pre1.remove()
 });
 list_el_pre1.appendChild(pre1_input);
@@ -493,12 +493,12 @@ list_el_pre1.appendChild(close)
 list.appendChild(list_el_pre1);
 
 
-//// Predough 2 field
+//// Pre-ferment 2 field
 var list = document.getElementById("list3");
 var list_el_pre2 = document.createElement('li');
 var pre2_input = document.createElement("div");
-pre2_input.className = "predoughText"; // set the CSS class
-pre2_input.innerHTML = "Predough 2"
+pre2_input.className = "Pre-fermentText"; // set the CSS class
+pre2_input.innerHTML = "Pre-ferment 2"
 // pre2_input.setAttribute("style",'text-align: center;')
 var close = document.createElement("span")
 close.className = "close"
@@ -506,7 +506,7 @@ close.innerHTML = "-"
 close.addEventListener("click", function() {
 	Pre2.removeAll()
 	Main.update()
-	document.getElementById("Pre1_title").value = "Predough 2"
+	document.getElementById("Pre1_title").value = "Pre-ferment 2"
 	list_el_pre2.remove()
 });
 list_el_pre2.appendChild(pre2_input);
@@ -514,7 +514,7 @@ list_el_pre2.appendChild(close)
 list.appendChild(list_el_pre2);
 
 
-// title updates for above predough fields
+// title updates for above Pre-ferment fields
 // update entry pre1 in main dough
 var pre1_title = document.getElementById("Pre1_title")
 pre1_title.addEventListener("focusout", function() {
