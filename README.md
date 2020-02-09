@@ -11,4 +11,4 @@ Just follow this link: https://github.com/D-Niermann/BreadCalculator/blob/master
 And press the download button on the right side.
 
 
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/D-Niermann/BreadCalculator/blob/master/Images/TutImg.png)
