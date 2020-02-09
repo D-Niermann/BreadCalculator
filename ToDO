@@ -1,5 +1,5 @@
 - add predough names back in after they got removed when user presses some predough add button
+    - better: make the predoughs as standard list elments, draggable, with name and total weight, and percent of hydration
+    
 - add third predough
 - add textfield below author
--remove clickable in infos
--löschen in main löscht auch name predough

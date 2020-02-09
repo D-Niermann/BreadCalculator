@@ -355,7 +355,7 @@ function createEntryField(listID, Dough, type){
 	img.className = "unselectable"
 	img.draggable = false
 	img.width="15" 
-	img.style = "margin-right: 20px;"
+	img.style = "margin-right: 5px;"
 	img.height="15"
 	
 	list_el.appendChild(img)
@@ -485,6 +485,7 @@ close.innerHTML = "-"
 close.addEventListener("click", function() {
 	Pre1.removeAll()
 	Main.update()
+	document.getElementById("Pre1_title").value = "Predough 1"
 	list_el_pre1.remove()
 });
 list_el_pre1.appendChild(pre1_input);
@@ -505,6 +506,7 @@ close.innerHTML = "-"
 close.addEventListener("click", function() {
 	Pre2.removeAll()
 	Main.update()
+	document.getElementById("Pre1_title").value = "Predough 2"
 	list_el_pre2.remove()
 });
 list_el_pre2.appendChild(pre2_input);
