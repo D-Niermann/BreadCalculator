@@ -21,7 +21,7 @@ I want something that makes it easy for me to create my own recipes without doin
 ### Usage
 The Calculator is very easy to use. You add elements (ingredients) to the respective dough list. The percentages of each ingerdient are calculated based on the total flour weight. You can either enter the weight in gram or the desired percentage (e.g. for salt or water) where you want always a fixed percentage.
 
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/D-Niermann/BreadCalculator/blob/master/Images/TutImg.png)
 
 
 ## Known Issues
