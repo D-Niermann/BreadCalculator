@@ -93,6 +93,7 @@ class Dough{
 		this.isMain = false;
 		this.pre_flour_gram = 0
 		this.pre_fluid_gram = 0
+		this.pre_other_gram = 0
 		this.flour_total = 0
 		this.fluid_total = 0
 	}
@@ -112,6 +113,9 @@ class Dough{
 			}
 			if(e.isWater()){
 				this.pre_fluid_gram += e.gram
+			}
+			else{
+				this.pre_other_gram += e.gram
 			}
 			// var entry = new Entry(ID, e.type)
 			// ID += 1 
@@ -199,6 +203,8 @@ class Dough{
 			this.flour_total = this.pre_flour_gram
 			var fluids = {}
 			this.fluid_total = this.pre_fluid_gram
+			var others = {}
+			this.other_total = this.pre_other_gram
 			var percent_total = 0
 
 			// sum all weights
@@ -209,33 +215,51 @@ class Dough{
 					flour[e.id] = e.gram;
 					this.flour_total += e.gram;
 				}
-				if(e.isWater()){ // could be if(e.isFluid()) ??!
+				if(e.isWater()){
 					fluids[e.id] = e.gram;
 					this.fluid_total += e.gram;
+				}
+				else{
+					others[e.id] = e.gram
+					this.other_total += e.gram
 				}
 			}
 			// console.log(this.name+" percent: "+percent_total)
 
 			for (var key in flour) {
-				var percent = (this.getEntry(key).gram/this.flour_total)*100
-				var grams = this.getEntry(key).percent*this.flour_total/100
-				var le = this.getEntry(key).lastEdited
+				var e = this.getEntry(key)
+				var percent = (e.gram/this.flour_total)*100
+				var grams = e.percent*this.flour_total/100
+				var le = e.lastEdited
 				if (le == T_GRAM){
-					this.getEntry(key).updatePercent(percent)
+					e.updatePercent(percent)
 				}
 				if (le == T_PERCENT){
-					this.getEntry(key).updateGrams(grams)
+					e.updateGrams(grams)
 				}
 			}
 			for (var key in fluids) {
-				var percent = (this.getEntry(key).gram/this.flour_total)*100
-				var grams = this.getEntry(key).percent*this.flour_total/100
-				var le = this.getEntry(key).lastEdited
+				var e = this.getEntry(key)
+				var percent = (e.gram/this.flour_total)*100
+				var grams = e.percent*this.flour_total/100
+				var le = e.lastEdited
 				if (le == T_GRAM){
-					this.getEntry(key).updatePercent(percent)
+					e.updatePercent(percent)
 				}
 				if (le == T_PERCENT){
-					this.getEntry(key).updateGrams(grams)
+					e.updateGrams(grams)
+				}
+			}
+			for (var key in others) {
+				var e = this.getEntry(key)
+				var percent = (e.gram/this.flour_total)*100
+				var grams = e.percent*this.flour_total/100
+				var le = e.lastEdited
+				if (le == T_GRAM){
+					e.updatePercent(percent)
+				}
+				if (le == T_PERCENT){
+					e.updateGrams(grams)
 				}
 			}
 		}
