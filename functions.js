@@ -286,15 +286,9 @@ Main.makeMain()
 
 
 function dragStart(event) {
-	// console.log(this.childNodes[0].value)
 	dragSrcEl = this;
-	// event.dataTransfer.effectAllowed = 'move';
-	// event.dataTransfer.setData('text/html', this.innerHTML);
   };
   
-//   function dragEnter(event) {
-// 	this.classList.add('over');
-//   }
   
   function dragLeave(event) {
 	event.stopPropagation();
@@ -304,7 +298,12 @@ function dragStart(event) {
   
   function dragOver(event) {
 	event.preventDefault();
-	return false;
+	if (this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI") {
+	}
+	else{
+		event.dataTransfer.dropEffect = "none"
+		return false;
+	}
   }
   
   function dragDrop(event) {
@@ -312,29 +311,31 @@ function dragStart(event) {
 	var source_name;
 	var source_percent;
 	var source_id;
-	if (this.parentElement.id==dragSrcEl.parentElement.id && dragSrcEl != this) {
+	if (this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI") {
 		// ursprung
-		console.log(dragSrcEl.childNodes[0].value)
+		console.log("source: " + dragSrcEl.childNodes[1].value)
 		// target
-		console.log(this.childNodes[0].value)
+		console.log("target: "+ this.childNodes[1].value)
 
 		// save values from source element
-		source_gram = dragSrcEl.childNodes[0].value
-		source_name = dragSrcEl.childNodes[2].value
-		source_percent = dragSrcEl.childNodes[3].value
+		source_gram = dragSrcEl.childNodes[1].value
+		source_name = dragSrcEl.childNodes[3].value
+		source_percent = dragSrcEl.childNodes[4].value
 		source_id = dragSrcEl.id
 		// change source element
-		dragSrcEl.childNodes[0].value = this.childNodes[0].value
-		dragSrcEl.childNodes[2].value = this.childNodes[2].value
+		dragSrcEl.childNodes[1].value = this.childNodes[1].value
 		dragSrcEl.childNodes[3].value = this.childNodes[3].value
+		dragSrcEl.childNodes[4].value = this.childNodes[4].value
 		dragSrcEl.id = this.id
 		// change other element
-		this.childNodes[0].value = source_gram
-		this.childNodes[2].value = source_name
-		this.childNodes[3].value = source_percent
+		this.childNodes[1].value = source_gram
+		this.childNodes[3].value = source_name
+		this.childNodes[4].value = source_percent
 		this.id = source_id
 	}
-	return false;
+	else{
+		return false;
+	}
   }
   
 ////////////////////////////////////////////
@@ -343,16 +344,25 @@ function dragStart(event) {
 function createEntryField(listID, Dough, type){
 	var list = document.getElementById(listID);
 	var list_el = document.createElement('li');
-	list_el.draggable = true
 	list_el.setAttribute("style","transition: 0.5s;")
 	list_el.id = ID;
 	ID += 1;
 	var entry = new Entry(list_el.id, type)
 	Dough.addEntry(entry)
-	list_el.addEventListener('dragstart', dragStart, false);
-	list_el.addEventListener('dragover', dragOver, false);
-	list_el.addEventListener('dragleave', dragLeave, false);
-	list_el.addEventListener('drop', dragDrop, false);
+	var img = document.createElement("img")
+	img.src = "./dragButton.png"
+	img.alt=""
+	img.className = "unselectable"
+	img.draggable = false
+	img.width="15" 
+	img.style = "margin-right: 20px;"
+	img.height="15"
+	
+	list_el.appendChild(img)
+	list_el.addEventListener('dragstart', dragStart);
+	list_el.addEventListener('dragover', dragOver);
+	list_el.addEventListener('dragleave', dragLeave);
+	list_el.addEventListener('drop', dragDrop);
 
 	var close = document.createElement("span")
 	close.className = "close"
@@ -439,6 +449,7 @@ function createEntryField(listID, Dough, type){
 
 
 	list_el.appendChild(close)
+	list_el.draggable = true
 	list.appendChild(list_el);
 
 	Dough.update(list_el.id)	
