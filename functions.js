@@ -506,7 +506,7 @@ close.innerHTML = "-"
 close.addEventListener("click", function() {
 	Pre2.removeAll()
 	Main.update()
-	document.getElementById("Pre1_title").value = "Pre-ferment 2"
+	document.getElementById("Pre2_title").value = "Pre-ferment 2"
 	list_el_pre2.remove()
 });
 list_el_pre2.appendChild(pre2_input);
