@@ -228,39 +228,36 @@ class Dough{
 
 			for (var key in flour) {
 				var e = this.getEntry(key)
+				// calculate percentage and gram of entry
 				var percent = (e.gram/this.flour_total)*100
 				var grams = e.percent*this.flour_total/100
-				var le = e.lastEdited
-				if (le == T_GRAM){
-					e.updatePercent(percent)
-				}
-				if (le == T_PERCENT){
-					e.updateGrams(grams)
-				}
+				// set entry values (also into html elements)
+				if (e.lastEdited == T_GRAM){
+					e.updatePercent(percent)}
+				if (e.lastEdited == T_PERCENT){
+					e.updateGrams(grams)}
 			}
 			for (var key in fluids) {
 				var e = this.getEntry(key)
+				// calculate percentage and gram of entry
 				var percent = (e.gram/this.flour_total)*100
 				var grams = e.percent*this.flour_total/100
-				var le = e.lastEdited
-				if (le == T_GRAM){
-					e.updatePercent(percent)
-				}
-				if (le == T_PERCENT){
-					e.updateGrams(grams)
-				}
+				// set entry values (also into html elements)
+				if (e.lastEdited == T_GRAM){
+					e.updatePercent(percent)}
+				if (e.lastEdited == T_PERCENT){
+					e.updateGrams(grams)}
 			}
 			for (var key in others) {
 				var e = this.getEntry(key)
+				// calculate percentage and gram of entry
 				var percent = (e.gram/this.flour_total)*100
 				var grams = e.percent*this.flour_total/100
-				var le = e.lastEdited
-				if (le == T_GRAM){
-					e.updatePercent(percent)
-				}
-				if (le == T_PERCENT){
-					e.updateGrams(grams)
-				}
+				// set entry values (also into html elements)
+				if (e.lastEdited == T_GRAM){
+					e.updatePercent(percent)}
+				if (e.lastEdited == T_PERCENT){
+					e.updateGrams(grams)}
 			}
 		}
 			
@@ -288,19 +285,74 @@ Main.makeMain()
 
 
 
+function dragStart(event) {
+	// console.log(this.childNodes[0].value)
+	dragSrcEl = this;
+	// event.dataTransfer.effectAllowed = 'move';
+	// event.dataTransfer.setData('text/html', this.innerHTML);
+  };
+  
+//   function dragEnter(event) {
+// 	this.classList.add('over');
+//   }
+  
+  function dragLeave(event) {
+	event.stopPropagation();
+	event.preventDefault();
+	event.dataTransfer.dropEffect = "none"
+  }
+  
+  function dragOver(event) {
+	event.preventDefault();
+	return false;
+  }
+  
+  function dragDrop(event) {
+	var source_gram;
+	var source_name;
+	var source_percent;
+	var source_id;
+	if (this.parentElement.id==dragSrcEl.parentElement.id && dragSrcEl != this) {
+		// ursprung
+		console.log(dragSrcEl.childNodes[0].value)
+		// target
+		console.log(this.childNodes[0].value)
 
+		// save values from source element
+		source_gram = dragSrcEl.childNodes[0].value
+		source_name = dragSrcEl.childNodes[2].value
+		source_percent = dragSrcEl.childNodes[3].value
+		source_id = dragSrcEl.id
+		// change source element
+		dragSrcEl.childNodes[0].value = this.childNodes[0].value
+		dragSrcEl.childNodes[2].value = this.childNodes[2].value
+		dragSrcEl.childNodes[3].value = this.childNodes[3].value
+		dragSrcEl.id = this.id
+		// change other element
+		this.childNodes[0].value = source_gram
+		this.childNodes[2].value = source_name
+		this.childNodes[3].value = source_percent
+		this.id = source_id
+	}
+	return false;
+  }
+  
 ////////////////////////////////////////////
 // ZUTAT SPALTE
 ////////////////////////////////////////////
 function createEntryField(listID, Dough, type){
 	var list = document.getElementById(listID);
 	var list_el = document.createElement('li');
+	list_el.draggable = true
 	list_el.setAttribute("style","transition: 0.5s;")
 	list_el.id = ID;
 	ID += 1;
 	var entry = new Entry(list_el.id, type)
 	Dough.addEntry(entry)
-
+	list_el.addEventListener('dragstart', dragStart, false);
+	list_el.addEventListener('dragover', dragOver, false);
+	list_el.addEventListener('dragleave', dragLeave, false);
+	list_el.addEventListener('drop', dragDrop, false);
 
 	var close = document.createElement("span")
 	close.className = "close"
