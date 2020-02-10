@@ -9,7 +9,7 @@ This program allows you to create your own bread recipes, calculating all percen
 
 No installation needed, just download the 'BreadCalculator.zip', unpack it and start the .exe.
 
-DOWNLOAD: https://github.com/D-Niermann/BreadCalculator/blob/Release/BreadCalculator.zip
+DOWNLOAD: https://github.com/D-Niermann/BreadCalculator/raw/Release/BreadCalculator.zip
 
 
 
