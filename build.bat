@@ -1,0 +1,1 @@
+electron-packager . --electronVersion=8.0.0 --overwrite=true
