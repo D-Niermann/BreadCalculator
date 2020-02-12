@@ -11,6 +11,8 @@ const {Dough} = require("./Classes.js")
 
 var Pre1 = new Dough("Pre-ferment 1", "Pre1");
 var Pre2 = new Dough("Pre-ferment 2", "Pre2");
+// if adding more predoughs search for comments that mark where code change is needed: // !Hardcoded predough!
+
 var Main = new Dough("Main", "Main");
 Main.makeMain()
 
@@ -80,9 +82,9 @@ document.getElementById("addPre11").addEventListener("click", function(){createE
 document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 
-document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR)});
-document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER)});
-document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER)});
+document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
 
 document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, T_FLOUR)});
 document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, T_WATER)});

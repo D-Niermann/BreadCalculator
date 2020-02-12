@@ -41,6 +41,8 @@ function createPredoughField(listID, Dough, type, Predough){
 		text.innerHTML = " g "
 		text.setAttribute("style",'margin-right: 10px;')
 		text.className = "InfoTypeText"
+		input.setAttribute("tabindex", "-1")
+		input.onmousedown=function(){return false}
 		list_el.appendChild(text)
 
 		var input = document.createElement("input");
@@ -48,7 +50,11 @@ function createPredoughField(listID, Dough, type, Predough){
 		input.className = "input-text-name"; // set the CSS class
 		input.value = Predough.name
 		input.onmousedown= "return false;"
+		input.setAttribute("tabindex", "-1")
+		input.onmousedown=function(){return false}
 		input.setAttribute("style",'margin-right: 20px;')
+		// input.setAttribute("style",'font-size: 12pt;')
+		// input.setAttribute("style",'color: rgba(70, 51, 10, 0.936);')
 		list_el.appendChild(input); // put it into the DOM
 
 		
@@ -62,6 +68,8 @@ function createPredoughField(listID, Dough, type, Predough){
 		text.className = "InfoTypeText"
 		text.innerHTML = "%      "
 		text.setAttribute("style",'margin-right: 40px;')
+		input.setAttribute("tabindex", "-1")
+		input.onmousedown=function(){return false}
 		list_el.appendChild(text)
 		
 		
@@ -75,7 +83,7 @@ function createPredoughField(listID, Dough, type, Predough){
 		list_el.draggable = true
 		list.appendChild(list_el);
 
-		Dough.update(list_el.id)	
+		Dough.update(list_el.id)
 		
 
 	}	

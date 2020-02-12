@@ -239,7 +239,6 @@ input[type='checkbox'] {
 
 .input-text-percent {
 	width: 10%;
-
 	text-align: right;
 }
 input::-webkit-inner-spin-button {
@@ -267,6 +266,7 @@ input::-webkit-inner-spin-button {
 .collapsible-content {
 	max-height: 0px;
 	overflow: hidden;
+	transition: 0.5s;
 	transition: max-height .25s ease-in-out;
 }
 
@@ -285,13 +285,14 @@ input::-webkit-inner-spin-button {
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
 	padding: .5rem 1rem;
+	transition: 0.5s;
 }
 
 ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-		transition: 0.5s;
+	transition: 0.5s;
 }
 
 ul li {

@@ -213,6 +213,7 @@ class Dough{
 		
 		// fetch all entries from pre doughs
 		if (this.isMain){
+			// !Hardcoded predough!
 			this.pre_flour_gram = 0
 			this.pre_fluid_gram = 0
 			this.addDough(Pre1)
@@ -242,8 +243,15 @@ class Dough{
 					this.fluid_total += e.gram;
 				}
 				if(e.isPredough()){
-					e.updateGrams(Math.round(Pre1.getTotalWeight()))
-					e.updatePercent(Math.round(Pre1.getTotalHydration()))
+					// !Hardcoded predough!
+					if (e.id == "Pre1"){
+						e.updateGrams(Math.round(Pre1.getTotalWeight()))
+						e.updatePercent(Math.round(Pre1.getTotalHydration()))
+					}
+					if (e.id == "Pre2"){
+						e.updateGrams(Math.round(Pre2.getTotalWeight()))
+						e.updatePercent(Math.round(Pre2.getTotalHydration()))
+					}
 				}
 				if(e.isOther()){
 					others[e.id] = e.gram
