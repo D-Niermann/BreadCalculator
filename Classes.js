@@ -1,6 +1,11 @@
+const T_OTHER = "Other"
+const T_FLOUR = "Flour"
+const T_WATER = "Fluid"
+const T_PREDOUGH = "Pref."
+
 class Entry{
 
-	constructor(id, type, listEl){
+	constructor(id, type){
 		// console.log("Created id: "+id)
 		this.id = id
 		this.gram = 0
@@ -37,6 +42,12 @@ class Entry{
 	}
 	updateName(value, fetchedFromHTML = false){
 		this.name = value
+		var childs = document.getElementById(this.id).childNodes
+			for(let i = 0; i<childs.length; i++){
+				if (childs[i].className == "input-text-name"){
+					childs[i].value = this.name
+				}
+			}
 	}
 	updatePercent(value, fetchedFromHTML = false){
 		if (Math.round(this.percent) != Math.round(value)){
@@ -74,13 +85,18 @@ class Entry{
 			return true}
 		else{return false}
 	}
+	isPredough(){
+		if(this.type == T_PREDOUGH){
+			return true}
+		else{return false}
+	}
 }
 
 class Dough{
 
-	constructor(name){
+	constructor(name, id){
 		this.name = name
-		this.id = 0
+		this.id = id
 		this.entries = []
 		this.isMain = false;
 		this.pre_flour_gram = 0
@@ -95,6 +111,14 @@ class Dough{
 		this.entries.push(Entry)
 	}
 
+	getTotalWeight(){
+		return this.flour_total+this.fluid_total+this.other_total
+	}
+	getTotalHydration(){
+		return 100*this.fluid_total/this.flour_total
+	}
+
+
 	addDough(dough){
 		const entries = dough.getAllEntries()
 		
@@ -106,7 +130,10 @@ class Dough{
 			if(e.isWater()){
 				this.pre_fluid_gram += e.gram
 			}
-			else{
+			if(e.isPredough()){
+
+			}
+			if(e.isOther()){
 				this.pre_other_gram += e.gram
 			}
 			// var entry = new Entry(ID, e.type)
@@ -127,6 +154,7 @@ class Dough{
 
 	makeMain(){
 		this.isMain = true
+		this.predoughEntries = []
 		this.weight_field = document.getElementById("total_weight")
 		this.weight_field.value = "0"
 		this.flour_field = document.getElementById("total_flour")
@@ -149,6 +177,7 @@ class Dough{
 				return e
 			}
 		}
+		return -1;
 	}
 
 	getAllEntries(){
@@ -179,7 +208,9 @@ class Dough{
 	}
 
 
+
 	update(id){
+		
 		// fetch all entries from pre doughs
 		if (this.isMain){
 			this.pre_flour_gram = 0
@@ -189,7 +220,6 @@ class Dough{
 		}
 
 		for (let i = 0; i < 7; i++) { // this must be done multiple times if some percentages are wrong (dont add to 100%)
-			
 		
 			var flour = {}
 			this.flour_total = this.pre_flour_gram
@@ -211,7 +241,11 @@ class Dough{
 					fluids[e.id] = e.gram;
 					this.fluid_total += e.gram;
 				}
-				else{
+				if(e.isPredough()){
+					e.updateGrams(Math.round(Pre1.getTotalWeight()))
+					e.updatePercent(Math.round(Pre1.getTotalHydration()))
+				}
+				if(e.isOther()){
 					others[e.id] = e.gram
 					this.other_total += e.gram
 				}

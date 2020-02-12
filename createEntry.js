@@ -10,7 +10,7 @@ function createEntryField(listID, Dough, type){
 	ID += 1;
 	var entry = new Entry(list_el.id, type)
 	Dough.addEntry(entry)
-	var img = document.createElement("img")
+	var img = document.createElement(	"img")
 	img.src = "./dragButton.png"
 	img.alt=""
 	img.className = "unselectable"
