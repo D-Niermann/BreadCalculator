@@ -58,25 +58,25 @@ function createPredoughField(listID, Dough, type, Predough){
 		list_el.appendChild(input); // put it into the DOM
 
 		
-		var input = document.createElement("input");
-		input.type = "number";
-		input.className = "input-text-percent"; // set the CSS class
-		input.value = Predough.getTotalHydration()
-		input.onmousedown= "return false;"
-		list_el.appendChild(input); // put it into the DOM
-		text = document.createElement("a")
-		text.className = "InfoTypeText"
-		text.innerHTML = "%      "
-		text.setAttribute("style",'margin-right: 40px;')
-		input.setAttribute("tabindex", "-1")
-		input.onmousedown=function(){return false}
-		list_el.appendChild(text)
+		// var input = document.createElement("input");
+		// input.type = "number";
+		// input.className = "input-text-percent"; // set the CSS class
+		// input.value = Predough.getTotalHydration()
+		// input.onmousedown= "return false;"
+		// list_el.appendChild(input); // put it into the DOM
+		// text = document.createElement("a")
+		// text.className = "InfoTypeText"
+		// text.innerHTML = "%      "
+		// text.setAttribute("style",'margin-right: 40px;')
+		// input.setAttribute("tabindex", "-1")
+		// input.onmousedown=function(){return false}
+		// list_el.appendChild(text)
 		
 		
-		var textType = document.createElement("a")
-		textType.innerHTML = type
-		textType.className = "InfoTypeText-transparent"
-		list_el.appendChild(textType)
+		// var textType = document.createElement("a")
+		// textType.innerHTML = type
+		// textType.className = "InfoTypeText-transparent"
+		// list_el.appendChild(textType)
 
 
 		list_el.appendChild(close)

@@ -246,11 +246,11 @@ class Dough{
 					// !Hardcoded predough!
 					if (e.id == "Pre1"){
 						e.updateGrams(Math.round(Pre1.getTotalWeight()))
-						e.updatePercent(Math.round(Pre1.getTotalHydration()))
+						// e.updatePercent(Math.round(Pre1.getTotalHydration()))
 					}
 					if (e.id == "Pre2"){
 						e.updateGrams(Math.round(Pre2.getTotalWeight()))
-						e.updatePercent(Math.round(Pre2.getTotalHydration()))
+						// e.updatePercent(Math.round(Pre2.getTotalHydration()))
 					}
 				}
 				if(e.isOther()){
