@@ -218,6 +218,7 @@ class Dough{
 			this.pre_fluid_gram = 0
 			this.addDough(Pre1)
 			this.addDough(Pre2)
+			this.addDough(Pre3)
 		}
 
 		for (let i = 0; i < 7; i++) { // this must be done multiple times if some percentages are wrong (dont add to 100%)
@@ -250,6 +251,10 @@ class Dough{
 					}
 					if (e.id == "Pre2"){
 						e.updateGrams(Math.round(Pre2.getTotalWeight()))
+						// e.updatePercent(Math.round(Pre2.getTotalHydration()))
+					}
+					if (e.id == "Pre3"){
+						e.updateGrams(Math.round(Pre3.getTotalWeight()))
 						// e.updatePercent(Math.round(Pre2.getTotalHydration()))
 					}
 				}

@@ -11,6 +11,7 @@ const {Dough} = require("./Classes.js")
 
 var Pre1 = new Dough("Pre-ferment 1", "Pre1");
 var Pre2 = new Dough("Pre-ferment 2", "Pre2");
+var Pre3 = new Dough("Pre-ferment 3", "Pre3");
 // if adding more predoughs search for comments that mark where code change is needed: // !Hardcoded predough!
 
 var Main = new Dough("Main", "Main");
@@ -86,54 +87,17 @@ document.getElementById("addPre21").addEventListener("click", function(){createE
 document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
 document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
 
+document.getElementById("addPre31").addEventListener("click", function(){createEntryField("list4", Pre3, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre32").addEventListener("click", function(){createEntryField("list4", Pre3, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre33").addEventListener("click", function(){createEntryField("list4", Pre3, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+
 document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, T_FLOUR)});
 document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, T_WATER)});
 document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
-//// Pre-ferment 1 field
-// var list = document.getElementById("list3");
-// var list_el_pre1 = document.createElement('li');
-// var pre1_input = document.createElement("div");
-// // pre1_input.type = "text";
-// pre1_input.className = "Pre-fermentText"; // set the CSS class
-// pre1_input.innerHTML = "Pre-ferment 1"
-// // pre1_input.setAttribute("style",'text-align: center;')
-// var close = document.createElement("span")
-// close.className = "close"
-// close.innerHTML = "-"
-// close.addEventListener("click", function() {
-// 	Pre1.removeAll()
-// 	Main.update()
-// 	document.getElementById("Pre1_title").value = "Pre-ferment 1"
-// 	list_el_pre1.remove()
-// });
-// list_el_pre1.appendChild(pre1_input);
-// list_el_pre1.appendChild(close)
-// list.appendChild(list_el_pre1);
 
-
-//// Pre-ferment 2 field
-// var list = document.getElementById("list3");
-// var list_el_pre2 = document.createElement('li');
-// var pre2_input = document.createElement("div");
-// pre2_input.className = "Pre-fermentText"; // set the CSS class
-// pre2_input.innerHTML = "Pre-ferment 2"
-// // pre2_input.setAttribute("style",'text-align: center;')
-// var close = document.createElement("span")
-// close.className = "close"
-// close.innerHTML = "-"
-// close.addEventListener("click", function() {
-// 	Pre2.removeAll()
-// 	Main.update()
-// 	document.getElementById("Pre2_title").value = "Pre-ferment 2"
-// 	list_el_pre2.remove()
-// });
-// list_el_pre2.appendChild(pre2_input);
-// list_el_pre2.appendChild(close)
-// list.appendChild(list_el_pre2);
-
-
+// !Hardcoded predough!
 // title updates for above Pre-ferment fields
 // update entry pre1 in main dough
 var pre1_title = document.getElementById("Pre1_title")
@@ -159,4 +123,16 @@ pre2_title.addEventListener ('keyup', function() {
 	// pre2_input.innerHTML = this.value 
 	Pre2.name = this.value
 	Main.getEntry(Pre2.id).updateName(Pre2.name)
+});
+// update entry pre3 in main dough
+var pre3_title = document.getElementById("Pre3_title")
+pre3_title.addEventListener("focusout", function() {
+	// pre2_input.innerHTML = this.value
+	Pre3.name = this.value
+	Main.getEntry(Pre3.id).updateName(Pre3.name)
+});
+pre3_title.addEventListener ('keyup', function() {
+	// pre2_input.innerHTML = this.value 
+	Pre3.name = this.value
+	Main.getEntry(Pre3.id).updateName(Pre3.name)
 });
