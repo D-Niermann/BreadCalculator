@@ -48,11 +48,20 @@ function dragStart(event) {
 	var source_percent;
 	var source_id;
 	var source_type;
-	if (this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI") {
+
+	// list.replaceChild(copy, list.childNodes[1])
+	if (this.childNodes[6].innerHTML == dragSrcEl.childNodes[6].innerHTML && ( this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI")) {
 		// ursprung
 		console.log("source: " + dragSrcEl.childNodes[1].value)
 		// target
 		console.log("target: "+ this.childNodes[1].value)
+
+		// for (let i = 0; i < dragSrcEl.childNodes.length; i++) {
+		// 	const c = dragSrcEl.childNodes[i];
+		// 	console.log(i)
+		// 	console.log(c)
+		// 	this.replaceChild(dragSrcEl.childNodes[i], this.childNodes[i])
+		// }
 
 		// save values from source element
 		source_gram = dragSrcEl.childNodes[1].value
@@ -78,6 +87,15 @@ function dragStart(event) {
 	}
   }
   
+  function test(){
+	  console.log("Test")
+	var list = document.getElementById("list3")
+	var copy = list.childNodes[1].cloneNode(true)
+	console.log(copy)
+	list.insertBefore(copy, list.childNodes[0])
+	list.removeChild(list.childNodes[1])
+  }
+
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});

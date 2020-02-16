@@ -15,7 +15,7 @@
 			</div>
 				
 			<div>
-				<a >by </a><input class = "author-input", type="text", value="Author", onClick= "this.select()">
+				<a style="font-family: myfont; font-size: 9pt;">by </a><input class = "author-input", type="text", value="Author", onClick= "this.select()">
 			</div>
 			<div>
 				<textarea class = "description-textfield" cols="60" rows="2"></textarea>
@@ -47,7 +47,12 @@
 		<!-- First predough colla -->
 		<div class="wrap-collabsible">
 			<input id="collapsible1" class="toggle" type="checkbox">
-			<label for="collapsible1" class="lbl-toggle"><input class = "coll-input", id="Pre1_title", type="text", value="Pre-ferment 1"></label>
+			<label for="collapsible1" class="lbl-toggle">
+				<input class = "coll-input", id="Pre1_title", type="text", value="Pre-ferment 1">
+				<div>
+					<!-- <input class = "time-input", type="text", size="3" value=" "> <input class = "temp-input", type="text", size="3" value=" "> <a>°C</a> -->
+				</div>
+			</label>
 			<div class="collapsible-content">
 				<div class="content-inner">
 					<!-- actual content list -->
@@ -126,7 +131,6 @@
 				</div>
 			</div>
 	</div>
-
 
 </div>
 

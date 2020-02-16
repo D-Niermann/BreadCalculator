@@ -89,7 +89,16 @@ body {
 	font-size: 14pt;
 	font-family: myfont;
 }
-
+.time-input, .temp-input{
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	border: none;
+	background: var(--brown_title);
+	text-align: center;
+	font-size: 11pt;
+	font-family: myfont;
+}
 .topbar{
 	display: grid;
 	grid-gap: 5%;
