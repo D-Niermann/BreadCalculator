@@ -1,284 +1,20 @@
 const T_OTHER = "Other"
 const T_FLOUR = "Flour"
 const T_WATER = "Fluid"
+const T_PREDOUGH = "Pref."
 var ID = 0
 const T_GRAM = "gram"
 const T_PERCENT = "percent"
+const {createEntryField} = require("./createEntry.js")
+const {createPredoughField} = require("./createDoughField.js")
+const {Dough} = require("./Classes.js")
 
+var Pre1 = new Dough("Pre-ferment 1", "Pre1");
+var Pre2 = new Dough("Pre-ferment 2", "Pre2");
+var Pre3 = new Dough("Pre-ferment 3", "Pre3");
+// if adding more predoughs search for comments that mark where code change is needed: // !Hardcoded predough!
 
-class Entry{
-
-	constructor(id, type, listEl){
-		// console.log("Created id: "+id)
-		this.id = id
-		this.gram = 0
-		this.name = "Name"
-		this.lastEdited = ""
-		this.percent = 0
-		this.type = type
-	}
-
-	removeListEl(){
-		document.getElementById(this.id).remove();	
-	}
-	getInfo(){
-		console.log("ID: "+this.id + " Type: "+ this.type)
-	}
-
-	updateGrams(value, fetchedFromHTML = false){
-		if (Math.round(this.gram) != Math.round(value)){
-			this.gram = parseFloat(value)
-			if (isNaN(this.gram)){
-				this.gram = 0
-			}
-			if (fetchedFromHTML){
-				this.lastEdited = T_GRAM
-			}
-			// document.getElementById(this.id).childNodes.getElementsByClassName("input-text-gram").value = "test"
-			var childs = document.getElementById(this.id).childNodes
-			for(let i = 0; i<childs.length; i++){
-				if (childs[i].className == "input-text-gram"){
-					childs[i].value = Math.round(this.gram)
-				}
-			}
-		}
-	}
-	updateName(value, fetchedFromHTML = false){
-		this.name = value
-	}
-	updatePercent(value, fetchedFromHTML = false){
-		if (Math.round(this.percent) != Math.round(value)){
-			this.percent = parseFloat(value)
-			if (isNaN(this.percent)){
-				this.percent = 0
-			}
-			if (fetchedFromHTML){
-				this.lastEdited = T_PERCENT
-			}
-			var childs = document.getElementById(this.id).childNodes
-			for(let i = 0; i<childs.length; i++){
-				if (childs[i].className == "input-text-percent"){
-					childs[i].value = Math.round(this.percent)
-				}
-			}
-		}
-	}
-	updateType(value){
-		this.type = value
-	}
-
-	isFlour(){
-		if(this.type==T_FLOUR){
-			return true}
-		else{return false}
-	}
-	isWater(){
-		if(this.type==T_WATER){
-			return true}
-		else{return false}
-	}
-	isOther(){
-		if(this.type==T_OTHER){
-			return true}
-		else{return false}
-	}
-}
-
-class Dough{
-
-	constructor(name){
-		this.name = name
-		this.id = 0
-		this.entries = []
-		this.isMain = false;
-		this.pre_flour_gram = 0
-		this.pre_fluid_gram = 0
-		this.pre_other_gram = 0
-		this.flour_total = 0
-		this.fluid_total = 0
-	}
-
-	addEntry(Entry){
-		console.log("adding entry: "+Entry.name)
-		this.entries.push(Entry)
-	}
-
-	addDough(dough){
-		const entries = dough.getAllEntries()
-		
-		for (let i = 0; i < entries.length; i++) {
-			const e = entries[i]
-			if(e.isFlour()){
-				this.pre_flour_gram += e.gram
-			}
-			if(e.isWater()){
-				this.pre_fluid_gram += e.gram
-			}
-			else{
-				this.pre_other_gram += e.gram
-			}
-			// var entry = new Entry(ID, e.type)
-			// ID += 1 
-			// entry.gram = e.gram
-			// entry.percent = e.percent
-
-			// this.addEntry(entry)
-		}
-	}
-
-	showEntries(){
-		for (let i = 0; i < this.entries.length; i++) {
-			const e = this.entries[i];
-			e.getInfo()
-		}
-	}
-
-	makeMain(){
-		this.isMain = true
-		this.weight_field = document.getElementById("total_weight")
-		this.weight_field.value = "0"
-		this.flour_field = document.getElementById("total_flour")
-		this.flour_field.value = "0"		
-		this.fluid_field = document.getElementById("total_fluid")
-		this.fluid_field.value = "0"
-		this.percent_field = document.getElementById("total_percent")
-		this.percent_field.value = "0"
-	}
-
-	// genID(){
-	// 	this.id += 1;
-	// 	return this.id.toString()
-	// }
-	
-	getEntry(id){
-		for (let i = 0; i < this.entries.length; i++) {
-			const e = this.entries[i];
-			if(e.id == id){
-				return e
-			}
-		}
-	}
-
-	getAllEntries(){
-		return this.entries;
-	}
-
-	removeEntry(id){
-		// console.log("---- OLD ------")
-		// this.showEntries()
-		for (let i = 0; i < this.entries.length; i++) {
-			const e = this.entries[i];
-			if(e.id == id){
-				e.removeListEl()
-				this.entries.splice(i,1)
-			}
-		}
-		// console.log("---- NEW ------")
-		// this.showEntries()
-	}
-
-	removeAll(){
-		for (let i = 0; i < this.entries.length; i++) {
-			const e = this.entries[i];
-			e.removeListEl()
-		}
-		this.entries = []
-		this.update()
-	}
-
-
-	update(id){
-		// fetch all entries from pre doughs
-		if (this.isMain){
-			this.pre_flour_gram = 0
-			this.pre_fluid_gram = 0
-			this.addDough(Pre1)
-			this.addDough(Pre2)
-		}
-
-		for (let i = 0; i < 7; i++) { // this must be done multiple times if some percentages are wrong (dont add to 100%)
-			
-		
-			var flour = {}
-			this.flour_total = this.pre_flour_gram
-			var fluids = {}
-			this.fluid_total = this.pre_fluid_gram
-			var others = {}
-			this.other_total = this.pre_other_gram
-			var percent_total = 0
-
-			// sum all weights
-			for (let i = 0; i < this.entries.length; i++) {
-				const e = this.entries[i];
-				if (e.isFlour()){
-					percent_total += e.percent
-					flour[e.id] = e.gram;
-					this.flour_total += e.gram;
-				}
-				if(e.isWater()){
-					fluids[e.id] = e.gram;
-					this.fluid_total += e.gram;
-				}
-				else{
-					others[e.id] = e.gram
-					this.other_total += e.gram
-				}
-			}
-			// console.log(this.name+" percent: "+percent_total)
-
-			for (var key in flour) {
-				var e = this.getEntry(key)
-				// calculate percentage and gram of entry
-				var percent = (e.gram/this.flour_total)*100
-				var grams = e.percent*this.flour_total/100
-				// set entry values (also into html elements)
-				if (e.lastEdited == T_GRAM){
-					e.updatePercent(percent)}
-				if (e.lastEdited == T_PERCENT){
-					e.updateGrams(grams)}
-			}
-			for (var key in fluids) {
-				var e = this.getEntry(key)
-				// calculate percentage and gram of entry
-				var percent = (e.gram/this.flour_total)*100
-				var grams = e.percent*this.flour_total/100
-				// set entry values (also into html elements)
-				if (e.lastEdited == T_GRAM){
-					e.updatePercent(percent)}
-				if (e.lastEdited == T_PERCENT){
-					e.updateGrams(grams)}
-			}
-			for (var key in others) {
-				var e = this.getEntry(key)
-				// calculate percentage and gram of entry
-				var percent = (e.gram/this.flour_total)*100
-				var grams = e.percent*this.flour_total/100
-				// set entry values (also into html elements)
-				if (e.lastEdited == T_GRAM){
-					e.updatePercent(percent)}
-				if (e.lastEdited == T_PERCENT){
-					e.updateGrams(grams)}
-			}
-		}
-			
-		if (this.isMain){
-			this.weight_field.value = Math.round(this.flour_total + this.fluid_total)
-			this.flour_field.value = Math.round(this.flour_total)
-			this.fluid_field.value = Math.round(this.fluid_total)
-			this.percent_field.value = 100+Math.round((this.fluid_total)/(this.flour_total) * 100)
-		}
-			
-	}	
-
-	
-}
-
-
-
-
-var Pre1 = new Dough("Vorteig 1");
-var Pre2 = new Dough("Vorteig 2");
-var Main = new Dough("Main");
+var Main = new Dough("Main", "Main");
 Main.makeMain()
 
 
@@ -311,221 +47,110 @@ function dragStart(event) {
 	var source_name;
 	var source_percent;
 	var source_id;
-	if (this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI") {
+	var source_type;
+
+	// list.replaceChild(copy, list.childNodes[1])
+	if (this.childNodes[6].innerHTML == dragSrcEl.childNodes[6].innerHTML && ( this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI")) {
 		// ursprung
 		console.log("source: " + dragSrcEl.childNodes[1].value)
 		// target
 		console.log("target: "+ this.childNodes[1].value)
+
+		// for (let i = 0; i < dragSrcEl.childNodes.length; i++) {
+		// 	const c = dragSrcEl.childNodes[i];
+		// 	console.log(i)
+		// 	console.log(c)
+		// 	this.replaceChild(dragSrcEl.childNodes[i], this.childNodes[i])
+		// }
 
 		// save values from source element
 		source_gram = dragSrcEl.childNodes[1].value
 		source_name = dragSrcEl.childNodes[3].value
 		source_percent = dragSrcEl.childNodes[4].value
 		source_id = dragSrcEl.id
+		source_type = dragSrcEl.childNodes[6].innerHTML
 		// change source element
 		dragSrcEl.childNodes[1].value = this.childNodes[1].value
 		dragSrcEl.childNodes[3].value = this.childNodes[3].value
 		dragSrcEl.childNodes[4].value = this.childNodes[4].value
 		dragSrcEl.id = this.id
+		dragSrcEl.childNodes[6].innerHTML = this.childNodes[6].innerHTML
 		// change other element
 		this.childNodes[1].value = source_gram
 		this.childNodes[3].value = source_name
 		this.childNodes[4].value = source_percent
 		this.id = source_id
+		this.childNodes[6].innerHTML = source_type
 	}
 	else{
 		return false;
 	}
   }
   
-////////////////////////////////////////////
-// ZUTAT SPALTE
-////////////////////////////////////////////
-function createEntryField(listID, Dough, type){
-	var list = document.getElementById(listID);
-	var list_el = document.createElement('li');
-	list_el.setAttribute("style","transition: 0.5s;")
-	list_el.id = ID;
-	ID += 1;
-	var entry = new Entry(list_el.id, type)
-	Dough.addEntry(entry)
-	var img = document.createElement("img")
-	img.src = "./dragButton.png"
-	img.alt=""
-	img.className = "unselectable"
-	img.draggable = false
-	img.width="15" 
-	img.style = "margin-right: 5px;"
-	img.height="15"
-	
-	list_el.appendChild(img)
-	list_el.addEventListener('dragstart', dragStart);
-	list_el.addEventListener('dragover', dragOver);
-	list_el.addEventListener('dragleave', dragLeave);
-	list_el.addEventListener('drop', dragDrop);
-
-	var close = document.createElement("span")
-	close.className = "close"
-	close.innerHTML = "-"
-	close.addEventListener("click", function() {
-		Dough.removeEntry(list_el.id)
-		Dough.update()
-		Main.update()
-	});
-
-	var input = document.createElement("input");
-	input.type = "number";
-	input.className = "input-text-gram"; // set the CSS class
-	input.value = 0
-	input.setAttribute("onClick","this.select();")
-	input.addEventListener ('keydown', function (event) {
-		if (event.which == 13) { //enter key
-			Dough.getEntry(list_el.id).updateGrams(this.value, true)
-			Dough.update(list_el.id)
-			Main.update(list_el.id)
-		} });
-	input.addEventListener ('focusout', function (event) {
-		Dough.getEntry(list_el.id).updateGrams(this.value, true)
-		Dough.update(list_el.id)
-		Main.update(list_el.id)
-		});
-	list_el.appendChild(input); // put it into the DOM
-	text = document.createElement("a")
-	text.innerHTML = " g "
-	text.setAttribute("style",'margin-right: 10px;')
-	text.className = "InfoTypeText"
-	list_el.appendChild(text)
-
-	var input = document.createElement("input");
-	input.type = "text";
-	input.className = "input-text-name"; // set the CSS class
-	input.value = "Name"
-	input.setAttribute("style",'margin-right: 20px;')
-	input.setAttribute("onClick","this.select();")
-	input.addEventListener ('keydown', function (event) {
-		if (event.which == 13) { //enter key
-			Dough.getEntry(list_el.id).updateName(this.value, true)
-			Dough.update(list_el.id)
-		} });
-	input.addEventListener ('focusout', function (event) {
-			Dough.getEntry(list_el.id).updateName(this.value, true)
-			Dough.update(list_el.id)
-			
-		});
-	list_el.appendChild(input); // put it into the DOM
-
-	
-	var input = document.createElement("input");
-	input.type = "number";
-	input.className = "input-text-percent"; // set the CSS class
-	input.setAttribute("onClick","this.select();")
-	input.value = 0
-	input.addEventListener("focusout", function(event){});
-
-	input.addEventListener ('keydown', function(event) {
-		if (event.which == 13) { //enter key
-			// only if value is different to old vlaue -> implement everything into an update funciton and a fetch function? or update with keyword arg
-			Dough.getEntry(list_el.id).updatePercent(this.value, true)
-			Dough.update(list_el.id)
-			Main.update(list_el.id)
-		} });
-	input.addEventListener ('focusout', function (event) {
-		Dough.getEntry(list_el.id).updatePercent(this.value, true)
-		Dough.update(list_el.id,"percent")
-		Main.update(list_el.id)
-		});
-	list_el.appendChild(input); // put it into the DOM
-	text = document.createElement("a")
-	text.className = "InfoTypeText"
-	text.innerHTML = "%      "
-	text.setAttribute("style",'margin-right: 40px;')
-	list_el.appendChild(text)
-	
-	
-	var textType = document.createElement("a")
-	textType.innerHTML = type
-	textType.className = "InfoTypeText-transparent"
-	list_el.appendChild(textType)
+  function test(){
+	  console.log("Test")
+	var list = document.getElementById("list3")
+	var copy = list.childNodes[1].cloneNode(true)
+	console.log(copy)
+	list.insertBefore(copy, list.childNodes[0])
+	list.removeChild(list.childNodes[1])
+  }
 
 
-	list_el.appendChild(close)
-	list_el.draggable = true
-	list.appendChild(list_el);
+document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 
-	Dough.update(list_el.id)	
-	
+document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
 
-	
-	
-	Main.update(list_el.id)
-}
+document.getElementById("addPre31").addEventListener("click", function(){createEntryField("list4", Pre3, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre32").addEventListener("click", function(){createEntryField("list4", Pre3, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre33").addEventListener("click", function(){createEntryField("list4", Pre3, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
 
-document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR)});
-document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER)});
-document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER)});
-document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR)});
-document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER)});
-document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER)});
 document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, T_FLOUR)});
 document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, T_WATER)});
 document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
 ////////////////////////////////////////////////////////////////////////////////
 
-//// Pre-ferment 1 field
-var list = document.getElementById("list3");
-var list_el_pre1 = document.createElement('li');
-var pre1_input = document.createElement("div");
-// pre1_input.type = "text";
-pre1_input.className = "Pre-fermentText"; // set the CSS class
-pre1_input.innerHTML = "Pre-ferment 1"
-// pre1_input.setAttribute("style",'text-align: center;')
-var close = document.createElement("span")
-close.className = "close"
-close.innerHTML = "-"
-close.addEventListener("click", function() {
-	Pre1.removeAll()
-	Main.update()
-	document.getElementById("Pre1_title").value = "Pre-ferment 1"
-	list_el_pre1.remove()
-});
-list_el_pre1.appendChild(pre1_input);
-list_el_pre1.appendChild(close)
-list.appendChild(list_el_pre1);
 
-
-//// Pre-ferment 2 field
-var list = document.getElementById("list3");
-var list_el_pre2 = document.createElement('li');
-var pre2_input = document.createElement("div");
-pre2_input.className = "Pre-fermentText"; // set the CSS class
-pre2_input.innerHTML = "Pre-ferment 2"
-// pre2_input.setAttribute("style",'text-align: center;')
-var close = document.createElement("span")
-close.className = "close"
-close.innerHTML = "-"
-close.addEventListener("click", function() {
-	Pre2.removeAll()
-	Main.update()
-	document.getElementById("Pre2_title").value = "Pre-ferment 2"
-	list_el_pre2.remove()
-});
-list_el_pre2.appendChild(pre2_input);
-list_el_pre2.appendChild(close)
-list.appendChild(list_el_pre2);
-
-
+// !Hardcoded predough!
 // title updates for above Pre-ferment fields
 // update entry pre1 in main dough
 var pre1_title = document.getElementById("Pre1_title")
 pre1_title.addEventListener("focusout", function() {
-	pre1_input.innerHTML = this.value
+	// pre1_input.innerHTML = this.value
+	Pre1.name = this.value
+	Main.getEntry(Pre1.id).updateName(Pre1.name)
 });
 pre1_title.addEventListener ('keyup', function() {
-	pre1_input.innerHTML = this.value });
+	// pre1_input.innerHTML = this.value 
+	Pre1.name = this.value
+	Main.getEntry(Pre1.id).updateName(Pre1.name)
+
+});
 // update entry pre2 in main dough
 var pre2_title = document.getElementById("Pre2_title")
 pre2_title.addEventListener("focusout", function() {
-	pre2_input.innerHTML = this.value
+	// pre2_input.innerHTML = this.value
+	Pre2.name = this.value
+	Main.getEntry(Pre2.id).updateName(Pre2.name)
 });
 pre2_title.addEventListener ('keyup', function() {
-	pre2_input.innerHTML = this.value });
+	// pre2_input.innerHTML = this.value 
+	Pre2.name = this.value
+	Main.getEntry(Pre2.id).updateName(Pre2.name)
+});
+// update entry pre3 in main dough
+var pre3_title = document.getElementById("Pre3_title")
+pre3_title.addEventListener("focusout", function() {
+	// pre2_input.innerHTML = this.value
+	Pre3.name = this.value
+	Main.getEntry(Pre3.id).updateName(Pre3.name)
+});
+pre3_title.addEventListener ('keyup', function() {
+	// pre2_input.innerHTML = this.value 
+	Pre3.name = this.value
+	Main.getEntry(Pre3.id).updateName(Pre3.name)
+});

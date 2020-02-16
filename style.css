@@ -89,11 +89,21 @@ body {
 	font-size: 14pt;
 	font-family: myfont;
 }
-
+.time-input, .temp-input{
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	border: none;
+	background: var(--brown_title);
+	text-align: center;
+	font-size: 11pt;
+	font-family: myfont;
+}
 .topbar{
 	display: grid;
 	grid-gap: 5%;
 	grid-area: top;
+	grid-template-columns: 50% 50%;
 	grid-template-areas:  "left infoBox";
 	/* grid-area: top; */
 }
@@ -107,6 +117,7 @@ body {
 	display: grid;
 	grid-column: 2;
 	grid-row: 1;
+	margin-left: 40%;
 	grid-template-columns: 50% 50%;
 	border-style: dotted dotted dotted dotted ;
 	border-width: 2px;
@@ -135,6 +146,22 @@ body {
 
 }
 
+.description-textfield{
+	margin-top: 10px;
+	border: 1px solid rgb(255, 255, 255, 0);
+	font-size: 10pt;
+	width: 100%;
+	/* font-weight: bold; */
+	/* text-align: center; */
+	/* -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1);  */
+	/* box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1);  */
+	border-style: dotted none dotted none ;
+	border-width: 2px;
+	border-color: rgba(231, 176, 99, 0.342);
+	padding: 4px;
+	background: rgba(255, 255, 255, 0);
+	font-family: myfont;
+}
 
 
 .main-grid {
@@ -239,7 +266,6 @@ input[type='checkbox'] {
 
 .input-text-percent {
 	width: 10%;
-
 	text-align: right;
 }
 input::-webkit-inner-spin-button {
@@ -267,6 +293,7 @@ input::-webkit-inner-spin-button {
 .collapsible-content {
 	max-height: 0px;
 	overflow: hidden;
+	transition: 0.5s;
 	transition: max-height .25s ease-in-out;
 }
 
@@ -285,13 +312,14 @@ input::-webkit-inner-spin-button {
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
 	padding: .5rem 1rem;
+	transition: 0.5s;
 }
 
 ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-		transition: 0.5s;
+	transition: 0.5s;
 }
 
 ul li {
