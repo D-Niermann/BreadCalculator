@@ -48,9 +48,18 @@ function dragStart(event) {
 	var source_percent;
 	var source_id;
 	var source_type;
+	var type1 = this.childNodes[6].innerHTML
+	var type2 = dragSrcEl.childNodes[6].innerHTML
+	var do_copy = false;
+	if (type1!=T_PREDOUGH && type2 != T_PREDOUGH){
+		do_copy = true
+	}
+	if (type1==type2){
+		do_copy = true
+	}
 
 	// list.replaceChild(copy, list.childNodes[1])
-	if (this.childNodes[6].innerHTML == dragSrcEl.childNodes[6].innerHTML && ( this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI")) {
+	if (do_copy && ( this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI")) {
 		// ursprung
 		console.log("source: " + dragSrcEl.childNodes[1].value)
 		// target
