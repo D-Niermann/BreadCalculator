@@ -96,14 +96,7 @@ function dragStart(event) {
 	}
   }
   
-  function test(){
-	  console.log("Test")
-	var list = document.getElementById("list3")
-	var copy = list.childNodes[1].cloneNode(true)
-	console.log(copy)
-	list.insertBefore(copy, list.childNodes[0])
-	list.removeChild(list.childNodes[1])
-  }
+
 
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});

@@ -308,7 +308,7 @@ class Dough{
 			this.weight_field.value = Math.round(this.flour_total + this.fluid_total)
 			this.flour_field.value = Math.round(this.flour_total)
 			this.fluid_field.value = Math.round(this.fluid_total)
-			this.percent_field.value = 100+Math.round((this.fluid_total)/(this.flour_total) * 100)
+			this.percent_field.value = Math.round((this.fluid_total)/(this.flour_total) * 100)
 		}
 			
 	}	
