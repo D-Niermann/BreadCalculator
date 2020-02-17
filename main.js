@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, globalShortcut } = require('electron')
 
 // Behalten Sie eine globale Referenz auf das Fensterobjekt. 
 // Wenn Sie dies nicht tun, wird das Fenster automatisch geschlossen, 
@@ -60,3 +60,9 @@ app.on('activate', () => {
 // In dieser Datei können Sie den Rest des App-spezifischen 
 // Hauptprozess-Codes einbinden. Sie können den Code auch 
 // auf mehrere Dateien aufteilen und diese hier einbinden.
+
+app.whenReady().then(() => {
+  globalShortcut.register('CommandOrControl+P', () => {
+    win.webContents.openDevTools()
+  })
+})

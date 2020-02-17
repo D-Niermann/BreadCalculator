@@ -22,6 +22,10 @@ class Entry{
 		console.log("ID: "+this.id + " Type: "+ this.type)
 	}
 
+	roundToTens(value){
+		return Math.round(value*10.0)/10
+	}
+
 	updateGrams(value, fetchedFromHTML = false){
 		if (Math.round(this.gram) != Math.round(value)){
 			this.gram = parseFloat(value)
@@ -50,7 +54,7 @@ class Entry{
 			}
 	}
 	updatePercent(value, fetchedFromHTML = false){
-		if (Math.round(this.percent) != Math.round(value)){
+		if (this.roundToTens(this.percent) != this.roundToTens(value)){
 			this.percent = parseFloat(value)
 			if (isNaN(this.percent)){
 				this.percent = 0
@@ -61,7 +65,7 @@ class Entry{
 			var childs = document.getElementById(this.id).childNodes
 			for(let i = 0; i<childs.length; i++){
 				if (childs[i].className == "input-text-percent"){
-					childs[i].value = Math.round(this.percent)
+					childs[i].value = this.roundToTens(this.percent)
 				}
 			}
 		}
