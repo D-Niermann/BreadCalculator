@@ -118,6 +118,7 @@ body {
 	grid-column: 2;
 	grid-row: 1;
 	margin-left: 40%;
+	width: 50%;
 	grid-template-columns: 50% 50%;
 	border-style: dotted dotted dotted dotted ;
 	border-width: 2px;
