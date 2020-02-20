@@ -189,6 +189,8 @@ document.getElementById("saveButton").addEventListener("click", function(){
 								document.getElementById("authorInput").value + ";" + 
 								document.getElementById("textArea").value
 		);
+
+		fs.appendFileSync(saveMainFolder + "fileManager.txt", saveFolder + "\n")
 	}
 	else{
 		// create a popup that says bread alredy exists, overwrite?
@@ -251,8 +253,3 @@ function loadFiles(folderName){
 	
 }
 
-function scanSaves(){
-
-}
-
-scanSaves()
