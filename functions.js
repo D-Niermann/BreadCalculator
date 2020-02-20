@@ -104,9 +104,8 @@ Pre1.entries[0].updateName("test1")
 Pre1.entries[1].updateName("test2")
 Pre1.entries[0].updateGrams(100)
 Pre1.entries[1].updateGrams(100)
-Pre1.save()
-Pre1.load()
-Pre1.showEntries()
+Pre1.save("./saves")
+Pre1.load("./saves")
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});

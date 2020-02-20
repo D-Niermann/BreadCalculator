@@ -371,7 +371,6 @@ class Dough{
 		for (let i = 0; i < this.entries.length; i++) {
 			const entry = this.entries[i];
 			saveString = entry.save()
-			console.log("Saving: "+saveString)
 			fs.appendFileSync(fName, saveString); 
 		}
 	}
@@ -386,7 +385,6 @@ class Dough{
 		// split data into lines 
 		var stringEntries = string.split("\n")
 		// go through each line and load the entries
-		console.log("Loaded: "+stringEntries[0])
 		for (let i = 0; i < stringEntries.length; i++) {
 			const line = stringEntries[i];
 			var entry = new Entry(0,0)
