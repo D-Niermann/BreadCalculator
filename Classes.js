@@ -3,16 +3,24 @@ const T_FLOUR = "Flour"
 const T_WATER = "Fluid"
 const T_PREDOUGH = "Pref."
 
-class Entry{
 
+class Entry{
+	
 	constructor(id, type){
 		// console.log("Created id: "+id)
+
+		// vars relevant for the saving entry
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
 		this.lastEdited = ""
 		this.percent = 0
 		this.type = type
+
+		this.allVars = [this.id, this.gram, this.name, this.lastEdited, this.percent, this.type]
+
+		// consts 
+		this.stringSeperator = ", "
 	}
 
 	removeListEl(){
@@ -94,7 +102,48 @@ class Entry{
 			return true}
 		else{return false}
 	}
+
+	save(){
+		var string;
+		string = this.id.toString() + this.stringSeperator +
+				this.gram.toString() + this.stringSeperator +
+				this.name.toString() + this.stringSeperator +
+				this.lastEdited.toString() + this.stringSeperator +
+				this.percent.toString() + this.stringSeperator +
+				this.type.toString() + this.stringSeperator 
+		string+= "\n"
+		return string
+
+	}
+
+	load(stringLine){
+		var strings = stringLine.split(this.stringSeperator)
+		for (let i = 0; i < strings.length; i++) {
+			const word = strings[i];
+			try {
+				word = parseFloat(word)
+			} catch (error) {
+				console.log("Loading: Could not parse to float")
+			}
+			this.allVars[i] = word
+		}
+		console.log("----------")
+		console.log("Loaded Vars")
+		console.log("ID: "+this.id+"... Gram: "+this.gram)
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Dough{
 
@@ -313,6 +362,24 @@ class Dough{
 			
 	}	
 
+	save(){
+		const fs = require("fs")
+		var saveString = ""
+		var fName = "./saves/test.txt"
+
+		// var fd;
+		fs.open(fName, "w", function(err, fd) {
+			if(err) {return console.log(err);}
+		});
+		// fs.close()
+		
+		for (let i = 0; i < this.entries.length; i++) {
+			const entry = this.entries[i];
+			saveString = entry.save()
+			console.log("Saving: "+saveString)
+			fs.appendFileSync(fName, saveString); 
+		}
+	}
 	
 }
 
