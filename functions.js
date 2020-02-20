@@ -2,13 +2,12 @@ const T_OTHER = "Other"
 const T_FLOUR = "Flour"
 const T_WATER = "Fluid"
 const T_PREDOUGH = "Pref."
-var ID = 0
 const T_GRAM = "gram"
 const T_PERCENT = "percent"
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
-const {Dough} = require("./Classes.js")
-
+const {Dough, Entry} = require("./Classes.js")
+console.log("Import")
 var Pre1 = new Dough("Pre-ferment 1", "Pre1");
 var Pre2 = new Dough("Pre-ferment 2", "Pre2");
 var Pre3 = new Dough("Pre-ferment 3", "Pre3");
@@ -16,10 +15,21 @@ var Pre3 = new Dough("Pre-ferment 3", "Pre3");
 
 var Main = new Dough("Main", "Main");
 Main.makeMain()
+console.log("Dough defs")
 
+class IDGen{
+	constructor(){
+		this.ID = 0
+	}
 
+	get(){
+		this.ID += 1
+		return this.ID
+	}
+}
+const ID = new IDGen()
 
-
+console.log("ID Class def")
 
 function dragStart(event) {
 	dragSrcEl = this;
@@ -96,32 +106,39 @@ function dragStart(event) {
 	}
   }
   
+console.log(ID.get())
+console.log(ID.get())
+var entry = new Entry(1, T_FLOUR)
+// createEntryField("list1", Pre1, entry);
+// createEntryField("list1", Pre1, entry);
+// createEntryField("list1", Pre1, entry);
+// Pre1.entries[0].updateName("test1")
+// Pre1.entries[1].updateName("test2")
+// Pre1.entries[0].updateGrams(100)
+// Pre1.entries[1].updateGrams(100)
+// Pre1.save("./saves")
+Pre1.load("./saves/")
+Pre1.showEntries()
+for (let i = 0; i < Pre1.entries.length; i++) {
+	createEntryField("list1", Pre1, Pre1.entries[i], true)
+	createPredoughField("list3", Main, T_PREDOUGH, Pre1)
+}
 
-createEntryField("list1", Pre1, T_FLOUR);
-createEntryField("list1", Pre1, T_FLOUR);
-createEntryField("list1", Pre1, T_FLOUR);
-Pre1.entries[0].updateName("test1")
-Pre1.entries[1].updateName("test2")
-Pre1.entries[0].updateGrams(100)
-Pre1.entries[1].updateGrams(100)
-Pre1.save("./saves")
-Pre1.load("./saves")
+document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_OTHER));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 
-document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
-document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
-document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, new Entry(ID.get(), T_OTHER));createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
 
-document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
-document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
-document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre31").addEventListener("click", function(){createEntryField("list4", Pre3, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre32").addEventListener("click", function(){createEntryField("list4", Pre3, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre33").addEventListener("click", function(){createEntryField("list4", Pre3, new Entry(ID.get(), T_OTHER));createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
 
-document.getElementById("addPre31").addEventListener("click", function(){createEntryField("list4", Pre3, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
-document.getElementById("addPre32").addEventListener("click", function(){createEntryField("list4", Pre3, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
-document.getElementById("addPre33").addEventListener("click", function(){createEntryField("list4", Pre3, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
-
-document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, T_FLOUR)});
-document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, T_WATER)});
-document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
+document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, new Entry(ID.get(), T_FLOUR))});
+document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, new Entry(ID.get(), T_WATER))});
+document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, new Entry(ID.get(), T_OTHER))});
 ////////////////////////////////////////////////////////////////////////////////
 
 

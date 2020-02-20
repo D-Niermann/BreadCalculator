@@ -26,7 +26,7 @@ class Entry{
 		document.getElementById(this.id).remove();	
 	}
 	getInfo(){
-		console.log("ID: "+this.id + " Type: "+ this.type)
+		console.log("ID: "+this.id +" Gram: "+this.gram + " %: "+ this.percent+ " Type: "+ this.type)
 	}
 
 	roundToTens(value){
@@ -197,10 +197,12 @@ class Dough{
 	}
 
 	showEntries(){
+		console.log("Entries of "+ this.id+":\n")
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			e.getInfo()
 		}
+		console.log("-----------------")
 	}
 
 	makeMain(){
@@ -385,7 +387,7 @@ class Dough{
 		// split data into lines 
 		var stringEntries = string.split("\n")
 		// go through each line and load the entries
-		for (let i = 0; i < stringEntries.length; i++) {
+		for (let i = 0; i < (stringEntries.length)-1; i++) {
 			const line = stringEntries[i];
 			var entry = new Entry(0,0)
 			entry.load(line)
