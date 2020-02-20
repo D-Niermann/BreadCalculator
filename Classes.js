@@ -17,7 +17,6 @@ class Entry{
 		this.percent = 0
 		this.type = type
 
-		this.allVars = [this.id, this.gram, this.name, this.lastEdited, this.percent, this.type]
 
 		// consts 
 		this.stringSeperator = ", "
@@ -118,15 +117,14 @@ class Entry{
 
 	load(stringLine){
 		var strings = stringLine.split(this.stringSeperator)
-		for (let i = 0; i < strings.length; i++) {
-			const word = strings[i];
-			try {
-				word = parseFloat(word)
-			} catch (error) {
-				console.log("Loading: Could not parse to float")
-			}
-			this.allVars[i] = word
-		}
+		
+		this.id = strings[0]
+		this.gram = strings[1]
+		this.name = strings[2]
+		this.lastEdited = strings[3]
+		this.percent = strings[4]
+		this.type = strings[5]
+		
 		console.log("----------")
 		console.log("Loaded Vars")
 		console.log("ID: "+this.id+"... Gram: "+this.gram)
@@ -362,22 +360,38 @@ class Dough{
 			
 	}	
 
-	save(){
+	save(folderName){
 		const fs = require("fs")
 		var saveString = ""
-		var fName = "./saves/test.txt"
+		var fName = folderName+ this.id +".txt"
 
-		// var fd;
-		fs.open(fName, "w", function(err, fd) {
-			if(err) {return console.log(err);}
-		});
-		// fs.close()
-		
+		// create file for this dough
+		fs.writeFileSync(fName, "");
+		// save the entrie into a line of the file
 		for (let i = 0; i < this.entries.length; i++) {
 			const entry = this.entries[i];
 			saveString = entry.save()
 			console.log("Saving: "+saveString)
 			fs.appendFileSync(fName, saveString); 
+		}
+	}
+
+	load(folderName){
+		// load file for this dough
+		const fs = require("fs")
+		var fName = folderName+ this.id +".txt"
+
+		var string = fs.readFileSync(fName,"utf8")
+
+		// split data into lines 
+		var stringEntries = string.split("\n")
+		// go through each line and load the entries
+		console.log("Loaded: "+stringEntries[0])
+		for (let i = 0; i < stringEntries.length; i++) {
+			const line = stringEntries[i];
+			var entry = new Entry(0,0)
+			entry.load(line)
+			this.addEntry(entry)
 		}
 	}
 	
