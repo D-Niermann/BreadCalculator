@@ -117,12 +117,11 @@ class Entry{
 
 	load(stringLine){
 		var strings = stringLine.split(this.stringSeperator)
-		
-		this.id = strings[0]
-		this.gram = strings[1]
+		this.id = parseInt(strings[0])
+		this.gram = parseInt(strings[1])
 		this.name = strings[2]
 		this.lastEdited = strings[3]
-		this.percent = strings[4]
+		this.percent = parseFloat(strings[4])
 		this.type = strings[5]
 		
 		console.log("----------")
@@ -182,7 +181,7 @@ class Dough{
 				this.pre_fluid_gram += e.gram
 			}
 			if(e.isPredough()){
-
+				
 			}
 			if(e.isOther()){
 				this.pre_other_gram += e.gram
@@ -262,7 +261,7 @@ class Dough{
 
 
 
-	update(id){
+	update(id=0){
 		
 		// fetch all entries from pre doughs
 		if (this.isMain){
@@ -393,6 +392,7 @@ class Dough{
 			entry.load(line)
 			this.addEntry(entry)
 		}
+		this.update()
 	}
 	
 }

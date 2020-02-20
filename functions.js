@@ -114,7 +114,7 @@ var entry = new Entry(1, T_FLOUR)
 // createEntryField("list1", Pre1, entry);
 // Pre1.entries[0].updateName("test1")
 // Pre1.entries[1].updateName("test2")
-// Pre1.entries[0].updateGrams(100)
+// Pre1.entries[0].updatesGrams(100)
 // Pre1.entries[1].updateGrams(100)
 // Pre1.save("./saves")
 Pre1.load("./saves/")
@@ -122,6 +122,8 @@ Pre1.showEntries()
 for (let i = 0; i < Pre1.entries.length; i++) {
 	createEntryField("list1", Pre1, Pre1.entries[i], true)
 	createPredoughField("list3", Main, T_PREDOUGH, Pre1)
+	Pre1.update()
+	Main.update()
 }
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
