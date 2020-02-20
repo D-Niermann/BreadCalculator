@@ -4,6 +4,7 @@ const T_WATER = "Fluid"
 const T_PREDOUGH = "Pref."
 const T_GRAM = "gram"
 const T_PERCENT = "percent"
+const saveMainFolder = "./saves/"
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
 const {Dough, Entry} = require("./Classes.js")
@@ -19,7 +20,7 @@ console.log("Dough defs")
 
 class IDGen{
 	constructor(){
-		this.ID = 0
+		this.ID = 11000
 	}
 
 	get(){
@@ -169,53 +170,89 @@ pre3_title.addEventListener ('keyup', function() {
 /////////////////////////////////////////////////////////////////////////////
 // Save and Load			// !Hardcoded predough!
 /////////////////////////////////////////////////////////////////////////////
+const fs = require("fs")
 document.getElementById("saveButton").addEventListener("click", function(){
-	Pre1.save("./saves/")
-	Pre2.save("./saves/")
-	Pre3.save("./saves/")
-	Main.save("./saves/")
-	// some metadata save
-	const fs = require("fs")
-	var saveString = ""
-	var fName = "./saves/"+ "Metadata" +".txt"
+	const saveFolder = document.getElementById("titleInput").value + "/"
+	if (!fs.existsSync(saveMainFolder + saveFolder)){
+		fs.mkdirSync(saveMainFolder + saveFolder);
 
-	// create file 
-	fs.writeFileSync(fName, document.getElementById("titleInput").value + ";" + 
-							document.getElementById("authorInput").value + ";" + 
-							document.getElementById("textArea").value
-	);
+		Pre1.save(saveMainFolder + saveFolder)
+		Pre2.save(saveMainFolder + saveFolder)
+		Pre3.save(saveMainFolder + saveFolder)
+		Main.save(saveMainFolder + saveFolder)
+		// some metadata save
+		var saveString = ""
+		var fName = saveMainFolder + saveFolder+ "Metadata" +".txt"
+
+		// create file 
+		fs.writeFileSync(fName, document.getElementById("titleInput").value + ";" + 
+								document.getElementById("authorInput").value + ";" + 
+								document.getElementById("textArea").value
+		);
+	}
+	else{
+		// create a popup that says bread alredy exists, overwrite?
+	}
+
 })
 document.getElementById("loadButton").addEventListener("click", function(){
+	loadFiles("test/")
+})
+
+function loadFiles(folderName){
 	// load in the metadata
-	const fs = require("fs")
-	var contentList = fs.readFileSync("./saves/" + "Metadata" + ".txt", "utf8").split(";")
+	var contentList = fs.readFileSync(saveMainFolder + folderName + "Metadata" + ".txt", "utf8").split(";")
 	document.getElementById("titleInput").value = contentList[0]
 	document.getElementById("authorInput").value = contentList[1]
 	document.getElementById("textArea").value = contentList[2]
 
 	// load in the entries
-	Pre1.load("./saves/")
-	Pre2.load("./saves/")
-	Pre3.load("./saves/")
-	Main.load("./saves/")
+	Main.removeAll()
+	Pre1.removeAll()
+	Pre2.removeAll()
+	Pre3.removeAll()
+
+
+	Pre1.load(saveMainFolder + folderName)
 	document.getElementById("Pre1_title").value = Pre1.name
-	document.getElementById("Pre2_title").value = Pre2.name
-	document.getElementById("Pre3_title").value = Pre3.name
-	document.getElementById("Main_title").value = Main.name
 	for (let i = 0; i < Pre1.entries.length; i++) {
 		createEntryField("list1", Pre1, Pre1.entries[i], true)
+		createPredoughField("list3", Main, T_PREDOUGH, Pre1)
 	}
+	
+	
+	Pre2.load(saveMainFolder + folderName)
+	document.getElementById("Pre2_title").value = Pre2.name
 	for (let i = 0; i < Pre2.entries.length; i++) {
 		createEntryField("list2", Pre2, Pre2.entries[i], true)
+		createPredoughField("list3", Main, T_PREDOUGH, Pre2)
 	}
+	
+
+	Pre3.load(saveMainFolder + folderName)
+	document.getElementById("Pre3_title").value = Pre3.name
 	for (let i = 0; i < Pre3.entries.length; i++) {
 		createEntryField("list4", Pre3, Pre3.entries[i], true)
+		createPredoughField("list3", Main, T_PREDOUGH, Pre3)
 	}
+	
+
+	Main.load(saveMainFolder + folderName)
+	document.getElementById("Main_title").value = Main.name
+
 	for (let i = 0; i < Main.entries.length; i++) {
-		createEntryField("list3", Main, Main.entries[i], true)
+		if (Main.entries[i].type != T_PREDOUGH){
+			createEntryField("list3", Main, Main.entries[i], true)
+		}
 	}
-	// this needs to be done at last!:
-	createPredoughField("list3", Main, T_PREDOUGH, Pre1)
-	createPredoughField("list3", Main, T_PREDOUGH, Pre2)
-	createPredoughField("list3", Main, T_PREDOUGH, Pre3)
-})
+	
+	
+	
+	
+}
+
+function scanSaves(){
+
+}
+
+scanSaves()

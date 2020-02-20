@@ -367,7 +367,7 @@ class Dough{
 		var fName = folderName+ this.id +".txt"
 
 		// create file for this dough
-		fs.writeFileSync(fName, this.name);
+		fs.writeFileSync(fName, this.name+"\n");
 		// save the entrie into a line of the file
 		for (let i = 0; i < this.entries.length; i++) {
 			const entry = this.entries[i];
