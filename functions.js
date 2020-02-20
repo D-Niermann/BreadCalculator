@@ -174,12 +174,34 @@ document.getElementById("saveButton").addEventListener("click", function(){
 	Pre2.save("./saves/")
 	Pre3.save("./saves/")
 	Main.save("./saves/")
+	// some metadata save
+	const fs = require("fs")
+	var saveString = ""
+	var fName = "./saves/"+ "Metadata" +".txt"
+
+	// create file 
+	fs.writeFileSync(fName, document.getElementById("titleInput").value + ";" + 
+							document.getElementById("authorInput").value + ";" + 
+							document.getElementById("textArea").value
+	);
 })
 document.getElementById("loadButton").addEventListener("click", function(){
+	// load in the metadata
+	const fs = require("fs")
+	var contentList = fs.readFileSync("./saves/" + "Metadata" + ".txt", "utf8").split(";")
+	document.getElementById("titleInput").value = contentList[0]
+	document.getElementById("authorInput").value = contentList[1]
+	document.getElementById("textArea").value = contentList[2]
+
+	// load in the entries
 	Pre1.load("./saves/")
 	Pre2.load("./saves/")
 	Pre3.load("./saves/")
 	Main.load("./saves/")
+	document.getElementById("Pre1_title").value = Pre1.name
+	document.getElementById("Pre2_title").value = Pre2.name
+	document.getElementById("Pre3_title").value = Pre3.name
+	document.getElementById("Main_title").value = Main.name
 	for (let i = 0; i < Pre1.entries.length; i++) {
 		createEntryField("list1", Pre1, Pre1.entries[i], true)
 	}
@@ -196,5 +218,4 @@ document.getElementById("loadButton").addEventListener("click", function(){
 	createPredoughField("list3", Main, T_PREDOUGH, Pre1)
 	createPredoughField("list3", Main, T_PREDOUGH, Pre2)
 	createPredoughField("list3", Main, T_PREDOUGH, Pre3)
-	// Main.update()
 })

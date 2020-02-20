@@ -11,14 +11,14 @@
 	<div class="topbar">
 		<div class = "item1">
 			<div>
-				<input class = "title-input", type="text", value="Title", size="20" onClick= "this.select()">
+				<input class = "title-input", id = "titleInput", type="text", value="Title", size="20" onClick= "this.select()">
 			</div>
 				
 			<div>
-				<a style="font-family: myfont; font-size: 9pt;">by </a><input class = "author-input", type="text", value="Author", onClick= "this.select()">
+				<a style="font-family: myfont; font-size: 9pt;">by </a><input class = "author-input", id = "authorInput", type="text", value="Author", onClick= "this.select()">
 			</div>
 			<div>
-				<textarea class = "description-textfield" cols="60" rows="2"></textarea>
+				<textarea class = "description-textfield" cols="60" rows="2" id = "textArea"></textarea>
 			</div>
 		</div>
 
@@ -116,7 +116,7 @@
 
 			<div class="wrap-collabsible">
 					<input id="collapsible3" class="toggle" type="checkbox" checked>
-					<label for="collapsible3" class="lbl-toggle"><input class = "coll-input", type="text", value="Main"></label>
+					<label for="collapsible3" class="lbl-toggle"><input class = "coll-input", type="text", value="Main", id = "Main_title"></label>
 					<div class="collapsible-content">
 						<div class="content-inner">
 							<!-- actual content list -->

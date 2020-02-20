@@ -367,7 +367,7 @@ class Dough{
 		var fName = folderName+ this.id +".txt"
 
 		// create file for this dough
-		fs.writeFileSync(fName, "");
+		fs.writeFileSync(fName, this.name);
 		// save the entrie into a line of the file
 		for (let i = 0; i < this.entries.length; i++) {
 			const entry = this.entries[i];
@@ -387,12 +387,13 @@ class Dough{
 
 		// split data into lines 
 		var stringEntries = string.split("\n")
+		this.name = stringEntries[0]
 		// go through each line and load the entries
-		for (let i = 0; i < (stringEntries.length)-1; i++) {
+		for (let i = 1; i < (stringEntries.length)-1; i++) {
 			const line = stringEntries[i];
 			var entry = new Entry(0,0)
 			entry.load(line)
-			console.log(this.id + " loading entry: "+entry.getInfo())
+			// console.log(this.id + " loading entry: "+entry.getInfo())
 			this.addEntry(entry)
 		}
 		this.update()

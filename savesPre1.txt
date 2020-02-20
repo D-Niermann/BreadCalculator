@@ -1,5 +1,0 @@
-1, 44.473, Weizen, percent, 10, Flour, 
-1, 100, test2, , 0, Flour, 
-1, 100, test2, , 0, Flour, 
-1, 0, Name, , 0, Flour, 
-2, 200, wwww, gram, 44.97110606435365, Flour, 
