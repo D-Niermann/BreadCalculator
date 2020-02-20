@@ -237,8 +237,8 @@ class Dough{
 	}
 
 	removeEntry(id){
-		// console.log("---- OLD ------")
-		// this.showEntries()
+		console.log("---- OLD ------")
+		this.showEntries()
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			if(e.id == id){
@@ -246,8 +246,8 @@ class Dough{
 				this.entries.splice(i,1)
 			}
 		}
-		// console.log("---- NEW ------")
-		// this.showEntries()
+		console.log("---- NEW ------")
+		this.showEntries()
 	}
 
 	removeAll(){
@@ -371,8 +371,10 @@ class Dough{
 		// save the entrie into a line of the file
 		for (let i = 0; i < this.entries.length; i++) {
 			const entry = this.entries[i];
-			saveString = entry.save()
-			fs.appendFileSync(fName, saveString); 
+			if (entry.type != T_PREDOUGH){
+				saveString = entry.save()
+				fs.appendFileSync(fName, saveString); 
+			}
 		}
 	}
 
@@ -390,6 +392,7 @@ class Dough{
 			const line = stringEntries[i];
 			var entry = new Entry(0,0)
 			entry.load(line)
+			console.log(this.id + " loading entry: "+entry.getInfo())
 			this.addEntry(entry)
 		}
 		this.update()

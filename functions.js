@@ -106,25 +106,6 @@ function dragStart(event) {
 	}
   }
   
-console.log(ID.get())
-console.log(ID.get())
-var entry = new Entry(1, T_FLOUR)
-// createEntryField("list1", Pre1, entry);
-// createEntryField("list1", Pre1, entry);
-// createEntryField("list1", Pre1, entry);
-// Pre1.entries[0].updateName("test1")
-// Pre1.entries[1].updateName("test2")
-// Pre1.entries[0].updatesGrams(100)
-// Pre1.entries[1].updateGrams(100)
-// Pre1.save("./saves")
-Pre1.load("./saves/")
-Pre1.showEntries()
-for (let i = 0; i < Pre1.entries.length; i++) {
-	createEntryField("list1", Pre1, Pre1.entries[i], true)
-	createPredoughField("list3", Main, T_PREDOUGH, Pre1)
-	Pre1.update()
-	Main.update()
-}
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
@@ -183,3 +164,37 @@ pre3_title.addEventListener ('keyup', function() {
 	Pre3.name = this.value
 	Main.getEntry(Pre3.id).updateName(Pre3.name)
 });
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Save and Load			// !Hardcoded predough!
+/////////////////////////////////////////////////////////////////////////////
+document.getElementById("saveButton").addEventListener("click", function(){
+	Pre1.save("./saves/")
+	Pre2.save("./saves/")
+	Pre3.save("./saves/")
+	Main.save("./saves/")
+})
+document.getElementById("loadButton").addEventListener("click", function(){
+	Pre1.load("./saves/")
+	Pre2.load("./saves/")
+	Pre3.load("./saves/")
+	Main.load("./saves/")
+	for (let i = 0; i < Pre1.entries.length; i++) {
+		createEntryField("list1", Pre1, Pre1.entries[i], true)
+	}
+	for (let i = 0; i < Pre2.entries.length; i++) {
+		createEntryField("list2", Pre2, Pre2.entries[i], true)
+	}
+	for (let i = 0; i < Pre3.entries.length; i++) {
+		createEntryField("list4", Pre3, Pre3.entries[i], true)
+	}
+	for (let i = 0; i < Main.entries.length; i++) {
+		createEntryField("list3", Main, Main.entries[i], true)
+	}
+	// this needs to be done at last!:
+	createPredoughField("list3", Main, T_PREDOUGH, Pre1)
+	createPredoughField("list3", Main, T_PREDOUGH, Pre2)
+	createPredoughField("list3", Main, T_PREDOUGH, Pre3)
+	// Main.update()
+})

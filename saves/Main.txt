@@ -1,0 +1,1 @@
+3, 99, weizenMain, gram, 42.672413793103445, Flour, 

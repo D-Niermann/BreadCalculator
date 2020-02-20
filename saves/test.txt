@@ -1,3 +1,0 @@
-0, 100, test1, , 0, Flour, 
-1, 100, test2, , 0, Flour, 
-2, 0, Name, , 0, Flour, 
