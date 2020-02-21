@@ -253,3 +253,24 @@ function loadFiles(folderName){
 	
 }
 
+var loadList = document.getElementById("loadList")
+setInterval(function(){
+	var len = loadList.childNodes.length
+	for (let i = 0; i < len; i++) {
+		const c = loadList.childNodes[0];
+		loadList.removeChild(c)
+	}
+	
+	var contents = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8").split("\n")
+	
+	console.log("-------------------")
+	for (let i = 0; i < (contents.length)-1; i++) {
+		const line = contents[i]	
+		var list_el = document.createElement("li")
+		var div = document.createElement("div")
+		div.innerHTML = line
+		list_el.appendChild(div)
+		console.log("Adding child")
+		loadList.appendChild(list_el)
+	}
+},1000)
