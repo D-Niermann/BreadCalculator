@@ -7,7 +7,7 @@ const T_PERCENT = "percent"
 const saveMainFolder = "./saves/"
 const fs = require("fs")
 if (!fs.existsSync(saveMainFolder)){fs.mkdirSync(saveMainFolder)}
-fs.writeFileSync(saveMainFolder + "fileManager.txt", "")
+if (!fs.existsSync(saveMainFolder + "fileManager.txt")){fs.writeFileSync(saveMainFolder + "fileManager.txt", "")}
 
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")

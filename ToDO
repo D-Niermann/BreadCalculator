@@ -1,7 +1,8 @@
+- New button der alles loescht!
 
 - load and save feature
-	- add data string to fileManager.txt
 	- make list of filenames and dates sortable by these categories 
 	- design a nice load list
+		- more like a flat ui look in list fitting to topbar
 	
 - zeiten input in header der jeweiligen teige
