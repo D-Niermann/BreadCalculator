@@ -1,3 +1,7 @@
 
 - load and save feature
+	- add data string to fileManager.txt
+	- make list of filenames and dates sortable by these categories 
+	- design a nice load list
+	
 - zeiten input in header der jeweiligen teige

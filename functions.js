@@ -2,13 +2,13 @@ const T_OTHER = "Other"
 const T_FLOUR = "Flour"
 const T_WATER = "Fluid"
 const T_PREDOUGH = "Pref."
-var ID = 0
 const T_GRAM = "gram"
 const T_PERCENT = "percent"
+const saveMainFolder = "./saves/"
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
-const {Dough} = require("./Classes.js")
-
+const {Dough, Entry} = require("./Classes.js")
+console.log("Import")
 var Pre1 = new Dough("Pre-ferment 1", "Pre1");
 var Pre2 = new Dough("Pre-ferment 2", "Pre2");
 var Pre3 = new Dough("Pre-ferment 3", "Pre3");
@@ -16,10 +16,21 @@ var Pre3 = new Dough("Pre-ferment 3", "Pre3");
 
 var Main = new Dough("Main", "Main");
 Main.makeMain()
+console.log("Dough defs")
 
+class IDGen{
+	constructor(){
+		this.ID = 11000
+	}
 
+	get(){
+		this.ID += 1
+		return this.ID
+	}
+}
+const ID = new IDGen()
 
-
+console.log("ID Class def")
 
 function dragStart(event) {
 	dragSrcEl = this;
@@ -96,31 +107,22 @@ function dragStart(event) {
 	}
   }
   
-  function test(){
-	  console.log("Test")
-	var list = document.getElementById("list3")
-	var copy = list.childNodes[1].cloneNode(true)
-	console.log(copy)
-	list.insertBefore(copy, list.childNodes[0])
-	list.removeChild(list.childNodes[1])
-  }
 
+document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_OTHER));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
 
-document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
-document.getElementById("addPre12").addEventListener("click", function(){createEntryField("list1", Pre1, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
-document.getElementById("addPre13").addEventListener("click", function(){createEntryField("list1", Pre1, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
+document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, new Entry(ID.get(), T_OTHER));createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
 
-document.getElementById("addPre21").addEventListener("click", function(){createEntryField("list2", Pre2, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
-document.getElementById("addPre22").addEventListener("click", function(){createEntryField("list2", Pre2, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
-document.getElementById("addPre23").addEventListener("click", function(){createEntryField("list2", Pre2, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre2)});
+document.getElementById("addPre31").addEventListener("click", function(){createEntryField("list4", Pre3, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre32").addEventListener("click", function(){createEntryField("list4", Pre3, new Entry(ID.get(), T_WATER));createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
+document.getElementById("addPre33").addEventListener("click", function(){createEntryField("list4", Pre3, new Entry(ID.get(), T_OTHER));createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
 
-document.getElementById("addPre31").addEventListener("click", function(){createEntryField("list4", Pre3, T_FLOUR);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
-document.getElementById("addPre32").addEventListener("click", function(){createEntryField("list4", Pre3, T_WATER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
-document.getElementById("addPre33").addEventListener("click", function(){createEntryField("list4", Pre3, T_OTHER);createPredoughField("list3", Main, T_PREDOUGH, Pre3)});
-
-document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, T_FLOUR)});
-document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, T_WATER)});
-document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, T_OTHER)});
+document.getElementById("addPreMain1").addEventListener("click", function(){createEntryField("list3", Main, new Entry(ID.get(), T_FLOUR))});
+document.getElementById("addPreMain2").addEventListener("click", function(){createEntryField("list3", Main, new Entry(ID.get(), T_WATER))});
+document.getElementById("addPreMain3").addEventListener("click", function(){createEntryField("list3", Main, new Entry(ID.get(), T_OTHER))});
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -163,3 +165,181 @@ pre3_title.addEventListener ('keyup', function() {
 	Pre3.name = this.value
 	Main.getEntry(Pre3.id).updateName(Pre3.name)
 });
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Save and Load			// !Hardcoded predough!
+/////////////////////////////////////////////////////////////////////////////
+const fs = require("fs")
+document.getElementById("saveButton").addEventListener("click", function(){
+	const saveFolder = document.getElementById("titleInput").value + "/"
+	if (!fs.existsSync(saveMainFolder + saveFolder)){
+		fs.mkdirSync(saveMainFolder + saveFolder);
+
+		Pre1.save(saveMainFolder + saveFolder)
+		Pre2.save(saveMainFolder + saveFolder)
+		Pre3.save(saveMainFolder + saveFolder)
+		Main.save(saveMainFolder + saveFolder)
+		// some metadata save
+		var saveString = ""
+		var fName = saveMainFolder + saveFolder+ "Metadata" +".txt"
+
+		// create file 
+		fs.writeFileSync(fName, document.getElementById("titleInput").value + ";" + 
+
+								document.getElementById("authorInput").value + ";" + 
+								document.getElementById("textArea").value
+		);
+
+		fs.appendFileSync(saveMainFolder + "fileManager.txt", saveFolder+"\n")
+	}
+	else{
+		// create a popup that says bread alredy exists, overwrite?
+	}
+
+})
+
+
+function loadFiles(folderName){
+	// load in the metadata
+	var contentList = fs.readFileSync(saveMainFolder + folderName + "Metadata" + ".txt", "utf8").split(";")
+	document.getElementById("titleInput").value = contentList[0]
+	document.getElementById("authorInput").value = contentList[1]
+	document.getElementById("textArea").value = contentList[2]
+
+	// load in the entries
+	Main.removeAll()
+	Pre1.removeAll()
+	Pre2.removeAll()
+	Pre3.removeAll()
+
+
+	Pre1.load(saveMainFolder + folderName)
+	document.getElementById("Pre1_title").value = Pre1.name
+	for (let i = 0; i < Pre1.entries.length; i++) {
+		createEntryField("list1", Pre1, Pre1.entries[i], true)
+		createPredoughField("list3", Main, T_PREDOUGH, Pre1)
+	}
+	
+	
+	Pre2.load(saveMainFolder + folderName)
+	document.getElementById("Pre2_title").value = Pre2.name
+	for (let i = 0; i < Pre2.entries.length; i++) {
+		createEntryField("list2", Pre2, Pre2.entries[i], true)
+		createPredoughField("list3", Main, T_PREDOUGH, Pre2)
+	}
+	
+
+	Pre3.load(saveMainFolder + folderName)
+	document.getElementById("Pre3_title").value = Pre3.name
+	for (let i = 0; i < Pre3.entries.length; i++) {
+		createEntryField("list4", Pre3, Pre3.entries[i], true)
+		createPredoughField("list3", Main, T_PREDOUGH, Pre3)
+	}
+	
+
+	Main.load(saveMainFolder + folderName)
+	document.getElementById("Main_title").value = Main.name
+
+	for (let i = 0; i < Main.entries.length; i++) {
+		if (Main.entries[i].type != T_PREDOUGH){
+			createEntryField("list3", Main, Main.entries[i], true)
+		}
+	}
+	
+	expandColl(loadListContent)
+	
+	
+}
+var loadListContent = document.getElementById("loadListContent")
+document.getElementById("loadButton").addEventListener("click",function(){expandColl(loadListContent)})
+function expandColl(item){
+	if (item.style.maxHeight == "100vh"){
+		item.setAttribute("style", "max-height: 0vh;")
+	}
+	else{
+		item.setAttribute("style", "max-height: 100vh; ")
+	}
+}
+
+var loadList = document.getElementById("loadList")
+var  fileCont = ""
+setInterval(function(){
+	
+	if (fileCont != fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")){
+		fileCont = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")
+		
+		var len = loadList.childNodes.length
+		for (let i = 0; i < len; i++) {
+			const c = loadList.childNodes[0];
+			loadList.removeChild(c)
+		}
+		
+		var contents = fileCont.split("\n")
+		
+		var len_contents = (contents.length)-1
+		for (let i = 0; i < len_contents; i++) {
+			const line = contents[len_contents-1 - i]
+			var list_el = document.createElement("li")
+			list_el.className = "loadList-li"
+			
+			var div = document.createElement("div")
+			div.innerHTML = line.slice(0,-1)
+			div.addEventListener("click", function(){loadFiles(line)})
+			list_el.appendChild(div)
+			
+			var anchor = document.createElement("a")
+			anchor.innerHTML = "delete"
+			anchor.addEventListener("click",function(){
+				deleteFile(line)
+			})
+			list_el.appendChild(anchor)
+			
+			loadList.appendChild(list_el)
+
+		}
+	}
+},1000)
+var deleteFolderRecursive = function(path) {
+	if( fs.existsSync(path) ) {
+
+		fs.readdirSync(path).forEach(function(file,index){
+			var curPath = path + "/" + file;
+			
+			if(fs.lstatSync(curPath).isDirectory()) { // recurse
+				deleteFolderRecursive(curPath);
+			} 
+			else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		console.log("Delete folder "+path)
+		fs.rmdirSync(path);
+	}
+};
+
+function deleteFile(folderName){
+	// open fileManager.txt
+	var fileCont = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")
+	fileCont = fileCont.split("\n")
+	// search for folderName and delete line
+	for (let i = 0; i < fileCont.length; i++) {
+		const line = fileCont[i];
+		if (line == folderName){
+			fileCont.splice(i,1)
+			console.log("Spliced: " + i + ", " + folderName)
+			break
+		}
+	}
+	// save fileManager
+	console.log(fileCont)
+	fs.writeFileSync(saveMainFolder + "fileManager.txt", "")
+	for (let i = 0; i < fileCont.length; i++) {
+		if (fileCont[i] != ""){
+			fs.appendFileSync(saveMainFolder + "fileManager.txt", fileCont[i]+"\n")
+		}
+	}
+
+	// delete folder with folderName
+	deleteFolderRecursive(saveMainFolder + folderName)
+}

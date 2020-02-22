@@ -1,15 +1,18 @@
-const  { Entry } = require("./Classes.js");
+// const  { Entry } = require("./Classes.js");
 ////////////////////////////////////////////
 // ZUTAT SPALTE
 ////////////////////////////////////////////
-function createEntryField(listID, Dough, type){
+function createEntryField(listID, Dough, Entry, loaded = false){
 	var list = document.getElementById(listID);
 	var list_el = document.createElement('li');
 	list_el.setAttribute("style","transition: 0.5s;")
-	list_el.id = ID;
-	ID += 1;
-	var entry = new Entry(list_el.id, type)
-	Dough.addEntry(entry)
+	list_el.className = "doughLi"
+
+	list_el.id = Entry.id;
+	
+	if (loaded == false){
+		Dough.addEntry(Entry)
+	}
 	var img = document.createElement(	"img")
 	img.src = "./dragButton.png"
 	img.alt=""
@@ -37,7 +40,7 @@ function createEntryField(listID, Dough, type){
 	var input = document.createElement("input");
 	input.type = "number";
 	input.className = "input-text-gram"; // set the CSS class
-	input.value = 0
+	input.value = parseFloat(Entry.gram)
 	input.setAttribute("onClick","this.select();")
 	input.addEventListener ('keydown', function (event) {
 		if (event.which == 13) { //enter key
@@ -60,7 +63,7 @@ function createEntryField(listID, Dough, type){
 	var input = document.createElement("input");
 	input.type = "text";
 	input.className = "input-text-name"; // set the CSS class
-	input.value = "Name"
+	input.value = Entry.name
 	input.setAttribute("style",'margin-right: 20px;')
 	input.setAttribute("onClick","this.select();")
 	input.addEventListener ('keydown', function (event) {
@@ -80,7 +83,7 @@ function createEntryField(listID, Dough, type){
 	input.type = "number";
 	input.className = "input-text-percent"; // set the CSS class
 	input.setAttribute("onClick","this.select();")
-	input.value = 0
+	input.value = parseFloat(Entry.percent)
 	input.addEventListener("focusout", function(event){});
 
 	input.addEventListener ('keydown', function(event) {
@@ -104,7 +107,7 @@ function createEntryField(listID, Dough, type){
 	
 	
 	var textType = document.createElement("a")
-	textType.innerHTML = type
+	textType.innerHTML = Entry.type
 	textType.className = "InfoTypeText-transparent"
 	list_el.appendChild(textType)
 

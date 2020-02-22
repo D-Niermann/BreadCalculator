@@ -3,23 +3,30 @@ const T_FLOUR = "Flour"
 const T_WATER = "Fluid"
 const T_PREDOUGH = "Pref."
 
-class Entry{
 
+class Entry{
+	
 	constructor(id, type){
 		// console.log("Created id: "+id)
+
+		// vars relevant for the saving entry
 		this.id = id
 		this.gram = 0
 		this.name = "Name"
 		this.lastEdited = ""
 		this.percent = 0
 		this.type = type
+
+
+		// consts 
+		this.stringSeperator = ", "
 	}
 
 	removeListEl(){
 		document.getElementById(this.id).remove();	
 	}
 	getInfo(){
-		console.log("ID: "+this.id + " Type: "+ this.type)
+		console.log("ID: "+this.id +" Gram: "+this.gram + " %: "+ this.percent+ " Type: "+ this.type)
 	}
 
 	roundToTens(value){
@@ -94,7 +101,46 @@ class Entry{
 			return true}
 		else{return false}
 	}
+
+	save(){
+		var string;
+		string = this.id.toString() + this.stringSeperator +
+				this.gram.toString() + this.stringSeperator +
+				this.name.toString() + this.stringSeperator +
+				this.lastEdited.toString() + this.stringSeperator +
+				this.percent.toString() + this.stringSeperator +
+				this.type.toString() + this.stringSeperator 
+		string+= "\n"
+		return string
+
+	}
+
+	load(stringLine){
+		var strings = stringLine.split(this.stringSeperator)
+		this.id = parseInt(strings[0])
+		this.gram = parseInt(strings[1])
+		this.name = strings[2]
+		this.lastEdited = strings[3]
+		this.percent = parseFloat(strings[4])
+		this.type = strings[5]
+		
+		console.log("----------")
+		console.log("Loaded Vars")
+		console.log("ID: "+this.id+"... Gram: "+this.gram)
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Dough{
 
@@ -135,7 +181,7 @@ class Dough{
 				this.pre_fluid_gram += e.gram
 			}
 			if(e.isPredough()){
-
+				
 			}
 			if(e.isOther()){
 				this.pre_other_gram += e.gram
@@ -150,10 +196,12 @@ class Dough{
 	}
 
 	showEntries(){
+		console.log("Entries of "+ this.id+":\n")
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			e.getInfo()
 		}
+		console.log("-----------------")
 	}
 
 	makeMain(){
@@ -189,8 +237,8 @@ class Dough{
 	}
 
 	removeEntry(id){
-		// console.log("---- OLD ------")
-		// this.showEntries()
+		console.log("---- OLD ------")
+		this.showEntries()
 		for (let i = 0; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			if(e.id == id){
@@ -198,8 +246,8 @@ class Dough{
 				this.entries.splice(i,1)
 			}
 		}
-		// console.log("---- NEW ------")
-		// this.showEntries()
+		console.log("---- NEW ------")
+		this.showEntries()
 	}
 
 	removeAll(){
@@ -213,7 +261,7 @@ class Dough{
 
 
 
-	update(id){
+	update(id=0){
 		
 		// fetch all entries from pre doughs
 		if (this.isMain){
@@ -308,11 +356,48 @@ class Dough{
 			this.weight_field.value = Math.round(this.flour_total + this.fluid_total)
 			this.flour_field.value = Math.round(this.flour_total)
 			this.fluid_field.value = Math.round(this.fluid_total)
-			this.percent_field.value = 100+Math.round((this.fluid_total)/(this.flour_total) * 100)
+			this.percent_field.value = Math.round((this.fluid_total)/(this.flour_total) * 100)
 		}
 			
 	}	
 
+	save(folderName){
+		const fs = require("fs")
+		var saveString = ""
+		var fName = folderName+ this.id +".txt"
+
+		// create file for this dough
+		fs.writeFileSync(fName, this.name+"\n");
+		// save the entrie into a line of the file
+		for (let i = 0; i < this.entries.length; i++) {
+			const entry = this.entries[i];
+			if (entry.type != T_PREDOUGH){
+				saveString = entry.save()
+				fs.appendFileSync(fName, saveString); 
+			}
+		}
+	}
+
+	load(folderName){
+		// load file for this dough
+		const fs = require("fs")
+		var fName = folderName+ this.id +".txt"
+
+		var string = fs.readFileSync(fName,"utf8")
+
+		// split data into lines 
+		var stringEntries = string.split("\n")
+		this.name = stringEntries[0]
+		// go through each line and load the entries
+		for (let i = 1; i < (stringEntries.length)-1; i++) {
+			const line = stringEntries[i];
+			var entry = new Entry(0,0)
+			entry.load(line)
+			// console.log(this.id + " loading entry: "+entry.getInfo())
+			this.addEntry(entry)
+		}
+		this.update()
+	}
 	
 }
 
