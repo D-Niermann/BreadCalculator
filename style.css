@@ -407,11 +407,11 @@ ul li > *{
 
 .loadArea{
 	background-color: rgb(70,60,52);
-	width: 120%;
+	/* width: 120%; */
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: -10px;
-	margin-right: -10px;
+	margin-right: -8px;
 	margin-top: -10px;
 	border: none none solid none;
 	border-color: rgb(51, 50, 49);
