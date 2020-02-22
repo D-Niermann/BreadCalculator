@@ -5,6 +5,10 @@ const T_PREDOUGH = "Pref."
 const T_GRAM = "gram"
 const T_PERCENT = "percent"
 const saveMainFolder = "./saves/"
+const fs = require("fs")
+if (!fs.existsSync(saveMainFolder)){fs.mkdirSync(saveMainFolder)}
+fs.writeFileSync(saveMainFolder + "fileManager.txt", "")
+
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
 const {Dough, Entry} = require("./Classes.js")
@@ -170,9 +174,9 @@ pre3_title.addEventListener ('keyup', function() {
 /////////////////////////////////////////////////////////////////////////////
 // Save and Load			// !Hardcoded predough!
 /////////////////////////////////////////////////////////////////////////////
-const fs = require("fs")
+
 document.getElementById("saveButton").addEventListener("click", function(){
-	const saveFolder = document.getElementById("titleInput").value + "/"
+	const saveFolder = document.getElementById("titleInput").value + "/"	
 	if (!fs.existsSync(saveMainFolder + saveFolder)){
 		fs.mkdirSync(saveMainFolder + saveFolder);
 
