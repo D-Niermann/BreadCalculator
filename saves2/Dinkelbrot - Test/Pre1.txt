@@ -1,3 +1,0 @@
-Dinkelvorteig
-11001, 0, Weizen, , 0, Flour, 
-11002, 100, Dinkel, gram, 100, Flour, 

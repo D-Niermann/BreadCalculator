@@ -7,7 +7,7 @@ const T_PERCENT = "percent"
 const saveMainFolder = "./saves/"
 const fs = require("fs")
 if (!fs.existsSync(saveMainFolder)){fs.mkdirSync(saveMainFolder)}
-fs.writeFileSync(saveMainFolder + "fileManager.txt", "")
+if (!fs.existsSync(saveMainFolder + "fileManager.txt")){fs.writeFileSync(saveMainFolder + "fileManager.txt", "")}
 
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
@@ -290,6 +290,7 @@ setInterval(function(){
 			var div = document.createElement("div")
 			div.innerHTML = line.slice(0,-1)
 			div.addEventListener("click", function(){loadFiles(line)})
+			div.className = "loadListDiv"
 			list_el.appendChild(div)
 			
 			var anchor = document.createElement("a")
