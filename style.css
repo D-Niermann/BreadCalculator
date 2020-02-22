@@ -31,6 +31,13 @@ body {
 }
 
 
+
+
+
+
+
+
+
 .InfoTypeText{
 	font-size: 10pt;
 	padding: 0px;
@@ -178,6 +185,10 @@ body {
 	transition: 0.5s;
 	margin-bottom: 20px;
 }
+.wrap-collabsibleLoad {
+	transition: 0.5s;
+	margin-bottom: 2px;
+}
 
 input[type='checkbox'] {
 	display: none;
@@ -197,6 +208,22 @@ input[type='checkbox'] {
 	cursor: pointer;
 	border-radius: 7px;
 	transition: all 0.25s ease-out;
+}
+.lbl-toggleLoad {
+	display: block;
+	font-weight: bold;
+	font-family: myfont;
+	font-size: 12pt;
+	text-transform: uppercase;
+	text-align: center;
+	/* padding: 1rem; */
+	background: rgb(44, 35, 22,0);
+	cursor: pointer;
+	border-radius: 0px;
+	transition: all 0.25s ease-out;
+}
+.LoadAreaColl{
+	color: rgb(247, 243, 238);
 }
 
 .lbl-toggle:hover {
@@ -294,8 +321,8 @@ input::-webkit-inner-spin-button {
 .collapsible-content {
 	max-height: 0px;
 	overflow: hidden;
-	transition: 0.5s;
-	transition: max-height .25s ease-in-out;
+	/* transition: 0.9s; */
+	transition: max-height .5s ease-in-out;
 }
 
 .toggle:checked+.lbl-toggle+.collapsible-content {
@@ -303,6 +330,15 @@ input::-webkit-inner-spin-button {
 }
 
 .toggle:checked+.lbl-toggle {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.toggleLoad:checked+.lbl-toggleLoad+.collapsible-content {
+	max-height: 100vh;
+}
+
+.toggleLoad:checked+.lbl-toggleLoad {
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
 }
@@ -316,14 +352,14 @@ input::-webkit-inner-spin-button {
 	transition: 0.5s;
 }
 
-ul {
+.doughUl {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 	transition: 0.5s;
 }
 
-ul li {
+.doughLi {
 	/* border: 1px solid #ddd; */
 	/* margin-top: -1px; */
 	/* Prevent double borders */
@@ -363,4 +399,20 @@ ul li > *{
 .close:hover {
 	transition: 0.2s;
 	background: rgb(0, 0, 0, 0.1);
+}
+
+
+
+.loadArea{
+	background-color: rgba(51, 48, 46, 0.164);
+	width: 120%;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: -10px;
+	margin-right: -10px;
+	margin-top: -10px;
+	border: none none solid none;
+}
+.loadList-li:hover{
+	background-color: rgba(73, 55, 12, 0.308);
 }

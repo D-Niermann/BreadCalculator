@@ -7,6 +7,7 @@ function createPredoughField(listID, Dough, type, Predough){
 		var list_el = document.createElement('li');
 		list_el.setAttribute("style","transition: 0.5s;")
 		list_el.id = Predough.id;
+		list_el.className = "doughLi"
 		var entry = new Entry(list_el.id, type)
 		Dough.addEntry(entry)
 		var img = document.createElement("img")

@@ -5,7 +5,21 @@
   
 </head>
 <body>
-
+<div class = "loadArea">
+	<div class="wrap-collabsibleLoad">
+		<input id="collapsibleLoadlist" class="toggleLoad" type="checkbox">
+		<label for="collapsibleLoadlist" class="lbl-toggleLoad">
+			<div class = "unselectable"  id = "LoadAreaColl">Load Recipe</div>
+		</label>
+		<div class="collapsible-content">
+			<div class="content-inner">
+				<ul id = "loadList" class = "loadList">
+				</ul>
+			</div>
+		</div>
+	</div>
+			
+</div>
 <div class="main-grid">
 	<!-- left grid element -->
 	<div class="topbar">
@@ -56,7 +70,7 @@
 			<div class="collapsible-content">
 				<div class="content-inner">
 					<!-- actual content list -->
-					<ul id="list1">
+					<ul id="list1" class= "doughUl">
 					</ul>
 					<div class = "content-addButtons">
 						<div class = "addButton" id="addPre11" style="text-align: center"> <img id="myImg" src="test.png" alt="" width="13" height="13", draggable=""> Flour</div>
@@ -76,7 +90,7 @@
 				<div class="collapsible-content">
 					<div class="content-inner">
 						<!-- actual content list -->
-						<ul id="list2">
+						<ul id="list2" class= "doughUl">
 						</ul>
 						<div class = "content-addButtons">
 							<div class = "addButton" id="addPre21" style="text-align: center"> <img id="myImg" src="test.png" alt="" width="13" height="13"> Flour</div>
@@ -94,7 +108,7 @@
 			<div class="collapsible-content">
 				<div class="content-inner">
 					<!-- actual content list -->
-					<ul id="list4">
+					<ul id="list4" class= "doughUl">
 					</ul>
 					<div class = "content-addButtons">
 						<div class = "addButton" id="addPre31" style="text-align: center"> <img id="myImg" src="test.png" alt="" width="13" height="13"> Flour</div>
@@ -115,12 +129,12 @@
 	<div class = "item2">
 
 			<div class="wrap-collabsible">
-					<input id="collapsible3" class="toggle" type="checkbox" checked>
-					<label for="collapsible3" class="lbl-toggle"><input class = "coll-input", type="text", value="Main", id = "Main_title"></label>
+					<input id="collapsibleMain" class="toggle" type="checkbox" checked>
+					<label for="collapsibleMain" class="lbl-toggle"><input class = "coll-input", type="text", value="Main", id = "Main_title"></label>
 					<div class="collapsible-content">
 						<div class="content-inner">
 							<!-- actual content list -->
-							<ul id="list3">
+							<ul id="list3" class= "doughUl">
 							</ul>
 							<div class = "content-addButtons">
 								<div class = "addButton" id="addPreMain1" style="text-align: center"> <img id="myImg" src="test.png" alt="" width="13" height="13"> Flour</div>
@@ -135,11 +149,7 @@
 </div>
 
 <input type="button" id = "saveButton" value="Save">
-<input type="button" id = "loadButton" value="Load">
 
-<ul id = "loadList">
-
-</ul>
 
 <script src="functions.js"></script>
 </body>

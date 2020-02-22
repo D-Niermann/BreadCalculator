@@ -197,9 +197,7 @@ document.getElementById("saveButton").addEventListener("click", function(){
 	}
 
 })
-document.getElementById("loadButton").addEventListener("click", function(){
-	loadFiles("test/")
-})
+
 
 function loadFiles(folderName){
 	// load in the metadata
@@ -254,23 +252,48 @@ function loadFiles(folderName){
 }
 
 var loadList = document.getElementById("loadList")
+var  fileCont = ""
 setInterval(function(){
-	var len = loadList.childNodes.length
-	for (let i = 0; i < len; i++) {
-		const c = loadList.childNodes[0];
-		loadList.removeChild(c)
-	}
 	
-	var contents = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8").split("\n")
-	
-	console.log("-------------------")
-	for (let i = 0; i < (contents.length)-1; i++) {
-		const line = contents[i]	
-		var list_el = document.createElement("li")
-		var div = document.createElement("div")
-		div.innerHTML = line
-		list_el.appendChild(div)
-		console.log("Adding child")
-		loadList.appendChild(list_el)
+	if (fileCont != fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")){
+		fileCont = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")
+		
+		var len = loadList.childNodes.length
+		for (let i = 0; i < len; i++) {
+			const c = loadList.childNodes[0];
+			loadList.removeChild(c)
+		}
+		
+		var contents = fileCont.split("\n")
+		
+		var len_contents = (contents.length)-1
+		for (let i = 0; i < len_contents; i++) {
+			const line = contents[len_contents-1 - i]
+			var list_el = document.createElement("li")
+			list_el.className = "loadList-li"
+			list_el.addEventListener("click", function(){loadFiles(line)})
+			
+			var div = document.createElement("div")
+			div.innerHTML = line
+			list_el.appendChild(div)
+			
+			// var anchor = document.createElement("a")
+			// anchor.innerHTML = "delete"
+			// anchor.addEventListener("click",function(){
+			// 	deleteFile(line)
+			// })
+			// list_el.appendChild(anchor)
+			
+			loadList.appendChild(list_el)
+
+		}
 	}
 },1000)
+
+function deleteFile(folderName){
+	// open fileManager.txt
+	// search for folderName and delete line
+	// save fileManager
+
+	// delete folder with folderName
+}
