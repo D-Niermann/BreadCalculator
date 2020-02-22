@@ -1,3 +1,0 @@
-Main
-11004, 2, Dinkel 630, gram, 0.18148820326678766, Flour, 
-11005, 0, Wasser, , 0, Fluid, 
