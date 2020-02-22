@@ -432,8 +432,9 @@ ul li > *{
 	font-size: 14pt;
 	color: rgb(240, 234, 234);
 }
-.loadList-li:hover{
-	background-color: rgba(73, 55, 12, 0.308);
+.loadListDiv:hover{
+	background-color: rgb(49, 45, 41);
+	transition: 0.1s;
 }
 
 .headerButton{

@@ -290,6 +290,7 @@ setInterval(function(){
 			var div = document.createElement("div")
 			div.innerHTML = line.slice(0,-1)
 			div.addEventListener("click", function(){loadFiles(line)})
+			div.className = "loadListDiv"
 			list_el.appendChild(div)
 			
 			var anchor = document.createElement("a")

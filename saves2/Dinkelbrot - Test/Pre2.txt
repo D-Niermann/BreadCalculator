@@ -1,2 +1,0 @@
-Vodka Pur
-11003, 1000, Name, gram, 100, Flour, 
