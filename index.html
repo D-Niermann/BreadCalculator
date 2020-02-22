@@ -6,10 +6,11 @@
 </head>
 <body>
 <div class = "loadArea">
-	<div class="wrap-collabsibleLoad">
+	<div>
 		<input id="collapsibleLoadlist" class="toggleLoad" type="checkbox">
 		<label for="collapsibleLoadlist" class="lbl-toggleLoad">
-			<div class = "unselectable"  id = "LoadAreaColl">Load Recipe</div>
+			<a class = "headerButton"  id = "LoadAreaColl"> Load Recipe </a>
+			<a class = "headerButton"  id = "saveButton"> Save Recipe </a>
 		</label>
 		<div class="collapsible-content">
 			<div class="content-inner">
@@ -86,7 +87,9 @@
 		<!-- Second predough colla -->
 		<div class="wrap-collabsible">
 				<input id="collapsible2" class="toggle" type="checkbox">
-				<label for="collapsible2" class="lbl-toggle"><input class = "coll-input", id="Pre2_title" type="text", value="Pre-ferment 2"></label>
+				<label for="collapsible2" class="lbl-toggle">
+					<input class = "coll-input", id="Pre2_title" type="text", value="Pre-ferment 2">
+				</label>
 				<div class="collapsible-content">
 					<div class="content-inner">
 						<!-- actual content list -->
@@ -148,7 +151,7 @@
 
 </div>
 
-<input type="button" id = "saveButton" value="Save">
+
 
 
 <script src="functions.js"></script>

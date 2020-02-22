@@ -24,6 +24,12 @@ body {
     font-family: myFont;
     src: url("./fonts/Merienda-Regular.ttf");
 }
+@font-face {
+    font-family: fancyFont;
+    src: url("./fonts/Galada-Regular.ttf");
+}
+
+
 * {
 	box-sizing: border-box;
 	/* font-family: fantasy; */
@@ -185,10 +191,6 @@ body {
 	transition: 0.5s;
 	margin-bottom: 20px;
 }
-.wrap-collabsibleLoad {
-	transition: 0.5s;
-	margin-bottom: 2px;
-}
 
 input[type='checkbox'] {
 	display: none;
@@ -211,16 +213,16 @@ input[type='checkbox'] {
 }
 .lbl-toggleLoad {
 	display: block;
-	font-weight: bold;
-	font-family: myfont;
-	font-size: 12pt;
-	text-transform: uppercase;
-	text-align: center;
-	/* padding: 1rem; */
-	background: rgb(44, 35, 22,0);
-	cursor: pointer;
+	/* font-weight: bold; */
+	/* font-family: myfont; */
+	/* font-size: 1.0rem; */
+	/* text-transform: uppercase; */
+	/* text-align: center; */
+	padding: 0.5rem;
+	/* background: rgb(44, 35, 22,0); */
+	/* cursor: pointer;
 	border-radius: 0px;
-	transition: all 0.25s ease-out;
+	transition: all 0.25s ease-out; */
 }
 .LoadAreaColl{
 	color: rgb(247, 243, 238);
@@ -404,7 +406,7 @@ ul li > *{
 
 
 .loadArea{
-	background-color: rgba(51, 48, 46, 0.164);
+	background-color: rgb(51, 48, 46);
 	width: 120%;
 	padding-left: 0px;
 	padding-right: 0px;
@@ -412,7 +414,34 @@ ul li > *{
 	margin-right: -10px;
 	margin-top: -10px;
 	border: none none solid none;
+	border-color: rgb(51, 50, 49);
+}
+
+.loadList-li{
+	border-style: none none solid none ;
+	border-width: 1px;
+	border-color: rgba(241, 231, 216, 0.342);
+	border-width: 20%;
+	padding-top: 5px;
+	width: 20%;
+	text-decoration: none;
+	color: rgb(240, 234, 234);
 }
 .loadList-li:hover{
 	background-color: rgba(73, 55, 12, 0.308);
+}
+
+.headerButton{
+	color: wheat;
+	font-family: fancyFont;
+	font-size: 15pt;
+	padding-top: 10px;
+	padding-bottom: 8px;
+	padding-right: 20px;
+	padding-left: 20px;
+	transition: 0.25s;
+}
+.headerButton:hover{
+	background-color: wheat;
+	color: rgb(59, 59, 59);
 }

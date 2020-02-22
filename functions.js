@@ -190,7 +190,7 @@ document.getElementById("saveButton").addEventListener("click", function(){
 								document.getElementById("textArea").value
 		);
 
-		fs.appendFileSync(saveMainFolder + "fileManager.txt", saveFolder + "\n")
+		fs.appendFileSync(saveMainFolder + "fileManager.txt", saveFolder+"\n")
 	}
 	else{
 		// create a popup that says bread alredy exists, overwrite?
@@ -274,7 +274,7 @@ setInterval(function(){
 			list_el.addEventListener("click", function(){loadFiles(line)})
 			
 			var div = document.createElement("div")
-			div.innerHTML = line
+			div.innerHTML = line.slice(0,-1)
 			list_el.appendChild(div)
 			
 			// var anchor = document.createElement("a")
