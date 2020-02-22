@@ -186,6 +186,7 @@ document.getElementById("saveButton").addEventListener("click", function(){
 
 		// create file 
 		fs.writeFileSync(fName, document.getElementById("titleInput").value + ";" + 
+
 								document.getElementById("authorInput").value + ";" + 
 								document.getElementById("textArea").value
 		);
@@ -246,9 +247,19 @@ function loadFiles(folderName){
 		}
 	}
 	
+	expandColl(loadListContent)
 	
 	
-	
+}
+var loadListContent = document.getElementById("loadListContent")
+document.getElementById("loadButton").addEventListener("click",function(){expandColl(loadListContent)})
+function expandColl(item){
+	if (item.style.maxHeight == "100vh"){
+		item.setAttribute("style", "max-height: 0vh;")
+	}
+	else{
+		item.setAttribute("style", "max-height: 100vh; ")
+	}
 }
 
 var loadList = document.getElementById("loadList")
@@ -271,29 +282,64 @@ setInterval(function(){
 			const line = contents[len_contents-1 - i]
 			var list_el = document.createElement("li")
 			list_el.className = "loadList-li"
-			list_el.addEventListener("click", function(){loadFiles(line)})
 			
 			var div = document.createElement("div")
 			div.innerHTML = line.slice(0,-1)
+			div.addEventListener("click", function(){loadFiles(line)})
 			list_el.appendChild(div)
 			
-			// var anchor = document.createElement("a")
-			// anchor.innerHTML = "delete"
-			// anchor.addEventListener("click",function(){
-			// 	deleteFile(line)
-			// })
-			// list_el.appendChild(anchor)
+			var anchor = document.createElement("a")
+			anchor.innerHTML = "delete"
+			anchor.addEventListener("click",function(){
+				deleteFile(line)
+			})
+			list_el.appendChild(anchor)
 			
 			loadList.appendChild(list_el)
 
 		}
 	}
 },1000)
+var deleteFolderRecursive = function(path) {
+	if( fs.existsSync(path) ) {
+
+		fs.readdirSync(path).forEach(function(file,index){
+			var curPath = path + "/" + file;
+			
+			if(fs.lstatSync(curPath).isDirectory()) { // recurse
+				deleteFolderRecursive(curPath);
+			} 
+			else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		console.log("Delete folder "+path)
+		fs.rmdirSync(path);
+	}
+};
 
 function deleteFile(folderName){
 	// open fileManager.txt
+	var fileCont = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")
+	fileCont = fileCont.split("\n")
 	// search for folderName and delete line
+	for (let i = 0; i < fileCont.length; i++) {
+		const line = fileCont[i];
+		if (line == folderName){
+			fileCont.splice(i,1)
+			console.log("Spliced: " + i + ", " + folderName)
+			break
+		}
+	}
 	// save fileManager
+	console.log(fileCont)
+	fs.writeFileSync(saveMainFolder + "fileManager.txt", "")
+	for (let i = 0; i < fileCont.length; i++) {
+		if (fileCont[i] != ""){
+			fs.appendFileSync(saveMainFolder + "fileManager.txt", fileCont[i]+"\n")
+		}
+	}
 
 	// delete folder with folderName
+	deleteFolderRecursive(saveMainFolder + folderName)
 }

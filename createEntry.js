@@ -6,6 +6,8 @@ function createEntryField(listID, Dough, Entry, loaded = false){
 	var list = document.getElementById(listID);
 	var list_el = document.createElement('li');
 	list_el.setAttribute("style","transition: 0.5s;")
+	list_el.className = "doughLi"
+
 	list_el.id = Entry.id;
 	
 	if (loaded == false){

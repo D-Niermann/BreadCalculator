@@ -1,1 +1,3 @@
 Graubrot - Test/
+Graubrot 100 - Test/
+Dinkelbrot - Test/

@@ -324,7 +324,7 @@ input::-webkit-inner-spin-button {
 	max-height: 0px;
 	overflow: hidden;
 	/* transition: 0.9s; */
-	transition: max-height .5s ease-in-out;
+	transition: max-height .25s ease-in-out;
 }
 
 .toggle:checked+.lbl-toggle+.collapsible-content {
@@ -336,9 +336,9 @@ input::-webkit-inner-spin-button {
 	border-bottom-left-radius: 0;
 }
 
-.toggleLoad:checked+.lbl-toggleLoad+.collapsible-content {
+/* .toggleLoad:checked+.lbl-toggleLoad+.collapsible-content {
 	max-height: 100vh;
-}
+} */
 
 .toggleLoad:checked+.lbl-toggleLoad {
 	border-bottom-right-radius: 0;
@@ -418,14 +418,16 @@ ul li > *{
 }
 
 .loadList-li{
+	display: grid;
+	grid-template-columns: 70% 30%;
 	border-style: none none solid none ;
 	border-width: 1px;
 	border-color: rgba(241, 231, 216, 0.342);
 	border-width: 20%;
 	padding-top: 5px;
-	width: 20%;
+	width: 40%;
 	text-decoration: none;
-	transition: 0.2s;
+	/* transition: 0.2s; */
 	border-radius: 5px;
 	font-size: 14pt;
 	color: rgb(240, 234, 234);
@@ -444,6 +446,9 @@ ul li > *{
 	padding-left: 20px;
 	/* margin-top: 4px; */
 	transition: 0.25s;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
 }
 .headerButton:hover{
 	background-color: wheat;
