@@ -12,6 +12,7 @@ if (!fs.existsSync(saveMainFolder + "fileManager.txt")){fs.writeFileSync(saveMai
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
 const {Dough, Entry} = require("./Classes.js")
+const {createSaveWarn} = require("./dialogs.js")
 console.log("Import")
 var Pre1 = new Dough("Pre-ferment 1", "Pre1");
 var Pre2 = new Dough("Pre-ferment 2", "Pre2");
@@ -176,9 +177,19 @@ pre3_title.addEventListener ('keyup', function() {
 /////////////////////////////////////////////////////////////////////////////
 
 document.getElementById("saveButton").addEventListener("click", function(){
+	saveRecipe(false)
+
+})
+document.getElementById("yesButton").addEventListener("click", function(){
+	saveRecipe(true)
+})
+
+function saveRecipe(overwrite){
 	const saveFolder = document.getElementById("titleInput").value + "/"	
+
 	if (!fs.existsSync(saveMainFolder + saveFolder)){
 		fs.mkdirSync(saveMainFolder + saveFolder);
+
 
 		Pre1.save(saveMainFolder + saveFolder)
 		Pre2.save(saveMainFolder + saveFolder)
@@ -197,12 +208,28 @@ document.getElementById("saveButton").addEventListener("click", function(){
 
 		fs.appendFileSync(saveMainFolder + "fileManager.txt", saveFolder+"\n")
 	}
-	else{
-		// create a popup that says bread alredy exists, overwrite?
+	else if(overwrite == true){
+		Pre1.save(saveMainFolder + saveFolder)
+		Pre2.save(saveMainFolder + saveFolder)
+		Pre3.save(saveMainFolder + saveFolder)
+		Main.save(saveMainFolder + saveFolder)
+		// some metadata save
+		var saveString = ""
+		var fName = saveMainFolder + saveFolder+ "Metadata" +".txt"
+
+		// create file 
+		fs.writeFileSync(fName, document.getElementById("titleInput").value + ";" + 
+
+								document.getElementById("authorInput").value + ";" + 
+								document.getElementById("textArea").value
+		);
+
+		createSaveWarn(false)
 	}
-
-})
-
+	else{
+		createSaveWarn(true)
+	}
+}
 
 function loadFiles(folderName){
 	// load in the metadata
@@ -255,6 +282,21 @@ function loadFiles(folderName){
 	
 	
 }
+document.getElementById("newButton").addEventListener("click",function(){	
+	document.getElementById("titleInput").value = "Title"
+	document.getElementById("authorInput").value = "Author"
+	document.getElementById("textArea").value = ""
+	document.getElementById("Pre1_title").value = Pre1.name
+	document.getElementById("Pre2_title").value = Pre2.name
+	document.getElementById("Pre3_title").value = Pre3.name
+	document.getElementById("Main_title").value = Main.name
+	// load in the entries
+	Main.removeAll()
+	Pre1.removeAll()
+	Pre2.removeAll()
+	Pre3.removeAll()
+})
+
 var loadListContent = document.getElementById("loadListContent")
 document.getElementById("loadButton").addEventListener("click",function(){expandColl(loadListContent)})
 function expandColl(item){

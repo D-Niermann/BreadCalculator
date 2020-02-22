@@ -9,6 +9,7 @@
 	<div>
 		<input id="collapsibleLoadlist" class="toggleLoad" type="checkbox">
 		<label for="collapsibleLoadlist" class="lbl-toggleLoad">
+			<a class = "headerButton"  id = "newButton"> New Recipe </a>
 			<a class = "headerButton"  id = "loadButton"> Load Recipe </a>
 			<a class = "headerButton"  id = "saveButton"> Save Recipe </a>
 		</label>
@@ -154,10 +155,17 @@
 
 
 
+<div class = "overlay" id = "overlay"></div>
+<div class = "DialogMain" id = "DialogMain" >
+	<span>
+		A recipe with this name already exists.
+		Do you want to overwrite it?
+	</span>
+</div>
+<div class = "yesButton" id = "yesButton">Yes </div>
+<div class = "noButton" id = "noButton"> No</div>
 <script src="functions.js"></script>
 
-<div id = "overlay">
-</div>
 
 </body>
 </html>
