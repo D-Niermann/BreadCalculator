@@ -407,11 +407,11 @@ ul li > *{
 
 .loadArea{
 	background-color: rgb(70,60,52);
-	width: 120%;
+	/* width: 120%; */
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: -10px;
-	margin-right: -10px;
+	margin-right: -8px;
 	margin-top: -10px;
 	border: none none solid none;
 	border-color: rgb(51, 50, 49);
@@ -435,6 +435,7 @@ ul li > *{
 .loadListDiv:hover{
 	background-color: rgb(49, 45, 41);
 	transition: 0.1s;
+	cursor: pointer;
 }
 
 .headerButton{
@@ -454,4 +455,68 @@ ul li > *{
 .headerButton:hover{
 	background-color: wheat;
 	color: rgb(59, 59, 59);
+}
+
+.overlay{
+	position: absolute; 
+	display: none;
+	width: 100%; 
+	height: 100%;
+	top: 0; 
+	left: 0;
+	background-color: rgba(0,0,0,0.7);
+	/* z-index: 2; Specify a stack order in case you're using a different order for other elements */
+}
+
+.DialogMain{
+	background-color: rgb(243, 237, 225);
+	position: absolute;	
+	display: none;
+	top: 35%;
+	left: 30%;
+	width: 40%;
+	height: 30%;
+	border-radius: 5px;
+}
+
+.yesButton{
+	background-color: rgb(120, 184, 114);
+	position: absolute;	
+	display: none;
+	top: 55%;
+	left: 50%;
+	width: 20%;
+	height: 10%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	font-family: myfont;
+	text-align: center;
+	font-size: 14pt;
+	vertical-align: middle;
+	color: black;
+	cursor: pointer;
+}
+.noButton{
+	background-color: rgb(194, 120, 107);
+	position: absolute;	
+	display: none;
+	top: 55%;
+	left: 30%;
+	width: 20%;
+	height: 10%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	font-family: myfont;
+	text-align: center;
+	font-size: 14pt;
+	color: black;
+	cursor: pointer;
+}
+
+.MessageSpan{
+	display: block;
+	text-align: center;
+	padding-top: 5%;
+	font-family: myfont;
+	font-size: 12pt;
 }
