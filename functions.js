@@ -175,6 +175,8 @@ pre3_title.addEventListener ('keyup', function() {
 /////////////////////////////////////////////////////////////////////////////
 // Save and Load			// !Hardcoded predough!
 /////////////////////////////////////////////////////////////////////////////
+var loadListContent = document.getElementById("loadListContent")
+document.getElementById("loadButton").addEventListener("click",function(){expandColl(loadListContent)})
 
 document.getElementById("saveButton").addEventListener("click", function(){
 	saveRecipe(false)
@@ -305,8 +307,6 @@ function resetAll(){
 }
 
 
-var loadListContent = document.getElementById("loadListContent")
-document.getElementById("loadButton").addEventListener("click",function(){expandColl(loadListContent)})
 
 
 function expandColl(item){
@@ -345,12 +345,24 @@ setInterval(function(){
 			div.className = "loadListDiv"
 			list_el.appendChild(div)
 			
+			// var anchor_div = document.createElement("a")
+			// anchor_div.innerHTML = "|"
+			// list_el.appendChild(anchor_div)
+
+
 			var anchor = document.createElement("a")
-			anchor.innerHTML = "delete"
-			anchor.setAttribute("style", "cursor: pointer;")
-			anchor.addEventListener("click",function(){
+			anchor.innerHTML = "|    "
+			anchor.className = "loadListImg"
+			var img = document.createElement("img")
+			img.src = "./trash.png"
+			img.alt = ""
+			img.width = "18"
+			img.height = "18"
+			img.addEventListener("click",function(){
 				createDeleteWarn(true, line)
 			})
+			img.setAttribute("style", "cursor: pointer;")
+			anchor.appendChild(img)
 			list_el.appendChild(anchor)
 			
 			loadList.appendChild(list_el)

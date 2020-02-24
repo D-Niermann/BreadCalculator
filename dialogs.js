@@ -51,7 +51,6 @@ document.getElementById("noButton").addEventListener("click",function(){
 function bgOn() {
 	document.getElementById("overlay").style.display = "block";
 	document.getElementById("DialogMain").style.display = "block";
-	// document.getElementById("yesButton").style.display = "block";
 	document.getElementById("noButton").style.display = "block";
 }
 
