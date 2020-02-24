@@ -435,6 +435,7 @@ ul li > *{
 .loadListDiv:hover{
 	background-color: rgb(49, 45, 41);
 	transition: 0.1s;
+	cursor: pointer;
 }
 
 .headerButton{
@@ -485,6 +486,7 @@ ul li > *{
 	top: 55%;
 	left: 50%;
 	width: 20%;
+	height: 10%;
 	padding-top: 2%;
 	padding-bottom: 2%;
 	font-family: myfont;
@@ -492,6 +494,7 @@ ul li > *{
 	font-size: 14pt;
 	vertical-align: middle;
 	color: black;
+	cursor: pointer;
 }
 .noButton{
 	background-color: rgb(194, 120, 107);
@@ -500,11 +503,20 @@ ul li > *{
 	top: 55%;
 	left: 30%;
 	width: 20%;
-	/* height: 10%; */
+	height: 10%;
 	padding-top: 2%;
 	padding-bottom: 2%;
 	font-family: myfont;
 	text-align: center;
 	font-size: 14pt;
 	color: black;
+	cursor: pointer;
+}
+
+.MessageSpan{
+	display: block;
+	text-align: center;
+	padding-top: 5%;
+	font-family: myfont;
+	font-size: 12pt;
 }

@@ -12,7 +12,7 @@ if (!fs.existsSync(saveMainFolder + "fileManager.txt")){fs.writeFileSync(saveMai
 const {createEntryField} = require("./createEntry.js")
 const {createPredoughField} = require("./createDoughField.js")
 const {Dough, Entry} = require("./Classes.js")
-const {createSaveWarn} = require("./dialogs.js")
+const {createSaveWarn,createNewWarn, createDeleteWarn} = require("./dialogs.js")
 console.log("Import")
 var Pre1 = new Dough("Pre-ferment 1", "Pre1");
 var Pre2 = new Dough("Pre-ferment 2", "Pre2");
@@ -178,13 +178,13 @@ pre3_title.addEventListener ('keyup', function() {
 
 document.getElementById("saveButton").addEventListener("click", function(){
 	saveRecipe(false)
+})
 
-})
-document.getElementById("yesButton").addEventListener("click", function(){
-	saveRecipe(true)
-})
+
+
 
 function saveRecipe(overwrite){
+	console.log("Save Recipe")
 	const saveFolder = document.getElementById("titleInput").value + "/"	
 
 	if (!fs.existsSync(saveMainFolder + saveFolder)){
@@ -283,22 +283,32 @@ function loadFiles(folderName){
 	
 }
 document.getElementById("newButton").addEventListener("click",function(){	
+	createNewWarn(true)
+})
+
+function resetAll(){
+	console.log("Reset All")
 	document.getElementById("titleInput").value = "Title"
 	document.getElementById("authorInput").value = "Author"
 	document.getElementById("textArea").value = ""
-	document.getElementById("Pre1_title").value = Pre1.name
-	document.getElementById("Pre2_title").value = Pre2.name
-	document.getElementById("Pre3_title").value = Pre3.name
-	document.getElementById("Main_title").value = Main.name
+	document.getElementById("Pre1_title").value = "Pre-ferment 1"
+	document.getElementById("Pre2_title").value = "Pre-ferment 2"
+	document.getElementById("Pre3_title").value = "Pre-ferment 3"
+	document.getElementById("Main_title").value = "Main"
 	// load in the entries
 	Main.removeAll()
 	Pre1.removeAll()
 	Pre2.removeAll()
 	Pre3.removeAll()
-})
+	createNewWarn(false)
+
+}
+
 
 var loadListContent = document.getElementById("loadListContent")
 document.getElementById("loadButton").addEventListener("click",function(){expandColl(loadListContent)})
+
+
 function expandColl(item){
 	if (item.style.maxHeight == "100vh"){
 		item.setAttribute("style", "max-height: 0vh;")
@@ -337,8 +347,9 @@ setInterval(function(){
 			
 			var anchor = document.createElement("a")
 			anchor.innerHTML = "delete"
+			anchor.setAttribute("style", "cursor: pointer;")
 			anchor.addEventListener("click",function(){
-				deleteFile(line)
+				createDeleteWarn(true, line)
 			})
 			list_el.appendChild(anchor)
 			
@@ -346,7 +357,7 @@ setInterval(function(){
 
 		}
 	}
-},1000)
+},100)
 var deleteFolderRecursive = function(path) {
 	if( fs.existsSync(path) ) {
 
@@ -366,6 +377,7 @@ var deleteFolderRecursive = function(path) {
 };
 
 function deleteFile(folderName){
+	console.log("Delete Files in "+ folderName)
 	// open fileManager.txt
 	var fileCont = fs.readFileSync(saveMainFolder + "fileManager.txt", "utf8")
 	fileCont = fileCont.split("\n")
