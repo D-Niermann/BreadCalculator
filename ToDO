@@ -2,7 +2,6 @@
 
 - load and save feature
 	- make list of filenames and dates sortable by these categories 
-	- design a nice load list
-		- more like a flat ui look in list fitting to topbar
+	- saving of sorted entries 
 	
 - zeiten input in header der jeweiligen teige

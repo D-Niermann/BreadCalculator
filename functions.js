@@ -25,10 +25,12 @@ console.log("Dough defs")
 
 class IDGen{
 	constructor(){
-		this.ID = 11000
+		this.ID = Math.floor(Math.random() * Math.floor(9999999))
 	}
 
 	get(){
+
+		console.log("ID: "+this.ID)
 		this.ID += 1
 		return this.ID
 	}
