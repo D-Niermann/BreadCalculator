@@ -279,7 +279,7 @@ function loadFiles(folderName){
 			createEntryField("list3", Main, Main.entries[i], true)
 		}
 	}
-	
+	Main.update()
 	expandColl(loadListContent)
 	
 	
