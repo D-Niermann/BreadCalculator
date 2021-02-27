@@ -21,7 +21,7 @@ var Pre3 = new Dough("Pre-ferment 3", "Pre3");
 
 var Main = new Dough("Main", "Main");
 Main.makeMain()
-console.log("Dough defs")
+AllDoughs = [Pre1, Pre2, Pre3, Main]
 
 class IDGen{
 	constructor(){
@@ -41,16 +41,16 @@ console.log("ID Class def")
 
 function dragStart(event) {
 	dragSrcEl = this;
-  };
+};
   
   
-  function dragLeave(event) {
+function dragLeave(event) {
 	event.stopPropagation();
 	event.preventDefault();
 	event.dataTransfer.dropEffect = "none"
-  }
+}
   
-  function dragOver(event) {
+function dragOver(event) {
 	event.preventDefault();
 	if (this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI") {
 	}
@@ -58,10 +58,12 @@ function dragStart(event) {
 		event.dataTransfer.dropEffect = "none"
 		return false;
 	}
-  }
-  
-  function dragDrop(event) {
+}
+
+
+function dragDrop(event) {
 	var source_gram;
+	var source_position;
 	var source_name;
 	var source_percent;
 	var source_id;
@@ -78,41 +80,52 @@ function dragStart(event) {
 
 	// list.replaceChild(copy, list.childNodes[1])
 	if (do_copy && ( this.parentElement.id==dragSrcEl.parentElement.id && this.id != dragSrcEl.id && this.nodeName=="LI")) {
+		var eSrc = -1
+		var eTarget = -1
+
+		AllDoughs.forEach(dough => {
+			if(eSrc==-1){
+				eSrc = dough.getEntry(dragSrcEl.id)
+			}
+		});
+
+		AllDoughs.forEach(dough => {
+			if(eTarget==-1){
+				eTarget = dough.getEntry(this.id)
+			}
+		});
 		// ursprung
-		console.log("source: " + dragSrcEl.childNodes[1].value)
+		// console.log(eSrc)
 		// target
-		console.log("target: "+ this.childNodes[1].value)
+		// console.log(eTarget)
 
-		// for (let i = 0; i < dragSrcEl.childNodes.length; i++) {
-		// 	const c = dragSrcEl.childNodes[i];
-		// 	console.log(i)
-		// 	console.log(c)
-		// 	this.replaceChild(dragSrcEl.childNodes[i], this.childNodes[i])
-		// }
 
-		// save values from source element
-		source_gram = dragSrcEl.childNodes[1].value
-		source_name = dragSrcEl.childNodes[3].value
-		source_percent = dragSrcEl.childNodes[4].value
-		source_id = dragSrcEl.id
-		source_type = dragSrcEl.childNodes[6].innerHTML
-		// change source element
-		dragSrcEl.childNodes[1].value = this.childNodes[1].value
-		dragSrcEl.childNodes[3].value = this.childNodes[3].value
-		dragSrcEl.childNodes[4].value = this.childNodes[4].value
-		dragSrcEl.id = this.id
-		dragSrcEl.childNodes[6].innerHTML = this.childNodes[6].innerHTML
-		// change other element
-		this.childNodes[1].value = source_gram
-		this.childNodes[3].value = source_name
-		this.childNodes[4].value = source_percent
-		this.id = source_id
-		this.childNodes[6].innerHTML = source_type
+
+		// // save values from source element
+		source_gram = eSrc.gram
+		source_name = eSrc.name
+		source_percent = eSrc.percent
+		source_id = eSrc.id
+		source_type = eSrc.type
+		source_lastEdited = eSrc.lastEdited
+		
+		eSrc.updateName(eTarget.name)
+		eSrc.updateGrams(eTarget.gram)
+		eSrc.updatePercent(eTarget.percent)
+		eSrc.updateType(eTarget.type) 
+		eSrc.lastEdited = eTarget.lastEdited
+		
+		eTarget.updateName(source_name)
+		eTarget.updateGrams(source_gram)
+		eTarget.updatePercent(source_percent)
+		eTarget.updateType(source_type) 
+		
 	}
 	else{
 		return false;
 	}
-  }
+}
+
   
 
 document.getElementById("addPre11").addEventListener("click", function(){createEntryField("list1", Pre1, new Entry(ID.get(), T_FLOUR));createPredoughField("list3", Main, T_PREDOUGH, Pre1)});
@@ -172,6 +185,17 @@ pre3_title.addEventListener ('keyup', function() {
 	Pre3.name = this.value
 	Main.getEntry(Pre3.id).updateName(Pre3.name)
 });
+// update entry pre3 in main dough
+var main_title = document.getElementById("Main_title")
+main_title.addEventListener("focusout", function() {
+	// pre2_input.innerHTML = this.value
+	Main.name = this.value
+});
+main_title.addEventListener ('keyup', function() {
+	// pre2_input.innerHTML = this.value 
+	Main.name = this.value
+});
+
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -372,6 +396,8 @@ setInterval(function(){
 		}
 	}
 },100)
+
+
 var deleteFolderRecursive = function(path) {
 	if( fs.existsSync(path) ) {
 

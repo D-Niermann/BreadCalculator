@@ -85,6 +85,15 @@ class Entry{
 	}
 	updateType(value){
 		this.type = value
+		// get html element and change it
+		if (document.getElementById(this.id)!=null){
+			var childs = document.getElementById(this.id).childNodes
+			for(let i = 0; i<childs.length; i++){
+				if (childs[i].className == "InfoTypeText-transparent"){
+					childs[i].innerHTML = this.type
+				}
+			}
+		}
 	}
 
 	isFlour(){

@@ -505,6 +505,8 @@ ul li > *{
 	width: 40%;
 	height: 30%;
 	border-radius: 5px;
+	padding-right: 5%;
+    padding-left: 5%;
 }
 
 .yesButton{
@@ -519,10 +521,11 @@ ul li > *{
 	padding-bottom: 2%;
 	font-family: myfont;
 	text-align: center;
-	font-size: 14pt;
+	font-size: 20pt;
 	vertical-align: middle;
 	color: black;
 	cursor: pointer;
+	border-radius: 5px;
 }
 .noButton{
 	background-color: rgb(194, 120, 107);
@@ -536,15 +539,16 @@ ul li > *{
 	padding-bottom: 2%;
 	font-family: myfont;
 	text-align: center;
-	font-size: 14pt;
+	font-size: 20pt;
 	color: black;
 	cursor: pointer;
+	border-radius: 5px;
 }
 
 .MessageSpan{
 	display: block;
 	text-align: center;
-	padding-top: 5%;
+	padding-top: 14%;
 	font-family: myfont;
-	font-size: 12pt;
+	font-size: 16pt;
 }
