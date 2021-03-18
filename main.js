@@ -10,7 +10,7 @@ function createWindow () {
   // Erstellen des Browser-Fensters.
   win = new BrowserWindow({
     width: 1000,
-    height: 800,
+    height: 1000,
     webPreferences: {
       nodeIntegration: true
     },
@@ -23,7 +23,7 @@ function createWindow () {
 //   var Rec = new Recipe();
   
   // Öffnen der DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
 
   win.setMenu(null)
