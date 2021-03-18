@@ -9,11 +9,11 @@ This program allows you to create your own bread recipes, calculating all percen
 
 No installation needed, just download the 'BreadCalculator.zip', unpack it and start the .exe.
 
-DOWNLOAD: https://github.com/D-Niermann/BreadCalculator/raw/Release/BreadCalculator-win32.zip
+DOWNLOAD: https://github.com/D-Niermann/BreadCalculator/raw/BreadCalculator-win32.zip
 
 
 
-## HowTo
+## How To Use
 ### Principle
 I want something that makes it easy for me to create my own recipes without doing all the math myself. I've seen many online calculators or excel spreadsheets, but these are either super ugly or useless since some vital features are missing, e.g. adding more than one pre-ferment. So I created my own application with certain principles in mind:
 - Easy to use
@@ -29,4 +29,3 @@ The Calculator is very easy to use. You add elements (ingredients) to the respec
 ## Known Issues
 - removing the per-ferment list elements in the Main dough is not undo-able! Needs add button
 - Adding up percentages over 100% is possible by user input and kinda breaks the calculation (obviously)
-- Needs more features (like easy to set total hydration)
