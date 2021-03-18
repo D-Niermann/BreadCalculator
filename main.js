@@ -10,10 +10,11 @@ function createWindow () {
   // Erstellen des Browser-Fensters.
   win = new BrowserWindow({
     width: 1000,
-    height: 800,
+    height: 1000,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    icon: "./Images/" + 'icons.ico'
   })
 
   // und lade die index.html der App.

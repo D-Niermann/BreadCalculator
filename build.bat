@@ -1,1 +1,1 @@
-electron-packager . --electronVersion=8.0.0 --overwrite=true
+electron-packager . --electronVersion=8.0.0 --overwrite=true --icon=./Images/icon.icns

@@ -10,7 +10,9 @@
   },
   "author": "Dario Niermann",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "minimist": "^1.2.5"
+  },
   "devDependencies": {
     "electron-packager": "^14.2.1"
   }

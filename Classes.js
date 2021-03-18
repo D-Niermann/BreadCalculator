@@ -43,22 +43,26 @@ class Entry{
 				this.lastEdited = T_GRAM
 			}
 			// document.getElementById(this.id).childNodes.getElementsByClassName("input-text-gram").value = "test"
-			var childs = document.getElementById(this.id).childNodes
-			for(let i = 0; i<childs.length; i++){
-				if (childs[i].className == "input-text-gram"){
-					childs[i].value = Math.round(this.gram)
+			if (document.getElementById(this.id)!=null){
+				var childs = document.getElementById(this.id).childNodes
+				for(let i = 0; i<childs.length; i++){
+					if (childs[i].className == "input-text-gram"){
+						childs[i].value = Math.round(this.gram)
+					}
 				}
 			}
 		}
 	}
 	updateName(value, fetchedFromHTML = false){
 		this.name = value
-		var childs = document.getElementById(this.id).childNodes
+		if (document.getElementById(this.id)!=null){
+			var childs = document.getElementById(this.id).childNodes
 			for(let i = 0; i<childs.length; i++){
 				if (childs[i].className == "input-text-name"){
 					childs[i].value = this.name
 				}
 			}
+		}
 	}
 	updatePercent(value, fetchedFromHTML = false){
 		if (this.roundToTens(this.percent) != this.roundToTens(value)){
@@ -69,16 +73,27 @@ class Entry{
 			if (fetchedFromHTML){
 				this.lastEdited = T_PERCENT
 			}
-			var childs = document.getElementById(this.id).childNodes
-			for(let i = 0; i<childs.length; i++){
-				if (childs[i].className == "input-text-percent"){
-					childs[i].value = this.roundToTens(this.percent)
+			if (document.getElementById(this.id)!=null){
+				var childs = document.getElementById(this.id).childNodes
+				for(let i = 0; i<childs.length; i++){
+					if (childs[i].className == "input-text-percent"){
+						childs[i].value = this.roundToTens(this.percent)
+					}
 				}
 			}
 		}
 	}
 	updateType(value){
 		this.type = value
+		// get html element and change it
+		if (document.getElementById(this.id)!=null){
+			var childs = document.getElementById(this.id).childNodes
+			for(let i = 0; i<childs.length; i++){
+				if (childs[i].className == "InfoTypeText-transparent"){
+					childs[i].innerHTML = this.type
+				}
+			}
+		}
 	}
 
 	isFlour(){
@@ -108,7 +123,7 @@ class Entry{
 				this.gram.toString() + this.stringSeperator +
 				this.name.toString() + this.stringSeperator +
 				this.lastEdited.toString() + this.stringSeperator +
-				this.percent.toString() + this.stringSeperator +
+				this.roundToTens(this.percent).toString() + this.stringSeperator +
 				this.type.toString() + this.stringSeperator 
 		string+= "\n"
 		return string
