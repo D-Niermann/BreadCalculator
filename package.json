@@ -1,5 +1,5 @@
 {
-  "name": "BreadCalculator",
+  "name": "bread-calculator",
   "version": "1.0.0",
   "description": "Calculates Dough weights and percentages.",
   "main": "main.js",
@@ -11,10 +11,9 @@
   "author": "Dario Niermann",
   "license": "ISC",
   "dependencies": {
+    "electron": "^16.0.5",
+    "electron-packager": "^15.4.0",
     "minimist": "^1.2.5"
   },
-  "devDependencies": {
-    "electron": "^16.0.5",
-    "electron-packager": "^14.2.1"
-  }
+  "devDependencies": {}
 }
