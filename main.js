@@ -1,4 +1,6 @@
-const { app, BrowserWindow, globalShortcut } = require('electron')
+var app = require('electron').app
+var BrowserWindow = require('electron').BrowserWindow
+var globalShortcut = require('electron').globalShortcut
 
 // Behalten Sie eine globale Referenz auf das Fensterobjekt. 
 // Wenn Sie dies nicht tun, wird das Fenster automatisch geschlossen, 
@@ -12,7 +14,8 @@ function createWindow () {
     width: 1000,
     height: 1000,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
     },
     icon: "./Images/" + 'icons.ico'
   })
