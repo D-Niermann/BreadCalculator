@@ -1,20 +1,23 @@
-# BreadCalculator 
+# BreadCalculator :bread: 
 
-:bread:  :pizza:
+:bread:  :pizza:  :+1:
 
 This program allows you to create your own bread recipes, calculating all percentages and weights needed. Just add ingredients (categories: Flour, Fluid, Other) and the tool calculates hydration rations and all other percentages. You can also simply type in your desired percentage of the ingredient and the weights will be calculated accordingly.
 
 
 ![alt text](https://github.com/D-Niermann/BreadCalculator/blob/master/Images/TutImg.png)
 
-## Install for Windows :heavy_check_mark:
+## How to Install  :heavy_check_mark: 
+### for Windows 
 
-No installation needed, just download the 'BreadCalculator.zip', unpack it and start the BreadCalculator.exe. On windows, a warning may pop up because I am not a certified developer. If it does, click "more info" and "open anyway".
-
+No installation needed, just download the 'BreadCalculator.zip', unpack it and start the BreadCalculator.exe. A warning may pop up because I am not a certified developer. If it does, click "more info" and "open anyway".
 
 ----> [DOWNLOAD HERE](https://github.com/D-Niermann/BreadCalculator/releases/download/Windows/BreadCalculator-win32.zip) <----
 
-## How To Use
+### For Mac
+Will come soon
+
+## How To Use :bulb:
 
 ### Principle
 
