@@ -11,7 +11,7 @@
   "author": "Dario Niermann",
   "license": "ISC",
   "dependencies": {
-    "electron": "^16.0.5",
+    "electron": "^16.2.6",
     "electron-packager": "^15.4.0",
     "minimist": "^1.2.5"
   },
