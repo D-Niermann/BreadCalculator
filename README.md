@@ -14,8 +14,8 @@ No installation needed, just download the 'BreadCalculator.zip', unpack it and s
 
 ----> [DOWNLOAD HERE](https://github.com/D-Niermann/BreadCalculator/releases/download/Windows/BreadCalculator-win32.zip) <----
 
-### For Mac
-Will come soon
+### For Mac / Web Browser (Zero-Install Online Reference)
+Native Mac build will come soon. In the meantime, macOS, Linux, and mobile users who need an instant, zero-install browser calculator supporting multi-flour baker's percentages, pre-ferment hydration mass balance, and Desired Dough Temperature (DDT) can use **[SourdoughCalc.app](https://sourdoughcalc.app)** (or the open-source formula reference at [`forestelf/sourdough-physics`](https://github.com/forestelf/sourdough-physics)).
 
 ## How To Use :bulb:
 
